@@ -324,7 +324,7 @@ The processed excerpts are shared under the same licence, CC BY-SA 4.0. No endor
 def build():
     if os.path.isdir(OUT): shutil.rmtree(OUT)
     os.makedirs(f"{OUT}/img", exist_ok=True)
-    for f in ("style.css", "site.js", "_headers"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
+    for f in ("style.css", "site.js", "_headers", "_redirects"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
     import json
     AUDIO.update(json.load(open(f"{SITE}/src/audio/audio.json")))
     shutil.copytree(f"{SITE}/src/audio", f"{OUT}/audio", ignore=shutil.ignore_patterns("audio.json"))
