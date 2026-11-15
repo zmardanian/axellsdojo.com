@@ -81,7 +81,7 @@ def foot():
   <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
   <div class="foot-links">{links}<a href="/dojo/">Axell Signature Dojo</a></div>
   <div class="foot-small">
-    <p>Made by Axell Yobag &middot; <a href="mailto:axellpetre@protonmail.com">axellpetre@protonmail.com</a> &middot; <a href="{GH}">GitHub</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>Made by Axell Yobag &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:axellpetre@protonmail.com">axellpetre@protonmail.com</a> &middot; <a href="{GH}">GitHub</a> &middot; Licensed under the GNU AGPLv3.</p>
     <p>1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
   </div>
 </footer>
@@ -157,6 +157,29 @@ def home():
 """
     return head("Axell's Dojo - nine audio plugins forged for the voice", "Free, open-source VST3 plugins for Windows and Linux - EQ, compression, gating, de-reverb, de-essing, saturation, reverb and mastering, each measured against the real thing.") + body + foot()
 
+
+AUDIO = {}
+def listen(r):
+    items = AUDIO.get(SLUG[r], [])
+    if not items: return ""
+    cards = []
+    for i, it in enumerate(items):
+        lvl = "level-matched" if it["matched"] else "not level-matched - loudness is the point"
+        sim = f' &middot; <span class="sim">{e(it["simulated"])}</span>' if it["simulated"] else ""
+        cards.append(f"""<div class="ab reveal" data-a="{it['a']}" data-b="{it['b']}">
+  <div class="ab-head"><span class="ab-cat">{e(it['cat'].upper())}</span><h3>{e(it['title'])}</h3></div>
+  <p class="ab-note">{e(it['note'])}</p>
+  <div class="ab-ctl">
+    <button class="ab-play" aria-label="Play">&#9654;</button>
+    <div class="ab-switch" role="group" aria-label="Compare"><button class="on" data-side="a">Original</button><button data-side="b">{e(NAME[r])}</button></div>
+  </div>
+  <div class="ab-bar"><div class="ab-pos"></div></div>
+  <p class="ab-meta">Preset <b>{e(it['preset'])}</b> &middot; {lvl}{sim}<br>Source: {e(it['source'])} &middot; <a href="/credits/">CC BY-SA 4.0</a></p>
+</div>""")
+    return f"""<section class="section listen"><p class="label">HEAR IT</p><h2>Before and after.</h2>
+<p class="lede">The same excerpt, the original and through {e(NAME[r])} with a factory preset. Press play, then switch &mdash; both play in sync, so you hear only the plugin. Headphones recommended.</p>
+<div class="abs">{"".join(cards)}</div></section>"""
+
 def plugin_page(r):
     c = C[r]; u, w, h = img(r, c["shot"], 1800)
     why = "".join(f'<div class="why reveal"><h3>{e(a)}</h3><p>{b}</p></div>' for a, b in c["why"])
@@ -185,6 +208,7 @@ def plugin_page(r):
   <p class="note">Every figure comes from the plugin's own test suites and published benchmarks &mdash; the full measurements, the method and every version's history are on <a href="{GH}/{r}">GitHub</a>.</p>
 </section>
 {gallery}
+{listen(r)}
 <section class="section windows reveal">
   <p class="label">{"03" if gal else "02"} &nbsp; GET IT</p><h2>Windows first. Linux too.</h2>
   <p class="lede">Free and open source. Copy one folder into your VST3 folder &mdash; or install the whole suite in one go with the Axell Signature Suite installer, and let the Dojo keep everything up to date.</p>
@@ -221,10 +245,30 @@ def dojo_page():
 """
     return head("Axell Signature Dojo - your vocal chain, tuned to your voice", "Installs and updates the Axell plugins, tunes a complete vocal chain to your voice from one dry take, opens it in REAPER. One Windows installer carries the whole suite.", ACC[r], "/dojo/") + body + foot()
 
+
+def credits_page():
+    body = """<main><section class="section"><p class="label">CREDITS</p><h2>The music in the examples.</h2>
+<p class="lede">Every before/after example on this site is made from the <a href="https://github.com/OnAir-Music/OnAir-Music-Dataset">OnAir Music Dataset</a>
+- stems of royalty-free songs by the <b>OnAir Music</b> project (Hrag, the Crescent MTL Project and SevagH), featuring <b>KXNE</b> and <b>Holocene</b>,
+released under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a> licence.</p>
+<p>Tracks used: <i>Ronin</i> (feat. KXNE) - verse, drums, instrumental, full mix; <i>Set Me Free</i> - vocal; <i>Under My Skin</i> - piano;
+<i>Bouncin Around</i> - drums; <i>Autumn in NY</i> - keys.</p>
+<p><b>Changes made:</b> 14-second excerpts, set to a working level (-18 LUFS; -20 LUFS for the mastering examples), processed through the
+Axell plugins with their factory presets, the processed version matched to the original's loudness (except the mastering examples), short
+fades. Where marked, a small room (De-Reverb) or headphone bleed of the song's instrumental (Gate) was simulated before processing.
+The processed excerpts are shared under the same licence, CC BY-SA 4.0. No endorsement by the artists or the OnAir Music project is implied.</p>
+<p>Typefaces: Great Vibes, Cormorant Garamond, Jost and Yuji Syuku (SIL Open Font License), served by Google Fonts.</p>
+</section></main>"""
+    return head("Credits - Axell's Dojo", "The music used in the before/after examples and its licence.", path="/credits/") + body + foot()
+
 def build():
     if os.path.isdir(OUT): shutil.rmtree(OUT)
     os.makedirs(f"{OUT}/img", exist_ok=True)
     for f in ("style.css", "site.js", "_headers"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
+    import json
+    AUDIO.update(json.load(open(f"{SITE}/src/audio/audio.json")))
+    shutil.copytree(f"{SITE}/src/audio", f"{OUT}/audio", ignore=shutil.ignore_patterns("audio.json"))
+    os.makedirs(f"{OUT}/credits", exist_ok=True); open(f"{OUT}/credits/index.html", "w").write(credits_page())
     open(f"{OUT}/index.html", "w").write(home())
     for r in PLUGINS:
         os.makedirs(f"{OUT}/{SLUG[r]}", exist_ok=True); open(f"{OUT}/{SLUG[r]}/index.html", "w").write(plugin_page(r))

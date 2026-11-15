@@ -28,3 +28,55 @@
   }, { rootMargin: "0px 0px -8% 0px" });
   els.forEach(function (el) { io.observe(el); });
 })();
+
+// Before/after players: both versions decoded and started together, switched with a 15 ms crossfade (no gap, no
+// drift); one player at a time; the bar seeks. Loaded on the first press (no audio downloaded until then).
+(function () {
+  let ctx = null, current = null;
+  function audioCtx() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); return ctx; }
+  function load(url) { return fetch(url).then(function (r) { return r.arrayBuffer(); }).then(function (b) { return new Promise(function (ok, no) { audioCtx().decodeAudioData(b, ok, no); }); }); }
+  document.querySelectorAll(".ab").forEach(function (el) {
+    const play = el.querySelector(".ab-play"), pos = el.querySelector(".ab-pos"), bar = el.querySelector(".ab-bar");
+    const sw = el.querySelectorAll(".ab-switch button");
+    let bufs = null, srcs = null, gains = null, t0 = 0, off = 0, side = "a", raf = 0, loading = false;
+    function dur() { return bufs ? Math.min(bufs.a.duration, bufs.b.duration) : 1; }
+    function now() { return srcs ? off + (ctx.currentTime - t0) : off; }
+    function draw() { pos.style.width = (100 * Math.min(1, now() / dur())) + "%"; if (srcs) raf = requestAnimationFrame(draw); }
+    function stop(keep) {
+      if (srcs) { off = keep ? now() : 0; srcs.a.onended = null; srcs.a.stop(); srcs.b.stop(); srcs = null; }
+      cancelAnimationFrame(raf); play.innerHTML = "&#9654;"; play.setAttribute("aria-label", "Play"); el.classList.remove("playing"); draw();
+    }
+    function start(at) {
+      if (current && current !== api) current.stop(true);
+      current = api; const c = audioCtx(); c.resume();
+      gains = { a: c.createGain(), b: c.createGain() }; srcs = {};
+      ["a", "b"].forEach(function (k) {
+        gains[k].gain.value = (k === side) ? 1 : 0; gains[k].connect(c.destination);
+        srcs[k] = c.createBufferSource(); srcs[k].buffer = bufs[k]; srcs[k].connect(gains[k]);
+      });
+      off = at; t0 = c.currentTime + 0.05; srcs.a.start(t0, at); srcs.b.start(t0, at);
+      srcs.a.onended = function () { if (srcs) stop(false); };
+      play.innerHTML = "&#10074;&#10074;"; play.setAttribute("aria-label", "Pause"); el.classList.add("playing"); draw();
+    }
+    const api = { stop: stop };
+    play.addEventListener("click", function () {
+      if (srcs) { stop(true); return; }
+      if (bufs) { start(off >= dur() - 0.05 ? 0 : off); return; }
+      if (loading) return; loading = true; el.classList.add("loading"); audioCtx().resume();
+      Promise.all([load(el.dataset.a), load(el.dataset.b)]).then(function (r) { bufs = { a: r[0], b: r[1] }; el.classList.remove("loading"); start(0); })
+        .catch(function () { el.classList.remove("loading"); loading = false; play.textContent = "!"; });
+    });
+    sw.forEach(function (b) {
+      b.addEventListener("click", function () {
+        side = b.dataset.side; sw.forEach(function (x) { x.classList.toggle("on", x === b); });
+        if (srcs && gains) { const t = ctx.currentTime; ["a", "b"].forEach(function (k) {
+          gains[k].gain.cancelScheduledValues(t); gains[k].gain.setValueAtTime(gains[k].gain.value, t);
+          gains[k].gain.linearRampToValueAtTime(k === side ? 1 : 0, t + 0.015); }); }
+      });
+    });
+    bar.addEventListener("click", function (ev) {
+      const r = bar.getBoundingClientRect(), at = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width)) * dur();
+      if (srcs) { stop(true); start(at); } else { off = at; draw(); }
+    });
+  });
+})();

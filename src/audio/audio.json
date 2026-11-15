@@ -1,0 +1,328 @@
+{
+ "penta-eq": [
+  {
+   "cat": "drums",
+   "title": "Drums",
+   "preset": "Drum Bus - Boom Bap Thump",
+   "note": "Weight on the kick, crack on the snare - analog-matched curves.",
+   "source": "Bouncin Around - OnAir Music (drums)",
+   "matched": true,
+   "a": "/audio/penta-eq/drums-a.mp3",
+   "b": "/audio/penta-eq/drums-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "melodic",
+   "title": "Keys",
+   "preset": "Keys / Rhodes - Warm Bell",
+   "note": "The chords warmer and rounder, the bell on top kept clear.",
+   "source": "Autumn in NY - OnAir Music (keys)",
+   "matched": true,
+   "a": "/audio/penta-eq/melodic-a.mp3",
+   "b": "/audio/penta-eq/melodic-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "vocals",
+   "title": "Rap vocal",
+   "preset": "Rap Lead - Clean & Forward",
+   "note": "The voice forward and clear - and the esses tamed by the Ess-keyed band.",
+   "source": "Ronin - OnAir Music feat. KXNE (verse)",
+   "matched": true,
+   "a": "/audio/penta-eq/vocals-a.mp3",
+   "b": "/audio/penta-eq/vocals-b.mp3",
+   "simulated": ""
+  }
+ ],
+ "duo-compressor": [
+  {
+   "cat": "drums",
+   "title": "Drums",
+   "preset": "Drum Bus: Boom Bap Smash",
+   "note": "FET smash for a denser, harder-hitting kit.",
+   "source": "Ronin - OnAir Music feat. KXNE (drums)",
+   "matched": true,
+   "a": "/audio/duo-compressor/drums-a.mp3",
+   "b": "/audio/duo-compressor/drums-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "melodic",
+   "title": "Piano",
+   "preset": "Gentle Leveling",
+   "note": "The opto evens the piano out without squashing it.",
+   "source": "Under My Skin - OnAir Music (piano)",
+   "matched": true,
+   "a": "/audio/duo-compressor/melodic-a.mp3",
+   "b": "/audio/duo-compressor/melodic-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "vocals",
+   "title": "Rap vocal",
+   "preset": "Rap Lead",
+   "note": "A steady, upfront vocal - and ESS HOLD keeps the esses from jumping up.",
+   "source": "Ronin - OnAir Music feat. KXNE (verse)",
+   "matched": true,
+   "a": "/audio/duo-compressor/vocals-a.mp3",
+   "b": "/audio/duo-compressor/vocals-b.mp3",
+   "simulated": ""
+  }
+ ],
+ "gate": [
+  {
+   "cat": "drums",
+   "title": "Drums",
+   "preset": "Gated Snare (80s)",
+   "note": "SHAPE cuts the drum tails short - no clicks, no kinks.",
+   "source": "Bouncin Around - OnAir Music (drums)",
+   "matched": true,
+   "a": "/audio/gate/drums-a.mp3",
+   "b": "/audio/gate/drums-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "melodic",
+   "title": "Keys",
+   "preset": "Trance Gate 16ths",
+   "note": "RHYTHM chops the chords on the grid with click-free edges.",
+   "source": "Autumn in NY - OnAir Music (keys)",
+   "matched": true,
+   "a": "/audio/gate/melodic-a.mp3",
+   "b": "/audio/gate/melodic-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "vocals",
+   "title": "Rap vocal with beat bleed",
+   "preset": "Rap Lead - Kill Beat Bleed",
+   "note": "Before: the beat leaking from headphones (simulated, -24 dB). After: BLEED REMOVAL with the beat on the side-chain.",
+   "source": "Ronin - OnAir Music feat. KXNE (verse)",
+   "matched": true,
+   "a": "/audio/gate/vocals-a.mp3",
+   "b": "/audio/gate/vocals-b.mp3",
+   "simulated": "beat bleed simulated"
+  }
+ ],
+ "dereverb": [
+  {
+   "cat": "drums",
+   "title": "Drums in a small room",
+   "preset": "Natural",
+   "note": "Before: the kit in a simulated small, boxy room. After: the room taken out.",
+   "source": "Bouncin Around - OnAir Music (drums)",
+   "matched": true,
+   "a": "/audio/dereverb/drums-a.mp3",
+   "b": "/audio/dereverb/drums-b.mp3",
+   "simulated": "room simulated"
+  },
+  {
+   "cat": "melodic",
+   "title": "Piano in a small room",
+   "preset": "Natural",
+   "note": "Before: the piano in a simulated small room. After: the room taken out.",
+   "source": "Under My Skin - OnAir Music (piano)",
+   "matched": true,
+   "a": "/audio/dereverb/melodic-a.mp3",
+   "b": "/audio/dereverb/melodic-b.mp3",
+   "simulated": "room simulated"
+  },
+  {
+   "cat": "vocals",
+   "title": "Vocal in a bedroom",
+   "preset": "Natural",
+   "note": "Before: the vocal in a simulated bedroom (0.5 s decay). After: the room out, the voice kept.",
+   "source": "Set Me Free - OnAir Music (vocal)",
+   "matched": true,
+   "a": "/audio/dereverb/vocals-a.mp3",
+   "b": "/audio/dereverb/vocals-b.mp3",
+   "simulated": "room simulated"
+  }
+ ],
+ "velvet": [
+  {
+   "cat": "drums",
+   "title": "Drums",
+   "preset": "Heat Only",
+   "note": "Tape warmth on the kit - thicker, rounder, no harsh edge.",
+   "source": "Ronin - OnAir Music feat. KXNE (drums)",
+   "matched": true,
+   "a": "/audio/velvet/drums-a.mp3",
+   "b": "/audio/velvet/drums-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "melodic",
+   "title": "Keys",
+   "preset": "Soul Tube Bloom",
+   "note": "Tube bloom on the chords.",
+   "source": "Autumn in NY - OnAir Music (keys)",
+   "matched": true,
+   "a": "/audio/velvet/melodic-a.mp3",
+   "b": "/audio/velvet/melodic-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "vocals",
+   "title": "Sung vocal",
+   "preset": "Pop Vocal Air",
+   "note": "The esses smoothed by the neural de-esser, air and warmth everywhere else.",
+   "source": "Set Me Free - OnAir Music (vocal)",
+   "matched": true,
+   "a": "/audio/velvet/vocals-a.mp3",
+   "b": "/audio/velvet/vocals-b.mp3",
+   "simulated": ""
+  }
+ ],
+ "master": [
+  {
+   "cat": "drums",
+   "title": "Drums",
+   "preset": "Drum Bus Punch",
+   "note": "Punch and loudness from the clipper and true-peak limiter.",
+   "source": "Ronin - OnAir Music feat. KXNE (drums)",
+   "matched": false,
+   "a": "/audio/master/drums-a.mp3",
+   "b": "/audio/master/drums-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "melodic",
+   "title": "Beat",
+   "preset": "Beat Tape / Instrumental Master (-14)",
+   "note": "A finished instrumental master at -14 LUFS.",
+   "source": "Ronin - OnAir Music feat. KXNE (instrumental)",
+   "matched": false,
+   "a": "/audio/master/melodic-a.mp3",
+   "b": "/audio/master/melodic-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "vocals",
+   "title": "Rap vocal",
+   "preset": "Vocal Upfront (Dense)",
+   "note": "A dense, upfront vocal bus - VOICE HOLD and ESS HOLD on.",
+   "source": "Ronin - OnAir Music feat. KXNE (verse)",
+   "matched": false,
+   "a": "/audio/master/vocals-a.mp3",
+   "b": "/audio/master/vocals-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "mix",
+   "title": "Full song",
+   "preset": "Hip-Hop / R&B Streaming (-14)",
+   "note": "The whole song mastered for streaming: louder, and safe after the codecs.",
+   "source": "Ronin - OnAir Music feat. KXNE (full mix)",
+   "matched": false,
+   "a": "/audio/master/mix-a.mp3",
+   "b": "/audio/master/mix-b.mp3",
+   "simulated": ""
+  }
+ ],
+ "space": [
+  {
+   "cat": "drums",
+   "title": "Drums",
+   "preset": "Small Room",
+   "note": "A real-sounding room around the kit.",
+   "source": "Bouncin Around - OnAir Music (drums)",
+   "matched": true,
+   "a": "/audio/space/drums-a.mp3",
+   "b": "/audio/space/drums-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "melodic",
+   "title": "Piano",
+   "preset": "Hall Hook",
+   "note": "A lush hall that blooms in the gaps.",
+   "source": "Under My Skin - OnAir Music (piano)",
+   "matched": true,
+   "a": "/audio/space/melodic-a.mp3",
+   "b": "/audio/space/melodic-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "vocals",
+   "title": "Sung vocal",
+   "preset": "Vocal Plate",
+   "note": "A vocal plate with ESS DUCK - no hissing tails.",
+   "source": "Set Me Free - OnAir Music (vocal)",
+   "matched": true,
+   "a": "/audio/space/vocals-a.mp3",
+   "b": "/audio/space/vocals-b.mp3",
+   "simulated": ""
+  }
+ ],
+ "forbidden-seal": [
+  {
+   "cat": "drums",
+   "title": "Drums",
+   "preset": "Drums: Tape Bus",
+   "note": "Tape hysteresis glue on the kit.",
+   "source": "Ronin - OnAir Music feat. KXNE (drums)",
+   "matched": true,
+   "a": "/audio/forbidden-seal/drums-a.mp3",
+   "b": "/audio/forbidden-seal/drums-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "melodic",
+   "title": "Keys",
+   "preset": "Master: Tube Sheen",
+   "note": "Tube sheen on the chords.",
+   "source": "Autumn in NY - OnAir Music (keys)",
+   "matched": true,
+   "a": "/audio/forbidden-seal/melodic-a.mp3",
+   "b": "/audio/forbidden-seal/melodic-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "vocals",
+   "title": "Rap vocal",
+   "preset": "Vocal: Warm Tape",
+   "note": "Warm tape on the voice - the voice itself never passes the circuit, only the harmonics are added.",
+   "source": "Ronin - OnAir Music feat. KXNE (verse)",
+   "matched": true,
+   "a": "/audio/forbidden-seal/vocals-a.mp3",
+   "b": "/audio/forbidden-seal/vocals-b.mp3",
+   "simulated": ""
+  }
+ ],
+ "76": [
+  {
+   "cat": "drums",
+   "title": "Drums",
+   "preset": "Drum Bus - All Buttons Smash",
+   "note": "The famous all-buttons-in smash.",
+   "source": "Bouncin Around - OnAir Music (drums)",
+   "matched": true,
+   "a": "/audio/76/drums-a.mp3",
+   "b": "/audio/76/drums-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "melodic",
+   "title": "Piano",
+   "preset": "Bass - Even",
+   "note": "The FET evening out the piano.",
+   "source": "Under My Skin - OnAir Music (piano)",
+   "matched": true,
+   "a": "/audio/76/melodic-a.mp3",
+   "b": "/audio/76/melodic-b.mp3",
+   "simulated": ""
+  },
+  {
+   "cat": "vocals",
+   "title": "Rap vocal",
+   "preset": "Rap Lead - Upfront",
+   "note": "The classic 1176 vocal: upfront and controlled.",
+   "source": "Ronin - OnAir Music feat. KXNE (verse)",
+   "matched": true,
+   "a": "/audio/76/vocals-a.mp3",
+   "b": "/audio/76/vocals-b.mp3",
+   "simulated": ""
+  }
+ ]
+}
