@@ -120,7 +120,7 @@ def home():
   <p class="hero-tag">Nine plugins forged for the voice. Every claim, measured.</p>
   <p class="spec">WINDOWS &nbsp;&middot;&nbsp; LINUX &nbsp;&middot;&nbsp; VST3 &nbsp;&middot;&nbsp; FREE &amp; OPEN SOURCE</p>
   {dl_buttons("axell-signature-dojo", "Get the whole suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo installs the plugins")}
-  <p class="hosts">Runs in any VST3 host &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER</p>
+  <p class="hosts">Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour</p>
   <div class="seal-row">{seals}</div>
 </section>
 
@@ -138,8 +138,8 @@ def home():
 
 <section class="section split reveal">
   <div><p class="label">03 &nbsp; THE DOJO</p><h2>Your chain, tuned to your voice.</h2>
-  <p class="lede">Record or drop one dry take. The Dojo measures your voice and your room, tunes a complete vocal chain by rendering your take through the plugins, and opens it in REAPER &mdash; your signature sound, one click away.</p>
-  <ul class="ticks"><li>Installs, updates and restores every plugin &mdash; checksum-verified</li><li>Voice Profile: loudness, noise, pitch, esses, room and low end</li><li>Streaming Preview: hear your master as Spotify, Apple Music and YouTube will play it</li><li>Twelve ready-made REAPER chains</li></ul>
+  <p class="lede">Record or drop one dry take. The Dojo measures your voice and your room, tunes a complete vocal chain by rendering your take through the plugins, and saves it as presets inside the plugins &mdash; so your signature sound opens in whatever DAW you use, on Windows or Linux.</p>
+  <ul class="ticks"><li>Installs, updates and restores every plugin &mdash; checksum-verified, for every DAW</li><li>Voice Profile: loudness, noise, pitch, esses, room and low end &mdash; tuned presets for Gate, Penta EQ, Duo Compressor and Velvet</li><li>Streaming Preview: hear your master as Spotify, Apple Music and YouTube will play it</li><li>REAPER extras: one-click sessions and twelve ready-made FX chains</li></ul>
   <a class="more" href="/dojo/">Inside the Dojo &rarr;</a></div>
   <div class="shot"><img src="{d}" width="{dw}" height="{dh}" alt="Axell Signature Dojo - the Plugins page" loading="lazy"></div>
 </section>
@@ -213,7 +213,7 @@ def plugin_page(r):
   <p class="label">{"03" if gal else "02"} &nbsp; GET IT</p><h2>Windows first. Linux too.</h2>
   <p class="lede">Free and open source. Copy one folder into your VST3 folder &mdash; or install the whole suite in one go with the Axell Signature Suite installer, and let the Dojo keep everything up to date.</p>
   {dl_buttons(r)}
-  <p class="hosts">Runs in any VST3 host &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER</p>
+  <p class="hosts">Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour</p>
 </section>
 <section class="section family"><p class="label">THE SUITE</p><div class="family-row">{others}</div></section>
 </main>
@@ -236,6 +236,7 @@ def dojo_page():
   <p class="hero-tag">{e(TAG[r])}</p>
   <p class="spec">{e(SPEC[r])}</p>
   {dl_buttons(r, "Get the suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo installs the plugins")}
+  <p class="hosts">Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour</p>
   <div class="hero-shot reveal"><img src="{u}" width="{w}" height="{h}" alt="{e(c['alt'])}"></div>
   <p class="pitch"><b>{c['pitch'][0]}</b> {c['pitch'][1]}</p>
 </section>
