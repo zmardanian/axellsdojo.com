@@ -89,6 +89,7 @@ def foot():
   </div>
 </footer>
 <script src="/site.js?v={VER['site.js']}" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{"token": "ce09d7285b9247608354813fd8e4a526"}}'></script>
 </body>
 </html>
 """
