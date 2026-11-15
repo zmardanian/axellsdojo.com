@@ -102,7 +102,8 @@ def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 1
   <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>
 </div>"""
 
-FEATURED = [("axell-gate", "vocals"), ("axell-dereverb", "vocals"), ("axell-master", "mix")]
+HIDE_AUDIO = {"axell-dereverb"}
+FEATURED = [("axell-gate", "vocals"), ("axell-velvet", "vocals"), ("axell-master", "mix")]
 def featured():
     cards = []
     for r, cat in FEATURED:
@@ -231,6 +232,7 @@ def ab_card(r, it, show_plugin=False):
 
 def listen(r):
     items = AUDIO.get(SLUG[r], [])
+    if r in HIDE_AUDIO: items = []          # examples being redone (a synthetic room was a poor test for De-Reverb)
     if not items: return ""
     cards = [ab_card(r, it) for it in items]
     return f"""<section class="section listen"><p class="label">HEAR IT</p><h2>Before and after.</h2>
