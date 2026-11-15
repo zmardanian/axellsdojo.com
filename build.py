@@ -49,7 +49,7 @@ STATS = [  # big numbers on the home page: every one from the plugin's own measu
     ("axell-dereverb", "4.13", "speech quality (ViSQOL) from 3.96 - the research standard reaches 3.99"),
 ]
 
-def head(title, desc, accent="#c9a25e", path="/"):
+def head(title, desc, accent="#c9a25e", path="/", og="og.jpg"):
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -62,7 +62,7 @@ def head(title, desc, accent="#c9a25e", path="/"):
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.axellsdojo.com{path}">
-<meta property="og:image" content="https://www.axellsdojo.com/img/og.jpg">
+<meta property="og:image" content="https://www.axellsdojo.com/img/{og}">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://www.axellsdojo.com{path}">
 <link rel="icon" href="/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,7 +74,7 @@ def head(title, desc, accent="#c9a25e", path="/"):
 <body>
 <header class="nav">
   <a class="brand" href="/"><span class="seal seal-wide seal-sm" aria-hidden="true">道場</span><span>Axell's Dojo</span></a>
-  <nav><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a class="nav-cta" href="/#get">Download</a></nav>
+  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a class="nav-cta" href="/#get">Download</a></nav>
 </header>
 """
 
@@ -102,6 +102,56 @@ def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 1
   <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>
 </div>"""
 
+FEATURED = [("axell-gate", "vocals"), ("axell-dereverb", "vocals"), ("axell-master", "mix")]
+def featured():
+    cards = []
+    for r, cat in FEATURED:
+        it = next((x for x in AUDIO.get(SLUG[r], []) if x["cat"] == cat), None)
+        if it: cards.append(ab_card(r, it, show_plugin=True))
+    if not cards: return ""
+    return f"""<section id="hear" class="section listen"><p class="label">HEAR THE DIFFERENCE</p><h2>Press play. Flip the switch.</h2>
+<p class="lede">The same excerpt, before and after &mdash; both play in sync, so the only thing that changes is the plugin. Every plugin page has its own drums, melodic and vocal examples.</p>
+<div class="abs">{"".join(cards)}</div></section>"""
+
+from PIL import ImageDraw, ImageFont, ImageFilter
+FONTS = {"script": f"{HOME}/axell-76/Resources/fonts/GreatVibes-Regular.ttf", "serif_i": f"{HOME}/axell-76-data/fonts/CormorantGaramond-MediumItalic.ttf",
+         "sans": f"{HOME}/axell-76-data/fonts/Jost-Medium.ttf", "brush": f"{HOME}/axell-windows-port/brand/YujiSyuku-subset.ttf"}
+def hexrgb(h): h = h.lstrip("#"); return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+def og_card(r, title, tag, shot_src, out):
+    """a 1200x630 share card: the plugin's colour, its script name and seal, the tagline, the real interface"""
+    W, H = 1200, 630; acc = hexrgb(ACC[r]) if r else hexrgb("#d3ad66")
+    img = Image.new("RGB", (W, H), (11, 13, 18))
+    glow = Image.new("RGB", (W, H), (11, 13, 18)); gd = ImageDraw.Draw(glow)
+    gd.ellipse((-200, -300, 900, 500), fill=tuple(int(11 + (c - 11) * 0.30) for c in acc)); glow = glow.filter(ImageFilter.GaussianBlur(160))
+    img = Image.blend(img, glow, 0.9); d = ImageDraw.Draw(img)
+    if shot_src:
+        sh = Image.open(shot_src).convert("RGB"); sh.thumbnail((700, 520))
+        mask = Image.new("L", sh.size, 0); ImageDraw.Draw(mask).rounded_rectangle((0, 0, sh.width - 1, sh.height - 1), 14, fill=255)
+        shadow = Image.new("RGBA", (sh.width + 80, sh.height + 80), (0, 0, 0, 0)); ImageDraw.Draw(shadow).rounded_rectangle((40, 50, sh.width + 40, sh.height + 50), 18, fill=(0, 0, 0, 200))
+        shadow = shadow.filter(ImageFilter.GaussianBlur(24)); x, y = 660, max(90, (H - sh.height) // 2 + 30)
+        img.paste(shadow, (x - 40, y - 40), shadow); img.paste(sh, (x, y), mask)
+    f = lambda k, n: ImageFont.truetype(FONTS[k], n)
+    d.text((64, 70), "AXELL SIGNATURE", font=f("sans", 22), fill=acc, spacing=0)
+    name = title; size = 120
+    while d.textlength(name, font=f("script", size)) > 570 and size > 60: size -= 4
+    d.text((58, 108), name, font=f("script", size), fill=acc)
+    k = KANJI.get(r) if r else "道場"
+    if k:
+        sz = 76; sx = 64; sy = 108 + size + 34
+        w = sz if len(k) == 1 else int(sz * 1.75)
+        d.rounded_rectangle((sx, sy, sx + w, sy + sz), 6, fill=(192, 54, 44))
+        d.text((sx + w / 2, sy + sz / 2), k, font=f("brush", int(sz * (0.62 if len(k) == 1 else 0.5))), fill=(255, 243, 230), anchor="mm")
+        ty = sy + sz + 26
+    else: ty = 108 + size + 40
+    words = tag.split(); lines = [""]
+    for wd in words:
+        t = (lines[-1] + " " + wd).strip()
+        if d.textlength(t, font=f("serif_i", 38)) > 540: lines.append(wd)
+        else: lines[-1] = t
+    for i, l in enumerate(lines[:3]): d.text((64, ty + i * 44), l, font=f("serif_i", 38), fill=(239, 230, 214))
+    d.text((64, H - 92), "FREE  ·  WINDOWS  ·  LINUX  ·  VST3", font=f("sans", 20), fill=(169, 157, 141)); d.text((64, H - 60), "axellsdojo.com", font=f("sans", 22), fill=acc)
+    img.save(out, quality=88)
+
 def home():
     cards = []
     for r in PLUGINS:
@@ -127,6 +177,7 @@ def home():
   <div class="seal-row">{seals}</div>
 </section>
 
+{featured()}
 <section id="arsenal" class="section">
   <p class="label">01 &nbsp; THE ARSENAL</p><h2>Nine plugins. One core.</h2>
   <p class="lede">Built as one family: they share a core library, so a breakthrough in one becomes a feature of the next &mdash; Velvet's sibilance network guards the esses in four of its siblings; Gate's voice detector holds the gain through your pauses in two more.</p>
@@ -163,15 +214,12 @@ def home():
 
 AUDIO = {}
 SHORT = {"axell-penta-eq": "Penta EQ", "axell-duo-compressor": "Duo", "axell-gate": "Gate", "axell-dereverb": "De-Reverb", "axell-velvet": "Velvet", "axell-master": "Master", "axell-space": "Space", "axell-forbidden-seal": "Seal", "axell-76": "Axell 76"}
-def listen(r):
-    items = AUDIO.get(SLUG[r], [])
-    if not items: return ""
-    cards = []
-    for i, it in enumerate(items):
-        lvl = "level-matched" if it["matched"] else "not level-matched - loudness is the point"
-        sim = f' &middot; <span class="sim">{e(it["simulated"])}</span>' if it["simulated"] else ""
-        cards.append(f"""<div class="ab reveal" data-a="{it['a']}" data-b="{it['b']}">
-  <div class="ab-head"><span class="ab-cat">{e(it['cat'].upper())}</span><h3>{e(it['title'])}</h3></div>
+def ab_card(r, it, show_plugin=False):
+    lvl = "level-matched" if it["matched"] else "not level-matched - loudness is the point"
+    sim = f' &middot; <span class="sim">{e(it["simulated"])}</span>' if it["simulated"] else ""
+    tag = f'<a class="ab-plugin" href="/{SLUG[r]}/" style="--acc:{ACC[r]}">{seal(r, "seal seal-sm")} {e(NAME[r])}</a>' if show_plugin else ""
+    return f"""<div class="ab reveal" style="--acc:{ACC[r]}" data-a="{it['a']}" data-b="{it['b']}">
+  {tag}<div class="ab-head"><span class="ab-cat">{e(it['cat'].upper())}</span><h3>{e(it['title'])}</h3></div>
   <p class="ab-note">{e(it['note'])}</p>
   <div class="ab-ctl">
     <button class="ab-play" aria-label="Play">&#9654;</button>
@@ -179,7 +227,12 @@ def listen(r):
   </div>
   <div class="ab-bar"><div class="ab-pos"></div></div>
   <p class="ab-meta">Preset <b>{e(it['preset'])}</b> &middot; {lvl}{sim}<br>Source: {e(it['source'])} &middot; <a href="/credits/">CC BY-SA 4.0</a></p>
-</div>""")
+</div>"""
+
+def listen(r):
+    items = AUDIO.get(SLUG[r], [])
+    if not items: return ""
+    cards = [ab_card(r, it) for it in items]
     return f"""<section class="section listen"><p class="label">HEAR IT</p><h2>Before and after.</h2>
 <p class="lede">The same excerpt, the original and through {e(NAME[r])} with a factory preset. Press play, then switch &mdash; both play in sync, so you hear only the plugin. Headphones recommended.</p>
 <div class="abs">{"".join(cards)}</div></section>"""
@@ -222,7 +275,7 @@ def plugin_page(r):
 <section class="section family"><p class="label">THE SUITE</p><div class="family-row">{others}</div></section>
 </main>
 """
-    return head(f"{NAME[r]} - {TAG[r]}", f"{NAME[r]}: {c['pitch'][0]} Free VST3 for Windows and Linux.", ACC[r], f"/{SLUG[r]}/") + body + foot()
+    return head(f"{NAME[r]} - {TAG[r]}", f"{NAME[r]}: {c['pitch'][0]} Free VST3 for Windows and Linux.", ACC[r], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg") + body + foot()
 
 def dojo_page():
     r = "axell-signature-dojo"; c = C[r]; u, w, h = img(r, c["shot"], 1800)
@@ -248,7 +301,7 @@ def dojo_page():
 <section class="section"><p class="label">02 &nbsp; A CLOSER LOOK</p><h2>Every page.</h2><div class="gallery">{"".join(gal)}</div></section>
 </main>
 """
-    return head("Axell Signature Dojo - your vocal chain, tuned to your voice", "Installs and updates the Axell plugins, tunes a complete vocal chain to your voice from one dry take, opens it in REAPER. One Windows installer carries the whole suite.", ACC[r], "/dojo/") + body + foot()
+    return head("Axell Signature Dojo - your vocal chain, tuned to your voice", "Installs and updates the Axell plugins, tunes a complete vocal chain to your voice from one dry take, opens it in REAPER. One Windows installer carries the whole suite.", ACC[r], "/dojo/", "og-dojo.jpg") + body + foot()
 
 
 def credits_page():
@@ -281,10 +334,11 @@ def build():
     open(f"{OUT}/404.html", "w").write(head("Not found - Axell's Dojo", "This page does not exist.") + '<main><section class="hero"><div class="hero-bg" aria-hidden="true">迷</div>'
         '<p class="eyebrow">404</p><h1 class="script hero-title">Lost in the dojo</h1><p class="hero-tag">This page does not exist - but nine plugins do.</p>'
         '<p><a class="btn btn-primary" href="/"><b>Back to the suite</b></a></p></section></main>' + foot())
+    for r in PLUGINS: og_card(r, NAME[r], TAG[r], f"{HOME}/{r}/{C[r]['shot']}", f"{OUT}/img/og-{SLUG[r]}.jpg")
+    og_card("axell-signature-dojo", "Signature Dojo", TAG["axell-signature-dojo"], f"{HOME}/axell-signature-dojo/{C['axell-signature-dojo']['shot']}", f"{OUT}/img/og-dojo.jpg")
     # favicon: the Dojo's seal; social card: the home hero's look
     T.wideseal(f"{OUT}/img/favicon.png", "道場", "dark", 64)
-    og = Image.open(f"{HOME}/axell-signature-dojo/{C['axell-signature-dojo']['shot']}").convert("RGB"); og.thumbnail((1200, 1200))
-    canvas = Image.new("RGB", (1200, 630), (11, 13, 18)); canvas.paste(og.crop((0, 0, 1200, 630)), (0, 0)); canvas.save(f"{OUT}/img/og.jpg", quality=85)
+    og_card("", "Axell's Dojo", "Nine plugins forged for the voice. Every claim, measured.", f"{HOME}/axell-gate/{C['axell-gate']['shot']}", f"{OUT}/img/og.jpg")
     open(f"{OUT}/robots.txt", "w").write("User-agent: *\nAllow: /\nSitemap: https://www.axellsdojo.com/sitemap.xml\n")
     urls = ["/"] + [f"/{SLUG[r]}/" for r in PLUGINS] + ["/dojo/"]
     open(f"{OUT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

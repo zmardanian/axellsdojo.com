@@ -183,3 +183,6 @@ h2::after { content: ""; display: block; width: 90px; height: 2px; background: v
 .ab-meta a { color: var(--soft); }
 .sim { color: var(--acc); }
 @media (max-width: 860px) { .abs { grid-template-columns: 1fr; } }
+.ab-plugin { display: inline-flex; align-items: center; gap: 8px; font-family: var(--script); font-size: 30px; color: var(--acc); margin-bottom: 6px; }
+.ab-plugin:hover { text-decoration: none; filter: brightness(1.15); }
+.ab-plugin .seal-sm { font-family: var(--brush); }
