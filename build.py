@@ -74,7 +74,7 @@ def head(title, desc, accent="#c9a25e", path="/", og="og.jpg"):
 <body>
 <header class="nav">
   <a class="brand" href="/"><span class="seal seal-wide seal-sm" aria-hidden="true">道場</span><span>Axell's Dojo</span></a>
-  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a class="nav-cta" href="/#get">Download</a></nav>
+  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-cta" href="/#get">Download</a></nav>
 </header>
 """
 
@@ -84,7 +84,7 @@ def foot():
   <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
   <div class="foot-links">{links}<a href="/dojo/">Axell Signature Dojo</a></div>
   <div class="foot-small">
-    <p>Made by Axell Yobag &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="{GH}">GitHub</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="{GH}">GitHub</a> &middot; Licensed under the GNU AGPLv3.</p>
     <p>1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
   </div>
 </footer>
@@ -321,6 +321,39 @@ The processed excerpts are shared under the same licence, CC BY-SA 4.0. No endor
 </section></main>"""
     return head("Credits - Axell's Dojo", "The music used in the before/after examples and its licence.", path="/credits/") + body + foot()
 
+def contact_page():
+    body = """<main style="--acc:#d3ad66">
+<section class="hero hero-plugin"><div class="hero-bg" aria-hidden="true">道場</div>
+  <p class="eyebrow">ABOUT &middot; CONTACT</p>
+  <h1 class="script hero-title">Axell Yobag</h1>
+  <p class="hero-tag">An artist who wanted his voice to sound right &mdash; and built the tools to get there.</p>
+  <p class="spec">RAP &nbsp;&middot;&nbsp; BOOM BAP &nbsp;&middot;&nbsp; TRAP &nbsp;&middot;&nbsp; LO-FI &nbsp;&middot;&nbsp; ENGLISH &amp; ROMANIAN</p>
+</section>
+<section class="section split reveal">
+  <div><p class="label">01 &nbsp; THE STORY</p><h2>From the booth to the code.</h2>
+  <p class="lede">I'm Axell Yobag &mdash; a rap artist and producer. I write and record in English and Romanian, over boom bap, trap and lo-fi beats, mostly in a home setup like most artists today: a mic, a room that isn't a studio, and a laptop.</p>
+  <p class="lede">The tools I could find either cost a fortune, didn't run where I work, or treated a voice like any other sound. So I started building my own &mdash; a gate that knows my voice from my room, a de-esser that recognises an S instead of guessing, a compressor that holds my words together, a master that survives the streaming services.</p>
+  <p class="lede">That became the Axell Signature suite: nine plugins and the Dojo that ties them together. Every one is tested against real hardware and the references engineers trust, and every claim on this site is a measurement you can check.</p></div>
+  <div><p class="label">02 &nbsp; WHAT I BELIEVE</p><h2>Free, honest, measured.</h2>
+  <ul class="ticks">
+    <li><b>Free and open source</b> &mdash; no subscriptions, no accounts, no licence keys. Good tools shouldn't depend on your budget.</li>
+    <li><b>Windows and Linux</b> &mdash; made where I work, built for wherever you work, in any DAW.</li>
+    <li><b>Measured, not marketed</b> &mdash; if a number is on the page, there's a test behind it.</li>
+    <li><b>Made for the voice</b> &mdash; rap vocals first, because that's what I make.</li>
+  </ul></div>
+</section>
+<section id="contact" class="section windows reveal">
+  <p class="label">03 &nbsp; CONTACT</p><h2>Say hello.</h2>
+  <p class="lede">Questions, bug reports, ideas for the next plugin, collaborations &mdash; I read everything.</p>
+  <div class="tri">
+    <div><h3>Email</h3><p><a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a></p></div>
+    <div><h3>Bugs &amp; ideas</h3><p>Open an issue on the plugin's <a href="https://github.com/zmardanian">GitHub</a> page &mdash; it helps everyone who hits the same thing.</p></div>
+    <div><h3>Get the suite</h3><p><a href="/download">axellsdojo.com/download</a> &mdash; Windows installer and Linux, free.</p></div>
+  </div>
+</section>
+</main>"""
+    return head("About & contact - Axell Yobag, Axell's Dojo", "Axell Yobag - rap artist and producer, maker of the free Axell Signature audio plugins for Windows and Linux. Contact: contact@axellsdojo.com.", "#d3ad66", "/contact/") + body + foot()
+
 def build():
     if os.path.isdir(OUT): shutil.rmtree(OUT)
     os.makedirs(f"{OUT}/img", exist_ok=True)
@@ -328,6 +361,7 @@ def build():
     import json
     AUDIO.update(json.load(open(f"{SITE}/src/audio/audio.json")))
     shutil.copytree(f"{SITE}/src/audio", f"{OUT}/audio", ignore=shutil.ignore_patterns("audio.json"))
+    os.makedirs(f"{OUT}/contact", exist_ok=True); open(f"{OUT}/contact/index.html", "w").write(contact_page())
     os.makedirs(f"{OUT}/credits", exist_ok=True); open(f"{OUT}/credits/index.html", "w").write(credits_page())
     open(f"{OUT}/index.html", "w").write(home())
     for r in PLUGINS:
@@ -342,7 +376,7 @@ def build():
     T.wideseal(f"{OUT}/img/favicon.png", "道場", "dark", 64)
     og_card("", "Axell's Dojo", "Nine plugins forged for the voice. Every claim, measured.", f"{HOME}/axell-gate/{C['axell-gate']['shot']}", f"{OUT}/img/og.jpg")
     open(f"{OUT}/robots.txt", "w").write("User-agent: *\nAllow: /\nSitemap: https://www.axellsdojo.com/sitemap.xml\n")
-    urls = ["/"] + [f"/{SLUG[r]}/" for r in PLUGINS] + ["/dojo/"]
+    urls = ["/"] + [f"/{SLUG[r]}/" for r in PLUGINS] + ["/dojo/", "/contact/"]
     open(f"{OUT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>https://www.axellsdojo.com{u}</loc></url>\n" for u in urls) + "</urlset>\n")
     print("built", OUT, sum(len(fs) for _, _, fs in os.walk(OUT)), "files")
