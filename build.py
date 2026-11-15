@@ -84,7 +84,7 @@ def foot():
   <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
   <div class="foot-links">{links}<a href="/dojo/">Axell Signature Dojo</a></div>
   <div class="foot-small">
-    <p>Made by Axell Yobag &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:axellpetre@protonmail.com">axellpetre@protonmail.com</a> &middot; <a href="{GH}">GitHub</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>Made by Axell Yobag &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="{GH}">GitHub</a> &middot; Licensed under the GNU AGPLv3.</p>
     <p>1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
   </div>
 </footer>
