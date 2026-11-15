@@ -6,5 +6,5 @@ The website of the Axell Signature suite - free, open-source audio plugins for W
 - `src/` - the stylesheet, script and headers copied into `public/`.
 - `build.py` - generates `public/` from the plugins' content (pitch, measured points, screenshots).
 
-Hosted on Cloudflare Pages: build command none, output directory `public`.
+Hosted on Cloudflare Workers (static assets): `wrangler.jsonc` serves `public/`; every push to main deploys.
 Text and code: AGPL-3.0, like the plugins. Audio examples: see `public/audio/CREDITS.md` (their own licences).

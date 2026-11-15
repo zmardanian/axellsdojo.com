@@ -229,6 +229,9 @@ def build():
     for r in PLUGINS:
         os.makedirs(f"{OUT}/{SLUG[r]}", exist_ok=True); open(f"{OUT}/{SLUG[r]}/index.html", "w").write(plugin_page(r))
     os.makedirs(f"{OUT}/dojo", exist_ok=True); open(f"{OUT}/dojo/index.html", "w").write(dojo_page())
+    open(f"{OUT}/404.html", "w").write(head("Not found - Axell's Dojo", "This page does not exist.") + '<main><section class="hero"><div class="hero-bg" aria-hidden="true">迷</div>'
+        '<p class="eyebrow">404</p><h1 class="script hero-title">Lost in the dojo</h1><p class="hero-tag">This page does not exist - but nine plugins do.</p>'
+        '<p><a class="btn btn-primary" href="/"><b>Back to the suite</b></a></p></section></main>' + foot())
     # favicon: the Dojo's seal; social card: the home hero's look
     T.wideseal(f"{OUT}/img/favicon.png", "道場", "dark", 64)
     og = Image.open(f"{HOME}/axell-signature-dojo/{C['axell-signature-dojo']['shot']}").convert("RGB"); og.thumbnail((1200, 1200))
