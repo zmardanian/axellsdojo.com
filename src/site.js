@@ -33,7 +33,14 @@
 // drift); one player at a time; the bar seeks. Loaded on the first press (no audio downloaded until then).
 (function () {
   let ctx = null, current = null;
-  function audioCtx() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); return ctx; }
+  function audioCtx() {
+    if (!ctx) {
+      // Safari (iOS 16.4+): play as media, so the ring/silent switch does not mute the examples
+      try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return ctx;
+  }
   function load(url) { return fetch(url).then(function (r) { return r.arrayBuffer(); }).then(function (b) { return new Promise(function (ok, no) { audioCtx().decodeAudioData(b, ok, no); }); }); }
   document.querySelectorAll(".ab").forEach(function (el) {
     const play = el.querySelector(".ab-play"), pos = el.querySelector(".ab-pos"), bar = el.querySelector(".ab-bar");

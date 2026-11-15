@@ -18,6 +18,9 @@ ACC = {r: T.P[r][2] for r in ORDER}            # the dark-theme accent: the site
 TAG = {r: T.P[r][4] for r in ORDER}
 SPEC = {r: T.P[r][5] for r in ORDER}
 e = html.escape
+import hashlib
+# a fingerprint per asset in its URL: a browser can never keep an outdated stylesheet or script after an update
+VER = {f: hashlib.sha256(open(f"{SITE}/src/{f}", "rb").read()).hexdigest()[:10] for f in ("style.css", "site.js")}
 
 def webp(src, dst, width=1600):
     os.makedirs(os.path.dirname(dst), exist_ok=True)
@@ -65,7 +68,7 @@ def head(title, desc, accent="#c9a25e", path="/"):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Jost:wght@400;500&family=Yuji+Syuku&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/style.css?v={VER['style.css']}">
 <style>:root{{--acc:{accent}}}</style>
 </head>
 <body>
@@ -85,7 +88,7 @@ def foot():
     <p>1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
   </div>
 </footer>
-<script src="/site.js" defer></script>
+<script src="/site.js?v={VER['site.js']}" defer></script>
 </body>
 </html>
 """
@@ -159,6 +162,7 @@ def home():
 
 
 AUDIO = {}
+SHORT = {"axell-penta-eq": "Penta EQ", "axell-duo-compressor": "Duo", "axell-gate": "Gate", "axell-dereverb": "De-Reverb", "axell-velvet": "Velvet", "axell-master": "Master", "axell-space": "Space", "axell-forbidden-seal": "Seal", "axell-76": "Axell 76"}
 def listen(r):
     items = AUDIO.get(SLUG[r], [])
     if not items: return ""
@@ -171,7 +175,7 @@ def listen(r):
   <p class="ab-note">{e(it['note'])}</p>
   <div class="ab-ctl">
     <button class="ab-play" aria-label="Play">&#9654;</button>
-    <div class="ab-switch" role="group" aria-label="Compare"><button class="on" data-side="a">Original</button><button data-side="b">{e(NAME[r])}</button></div>
+    <div class="ab-switch" role="group" aria-label="Compare"><button class="on" data-side="a">Original</button><button data-side="b">{e(SHORT[r])}</button></div>
   </div>
   <div class="ab-bar"><div class="ab-pos"></div></div>
   <p class="ab-meta">Preset <b>{e(it['preset'])}</b> &middot; {lvl}{sim}<br>Source: {e(it['source'])} &middot; <a href="/credits/">CC BY-SA 4.0</a></p>
