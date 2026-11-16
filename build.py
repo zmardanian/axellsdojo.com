@@ -20,7 +20,11 @@ SPEC = {r: T.P[r][5] for r in ORDER}
 e = html.escape
 import hashlib
 # a fingerprint per asset in its URL: a browser can never keep an outdated stylesheet or script after an update
-VER = {f: hashlib.sha256(open(f"{SITE}/src/{f}", "rb").read()).hexdigest()[:10] for f in ("style.css", "site.js")}
+CSS = open(f"{SITE}/src/fonts.css").read() + open(f"{SITE}/src/style.css").read()   # the site serves its own fonts (tools/fetch_fonts.py)
+VER = {"style.css": hashlib.sha256(CSS.encode()).hexdigest()[:10], "site.js": hashlib.sha256(open(f"{SITE}/src/site.js", "rb").read()).hexdigest()[:10]}
+import re
+FONT_URL = {n: u for u, n in re.findall(r"url\((/fonts/([a-z-]+?)-\d[^)]*)\)", CSS)}
+PRELOAD = "".join(f'<link rel="preload" href="{FONT_URL[n]}" as="font" type="font/woff2" crossorigin>\n' for n in ("great-vibes", "jost", "cormorant-garamond"))
 
 def webp(src, dst, width=1600):
     os.makedirs(os.path.dirname(dst), exist_ok=True)
@@ -33,7 +37,17 @@ def img(repo, path, width=1600):
     """copy a repository image into the site as WebP; returns (url, w, h)"""
     name = os.path.splitext(os.path.basename(path))[0] + ".webp"
     w, h = webp(f"{HOME}/{repo}/{path}", f"{OUT}/img/{SLUG[repo]}/{name}", width)
+    if w > 1000: webp(f"{HOME}/{repo}/{path}", f"{OUT}/img/{SLUG[repo]}/{name[:-5]}-800.webp", 800)
     return f"/img/{SLUG[repo]}/{name}", w, h
+
+SIZES = dict(card="(max-width: 860px) 100vw, 400px", gallery="(max-width: 860px) 100vw, 600px", shot="(max-width: 860px) 100vw, 660px",
+             hero="(max-width: 1100px) 100vw, 1100px")
+def tag(u, w, h, alt, kind):
+    """the <img>: phones get the 800 px file, the first image of a page loads first, the rest when scrolled to"""
+    small = u[:-5] + "-800.webp"
+    ss = f' srcset="{small} 800w, {u} {w}w" sizes="{SIZES[kind]}"' if os.path.exists(OUT + small) else ""
+    load = ' fetchpriority="high"' if kind == "hero" else ' loading="lazy" decoding="async"'
+    return f'<img src="{u}"{ss} width="{w}" height="{h}" alt="{e(alt)}"{load}>'
 
 def seal(r, cls="seal"):
     k = KANJI[r]
@@ -49,7 +63,18 @@ STATS = [  # big numbers on the home page: every one from the plugin's own measu
     ("axell-dereverb", "4.13", "speech quality (ViSQOL) from 3.96 - the research standard reaches 3.99"),
 ]
 
-def head(title, desc, accent="#c9a25e", path="/", og="og.jpg"):
+def ldjson(d):
+    """structured data for search engines"""
+    import json
+    return "" if not d else '\n<script type="application/ld+json">' + json.dumps(d, ensure_ascii=False).replace("</", "<\\/") + "</script>"
+
+AUTHOR = {"@type": "Person", "name": "Axell Yobag", "url": "https://www.axellsdojo.com/contact/"}
+def app_ld(name, desc, path, og, os_="Windows 10, Windows 11, Linux"):
+    return {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": name, "description": desc, "url": f"https://www.axellsdojo.com{path}",
+            "image": f"https://www.axellsdojo.com/img/{og}", "applicationCategory": "MultimediaApplication", "applicationSubCategory": "Audio plugin (VST3)",
+            "operatingSystem": os_, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "author": AUTHOR}
+
+def head(title, desc, accent="#c9a25e", path="/", og="og.jpg", ld=None):
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -65,11 +90,8 @@ def head(title, desc, accent="#c9a25e", path="/", og="og.jpg"):
 <meta property="og:image" content="https://www.axellsdojo.com/img/{og}">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://www.axellsdojo.com{path}">
 <link rel="icon" href="/img/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Jost:wght@400;500&family=Yuji+Syuku&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css?v={VER['style.css']}">
-<style>:root{{--acc:{accent}}}</style>
+{PRELOAD}<link rel="stylesheet" href="/style.css?v={VER['style.css']}">
+<style>:root{{--acc:{accent}}}</style>{ldjson(ld)}
 </head>
 <body>
 <header class="nav">
@@ -159,7 +181,7 @@ def home():
     for r in PLUGINS:
         u, w, h = img(r, C[r]["shot"], 1200)
         cards.append(f"""<a class="card reveal" href="/{SLUG[r]}/" style="--acc:{ACC[r]}">
-  <div class="card-shot"><img src="{u}" width="{w}" height="{h}" alt="{e(NAME[r])}" loading="lazy"></div>
+  <div class="card-shot">{tag(u, w, h, NAME[r], "card")}</div>
   <div class="card-body">{seal(r)}<h3 class="script">{e(NAME[r])}</h3><p class="card-tag">{e(TAG[r])}</p>
   <p class="card-line">{e(SUITE_LINE[r])}</p></div></a>""")
     stats = "".join(f"""<a class="stat reveal" href="/{SLUG[r]}/" style="--acc:{ACC[r]}"><span class="stat-n">{n}</span>
@@ -197,7 +219,7 @@ def home():
   <p class="lede">Record or drop one dry take. The Dojo measures your voice and your room, tunes a complete vocal chain by rendering your take through the plugins, and saves it as presets inside the plugins &mdash; so your signature sound opens in whatever DAW you use, on Windows or Linux.</p>
   <ul class="ticks"><li>Installs, updates and restores every plugin &mdash; checksum-verified, for every DAW</li><li>Voice Profile: loudness, noise, pitch, esses, room and low end &mdash; tuned presets for Gate, Penta EQ, Duo Compressor and Velvet</li><li>Streaming Preview: hear your master as Spotify, Apple Music and YouTube will play it</li><li>REAPER extras: one-click sessions and twelve ready-made FX chains</li></ul>
   <a class="more" href="/dojo/">Inside the Dojo &rarr;</a></div>
-  <div class="shot"><img src="{d}" width="{dw}" height="{dh}" alt="Axell Signature Dojo - the Plugins page" loading="lazy"></div>
+  <div class="shot">{tag(d, dw, dh, "Axell Signature Dojo - the Plugins page", "shot")}</div>
 </section>
 
 <section id="get" class="section windows reveal">
@@ -211,7 +233,7 @@ def home():
 </section>
 </main>
 """
-    return head("Axell's Dojo - nine audio plugins forged for the voice", "Free, open-source VST3 plugins for Windows and Linux - EQ, compression, gating, de-reverb, de-essing, saturation, reverb and mastering, each measured against the real thing.") + body + foot()
+    return head("Axell's Dojo - nine audio plugins forged for the voice", "Free, open-source VST3 plugins for Windows and Linux - EQ, compression, gating, de-reverb, de-essing, saturation, reverb and mastering, each measured against the real thing.", ld={"@context": "https://schema.org", "@type": "WebSite", "name": "Axell's Dojo", "url": "https://www.axellsdojo.com/", "author": AUTHOR}) + body + foot()
 
 
 AUDIO = {}
@@ -247,7 +269,7 @@ def plugin_page(r):
     for p, t in c.get("gallery", []):
         if "workstation" in p: continue
         gu, gw, gh = img(r, p, 1200)
-        gal.append(f'<figure class="reveal"><img src="{gu}" width="{gw}" height="{gh}" alt="{e(t)}" loading="lazy"><figcaption>{e(t)}</figcaption></figure>')
+        gal.append(f'<figure class="reveal">{tag(gu, gw, gh, t, "gallery")}<figcaption>{e(t)}</figcaption></figure>')
     others = "".join(f'<a href="/{SLUG[o]}/" style="--acc:{ACC[o]}">{seal(o)}<span>{e(NAME[o])}</span></a>' for o in PLUGINS if o != r)
     gallery = f'<section class="section"><p class="label">02 &nbsp; A CLOSER LOOK</p><h2>Every screen, every mode.</h2><div class="gallery">{"".join(gal)}</div></section>' if gal else ""
     body = f"""
@@ -259,7 +281,7 @@ def plugin_page(r):
   <p class="hero-tag">{e(TAG[r])}</p>
   <p class="spec">{e(SPEC[r])}</p>
   {dl_buttons(r)}
-  <div class="hero-shot reveal"><img src="{u}" width="{w}" height="{h}" alt="{e(c['alt'])}"></div>
+  <div class="hero-shot rise">{tag(u, w, h, c["alt"], "hero")}</div>
   <p class="pitch"><b>{c['pitch'][0]}</b> {c['pitch'][1]}</p>
 </section>
 <section class="section">
@@ -278,7 +300,7 @@ def plugin_page(r):
 <section class="section family"><p class="label">THE SUITE</p><div class="family-row">{others}</div></section>
 </main>
 """
-    return head(f"{NAME[r]} - {TAG[r]}", f"{NAME[r]}: {c['pitch'][0]} Free VST3 for Windows and Linux.", ACC[r], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg") + body + foot()
+    return head(f"{NAME[r]} - {TAG[r]}", f"{NAME[r]}: {c['pitch'][0]} Free VST3 for Windows and Linux.", ACC[r], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg", ld=app_ld(NAME[r], c['pitch'][0], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg")) + body + foot()
 
 def dojo_page():
     r = "axell-signature-dojo"; c = C[r]; u, w, h = img(r, c["shot"], 1800)
@@ -286,7 +308,7 @@ def dojo_page():
     gal = []
     for p, t in c["gallery"]:
         if "workstation" in p: continue
-        gu, gw, gh = img(r, p, 1400); gal.append(f'<figure class="reveal"><img src="{gu}" width="{gw}" height="{gh}" alt="{e(t)}" loading="lazy"><figcaption>{e(t)}</figcaption></figure>')
+        gu, gw, gh = img(r, p, 1400); gal.append(f'<figure class="reveal">{tag(gu, gw, gh, t, "gallery")}<figcaption>{e(t)}</figcaption></figure>')
     body = f"""
 <main style="--acc:{ACC[r]}">
 <section class="hero hero-plugin">
@@ -297,7 +319,7 @@ def dojo_page():
   <p class="spec">{e(SPEC[r])}</p>
   {dl_buttons(r, "Get the suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo installs the plugins")}
   <p class="hosts">Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour</p>
-  <div class="hero-shot reveal"><img src="{u}" width="{w}" height="{h}" alt="{e(c['alt'])}"></div>
+  <div class="hero-shot rise">{tag(u, w, h, c["alt"], "hero")}</div>
   <p class="pitch"><b>{c['pitch'][0]}</b> {c['pitch'][1]}</p>
 </section>
 <section class="section"><p class="label">01 &nbsp; WHAT IT DOES</p><h2>Everything around the plugins.</h2><div class="whys">{why}</div></section>
@@ -318,7 +340,7 @@ released under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Cre
 Axell plugins with their factory presets, the processed version matched to the original's loudness (except the mastering examples), short
 fades. Where marked, a small room (De-Reverb) or headphone bleed of the song's instrumental (Gate) was simulated before processing.
 The processed excerpts are shared under the same licence, CC BY-SA 4.0. No endorsement by the artists or the OnAir Music project is implied.</p>
-<p>Typefaces: Great Vibes, Cormorant Garamond, Jost and Yuji Syuku (SIL Open Font License), served by Google Fonts.</p>
+<p>Typefaces: Great Vibes, Cormorant Garamond, Jost and Yuji Syuku (<a href="/fonts/OFL.txt">SIL Open Font License</a>), served from this site - no request goes to a font service.</p>
 </section></main>"""
     return head("Credits - Axell's Dojo", "The music used in the before/after examples and its licence.", path="/credits/") + body + foot()
 
@@ -356,7 +378,8 @@ def contact_page():
 def build():
     if os.path.isdir(OUT): shutil.rmtree(OUT)
     os.makedirs(f"{OUT}/img", exist_ok=True)
-    for f in ("style.css", "site.js", "_headers", "_redirects"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
+    for f in ("site.js", "_headers", "_redirects"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
+    open(f"{OUT}/style.css", "w").write(CSS); shutil.copytree(f"{SITE}/src/fonts", f"{OUT}/fonts", ignore=shutil.ignore_patterns("KANJI.txt"))
     import json
     AUDIO.update(json.load(open(f"{SITE}/src/audio/audio.json")))
     shutil.copytree(f"{SITE}/src/audio", f"{OUT}/audio", ignore=shutil.ignore_patterns("audio.json"))
@@ -378,6 +401,12 @@ def build():
     urls = ["/"] + [f"/{SLUG[r]}/" for r in PLUGINS] + ["/dojo/", "/contact/"]
     open(f"{OUT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>https://www.axellsdojo.com{u}</loc></url>\n" for u in urls) + "</urlset>\n")
+    have = open(f"{SITE}/src/fonts/KANJI.txt").read()
+    for d_, _, fs in os.walk(OUT):
+        for f in fs:
+            if f.endswith(".html"):
+                miss = set(re.findall(r"[\u3000-\u9fff]", open(f"{d_}/{f}").read())) - set(have)
+                if miss: raise SystemExit(f"{f}: kanji {miss} not in the brush font - run tools/fetch_fonts.py")
     print("built", OUT, sum(len(fs) for _, _, fs in os.walk(OUT)), "files")
 
 if __name__ == "__main__": build()

@@ -41,7 +41,10 @@
     }
     return ctx;
   }
-  function load(url) { return fetch(url).then(function (r) { return r.arrayBuffer(); }).then(function (b) { return new Promise(function (ok, no) { audioCtx().decodeAudioData(b, ok, no); }); }); }
+  // the files start downloading when the pointer or a finger reaches a player, so Play answers sooner
+  const raw = {};
+  function get(url) { return raw[url] || (raw[url] = fetch(url).then(function (r) { if (!r.ok) throw 0; return r.arrayBuffer(); }).catch(function (x) { delete raw[url]; throw x; })); }
+  function load(url) { return get(url).then(function (b) { delete raw[url]; return new Promise(function (ok, no) { audioCtx().decodeAudioData(b, ok, no); }); }); }
   document.querySelectorAll(".ab").forEach(function (el) {
     const play = el.querySelector(".ab-play"), pos = el.querySelector(".ab-pos"), bar = el.querySelector(".ab-bar");
     const sw = el.querySelectorAll(".ab-switch button");
@@ -66,6 +69,9 @@
       play.innerHTML = "&#10074;&#10074;"; play.setAttribute("aria-label", "Pause"); el.classList.add("playing"); draw();
     }
     const api = { stop: stop };
+    function warm() { if (!bufs && !loading && !(navigator.connection && navigator.connection.saveData)) { get(el.dataset.a).catch(function () {}); get(el.dataset.b).catch(function () {}); } }
+    el.addEventListener("pointerenter", warm, { once: true }); el.addEventListener("touchstart", warm, { once: true, passive: true });
+    el.addEventListener("focusin", warm, { once: true });
     play.addEventListener("click", function () {
       if (srcs) { stop(true); return; }
       if (bufs) { start(off >= dur() - 0.05 ? 0 : off); return; }
