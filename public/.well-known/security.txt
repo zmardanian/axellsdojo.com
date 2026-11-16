@@ -1,0 +1,4 @@
+Contact: mailto:contact@axellsdojo.com
+Expires: 2027-11-11T00:00:00Z
+Preferred-Languages: en, de
+Canonical: https://www.axellsdojo.com/.well-known/security.txt

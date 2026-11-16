@@ -1,0 +1,182 @@
+{
+ "penta-eq": {
+  "repo": "axell-penta-eq",
+  "name": "Axell Penta EQ",
+  "suffix": {
+   "windows": "windows-x64.tar.gz",
+   "linux": "linux-x86_64.tar.gz"
+  },
+  "windows": {
+   "url": "https://github.com/zmardanian/axell-penta-eq/releases/download/v3.0.1/AxellPentaEQ-3.0.1-windows-x64.tar.gz",
+   "file": "AxellPentaEQ-3.0.1-windows-x64.tar.gz",
+   "version": "3.0.1"
+  },
+  "linux": {
+   "url": "https://github.com/zmardanian/axell-penta-eq/releases/download/v3.0.1/AxellPentaEQ-3.0.1-linux-x86_64.tar.gz",
+   "file": "AxellPentaEQ-3.0.1-linux-x86_64.tar.gz",
+   "version": "3.0.1"
+  }
+ },
+ "duo-compressor": {
+  "repo": "axell-duo-compressor",
+  "name": "Axell Duo Compressor",
+  "suffix": {
+   "windows": "windows-x64.tar.gz",
+   "linux": "linux-x86_64.tar.gz"
+  },
+  "windows": {
+   "url": "https://github.com/zmardanian/axell-duo-compressor/releases/download/v4.0.3/AxellDuoCompressor-4.0.3-windows-x64.tar.gz",
+   "file": "AxellDuoCompressor-4.0.3-windows-x64.tar.gz",
+   "version": "4.0.3"
+  },
+  "linux": {
+   "url": "https://github.com/zmardanian/axell-duo-compressor/releases/download/v4.0.3/AxellDuoCompressor-4.0.3-linux-x86_64.tar.gz",
+   "file": "AxellDuoCompressor-4.0.3-linux-x86_64.tar.gz",
+   "version": "4.0.3"
+  }
+ },
+ "gate": {
+  "repo": "axell-gate",
+  "name": "Axell Gate",
+  "suffix": {
+   "windows": "windows-x64.tar.gz",
+   "linux": "linux-x86_64.tar.gz"
+  },
+  "windows": {
+   "url": "https://github.com/zmardanian/axell-gate/releases/download/v4.0.1/AxellGate-4.0.1-windows-x64.tar.gz",
+   "file": "AxellGate-4.0.1-windows-x64.tar.gz",
+   "version": "4.0.1"
+  },
+  "linux": {
+   "url": "https://github.com/zmardanian/axell-gate/releases/download/v4.0.2/AxellGate-4.0.2-linux-x86_64.tar.gz",
+   "file": "AxellGate-4.0.2-linux-x86_64.tar.gz",
+   "version": "4.0.2"
+  }
+ },
+ "dereverb": {
+  "repo": "axell-dereverb",
+  "name": "Axell De-Reverb",
+  "suffix": {
+   "windows": "windows-x64.tar.gz",
+   "linux": "linux-x86_64.tar.gz"
+  },
+  "windows": {
+   "url": "https://github.com/zmardanian/axell-dereverb/releases/download/v4.0.1/AxellDeReverb-4.0.1-windows-x64.tar.gz",
+   "file": "AxellDeReverb-4.0.1-windows-x64.tar.gz",
+   "version": "4.0.1"
+  },
+  "linux": {
+   "url": "https://github.com/zmardanian/axell-dereverb/releases/download/v4.0.1/AxellDeReverb-4.0.1-linux-x86_64.tar.gz",
+   "file": "AxellDeReverb-4.0.1-linux-x86_64.tar.gz",
+   "version": "4.0.1"
+  }
+ },
+ "velvet": {
+  "repo": "axell-velvet",
+  "name": "Axell Velvet",
+  "suffix": {
+   "windows": "windows-x64.tar.gz",
+   "linux": "linux-x86_64.tar.gz"
+  },
+  "windows": {
+   "url": "https://github.com/zmardanian/axell-velvet/releases/download/v3.0.4/AxellVelvet-3.0.4-windows-x64.tar.gz",
+   "file": "AxellVelvet-3.0.4-windows-x64.tar.gz",
+   "version": "3.0.4"
+  },
+  "linux": {
+   "url": "https://github.com/zmardanian/axell-velvet/releases/download/v3.0.4/AxellVelvet-3.0.4-linux-x86_64.tar.gz",
+   "file": "AxellVelvet-3.0.4-linux-x86_64.tar.gz",
+   "version": "3.0.4"
+  }
+ },
+ "master": {
+  "repo": "axell-master",
+  "name": "Axell Master",
+  "suffix": {
+   "windows": "windows-x64.tar.gz",
+   "linux": "linux-x86_64.tar.gz"
+  },
+  "windows": {
+   "url": "https://github.com/zmardanian/axell-master/releases/download/v4.0.3/AxellMaster-4.0.3-windows-x64.tar.gz",
+   "file": "AxellMaster-4.0.3-windows-x64.tar.gz",
+   "version": "4.0.3"
+  },
+  "linux": {
+   "url": "https://github.com/zmardanian/axell-master/releases/download/v4.0.3/AxellMaster-4.0.3-linux-x86_64.tar.gz",
+   "file": "AxellMaster-4.0.3-linux-x86_64.tar.gz",
+   "version": "4.0.3"
+  }
+ },
+ "space": {
+  "repo": "axell-space",
+  "name": "Axell Space",
+  "suffix": {
+   "windows": "windows-x64.tar.gz",
+   "linux": "linux-x86_64.tar.gz"
+  },
+  "windows": {
+   "url": "https://github.com/zmardanian/axell-space/releases/download/v4.0.1/AxellSpace-4.0.1-windows-x64.tar.gz",
+   "file": "AxellSpace-4.0.1-windows-x64.tar.gz",
+   "version": "4.0.1"
+  },
+  "linux": {
+   "url": "https://github.com/zmardanian/axell-space/releases/download/v4.0.1/AxellSpace-4.0.1-linux-x86_64.tar.gz",
+   "file": "AxellSpace-4.0.1-linux-x86_64.tar.gz",
+   "version": "4.0.1"
+  }
+ },
+ "forbidden-seal": {
+  "repo": "axell-forbidden-seal",
+  "name": "Axell Forbidden Seal",
+  "suffix": {
+   "windows": "windows-x64.tar.gz",
+   "linux": "linux-x86_64.tar.gz"
+  },
+  "windows": {
+   "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/download/v4.0.2/AxellForbiddenSeal-4.0.2-windows-x64.tar.gz",
+   "file": "AxellForbiddenSeal-4.0.2-windows-x64.tar.gz",
+   "version": "4.0.2"
+  },
+  "linux": {
+   "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/download/v4.0.2/AxellForbiddenSeal-4.0.2-linux-x86_64.tar.gz",
+   "file": "AxellForbiddenSeal-4.0.2-linux-x86_64.tar.gz",
+   "version": "4.0.2"
+  }
+ },
+ "76": {
+  "repo": "axell-76",
+  "name": "Axell 76",
+  "suffix": {
+   "windows": "windows-x64.tar.gz",
+   "linux": "linux-x86_64.tar.gz"
+  },
+  "windows": {
+   "url": "https://github.com/zmardanian/axell-76/releases/download/v3.2.0/Axell76-3.2.0-windows-x64.tar.gz",
+   "file": "Axell76-3.2.0-windows-x64.tar.gz",
+   "version": "3.2.0"
+  },
+  "linux": {
+   "url": "https://github.com/zmardanian/axell-76/releases/download/v3.2.0/Axell76-3.2.0-linux-x86_64.tar.gz",
+   "file": "Axell76-3.2.0-linux-x86_64.tar.gz",
+   "version": "3.2.0"
+  }
+ },
+ "dojo": {
+  "repo": "axell-signature-dojo",
+  "name": "Signature Suite + Dojo",
+  "suffix": {
+   "windows": "windows-x64-setup.exe",
+   "linux": "linux-x86_64.tar.gz"
+  },
+  "windows": {
+   "url": "https://github.com/zmardanian/axell-signature-dojo/releases/download/v3.3.2/AxellSignatureSuite-3.3.2-windows-x64-setup.exe",
+   "file": "AxellSignatureSuite-3.3.2-windows-x64-setup.exe",
+   "version": "3.3.2"
+  },
+  "linux": {
+   "url": "https://github.com/zmardanian/axell-signature-dojo/releases/download/v3.3.2/AxellSignatureDojo-3.3.2-linux-x86_64.tar.gz",
+   "file": "AxellSignatureDojo-3.3.2-linux-x86_64.tar.gz",
+   "version": "3.3.2"
+  }
+ }
+}

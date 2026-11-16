@@ -116,12 +116,28 @@ def foot():
 </html>
 """
 
+DLSLUG = lambda repo: "dojo" if repo == "axell-signature-dojo" else SLUG[repo]
+def downloads_manifest():
+    """src/downloads.json for the Worker: per plugin the release files known now (its fallback when GitHub's API does not answer)"""
+    import json, subprocess
+    out = {}
+    for r in ORDER:
+        rels = json.loads(subprocess.run(["gh", "api", f"repos/zmardanian/{r}/releases?per_page=6"], capture_output=True, text=True, check=True).stdout)
+        suf = {"windows": "windows-x64-setup.exe" if r == "axell-signature-dojo" else "windows-x64.tar.gz", "linux": "linux-x86_64.tar.gz"}
+        en = {"repo": r, "name": NAME[r] if r != "axell-signature-dojo" else "Signature Suite + Dojo", "suffix": suf}
+        for k, sfx in suf.items():
+            en[k] = next(({"url": a["browser_download_url"], "file": a["name"], "version": rel["tag_name"].lstrip("v")}
+                          for rel in rels if not rel["draft"] and not rel["prerelease"] for a in rel["assets"] if a["name"].endswith(sfx)), None)
+            if not en[k]: raise SystemExit(f"{r}: no {k} release file")
+        out[DLSLUG(r)] = en
+    json.dump(out, open(f"{SITE}/src/downloads.json", "w"), indent=1)
+
 def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 11 &middot; 64-bit &middot; VST3", sub_l="x86_64 &middot; one-line install"):
     rel = f"{GH}/{repo}/releases/latest"
     pat_w = "setup.exe" if repo == "axell-signature-dojo" else "windows-x64.tar.gz"
     return f"""<div class="dl" data-repo="{repo}">
-  <a class="btn btn-primary" href="{rel}" data-asset="{pat_w}"><b>{windows_label}</b><small>{sub_w}</small></a>
-  <a class="btn btn-ghost" href="{rel}" data-asset="linux-x86_64.tar.gz"><b>Download for Linux</b><small>{sub_l}</small></a>
+  <a class="btn btn-primary" href="/get/{DLSLUG(repo)}/windows" rel="nofollow"><b>{windows_label}</b><small>{sub_w}</small></a>
+  <a class="btn btn-ghost" href="/get/{DLSLUG(repo)}/linux" rel="nofollow"><b>Download for Linux</b><small>{sub_l}</small></a>
   <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>
 </div>"""
 
@@ -376,6 +392,7 @@ def contact_page():
     return head("About & contact - Axell Yobag, Axell's Dojo", "Axell Yobag - rap artist and producer, maker of the free Axell Signature audio plugins for Windows and Linux. Contact: contact@axellsdojo.com.", "#d3ad66", "/contact/") + body + foot()
 
 def build():
+    downloads_manifest()
     if os.path.isdir(OUT): shutil.rmtree(OUT)
     os.makedirs(f"{OUT}/img", exist_ok=True)
     for f in ("site.js", "_headers", "_redirects"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
@@ -397,7 +414,11 @@ def build():
     # favicon: the Dojo's seal; social card: the home hero's look
     T.wideseal(f"{OUT}/img/favicon.png", "道場", "dark", 64)
     og_card("", "Axell's Dojo", "Nine plugins forged for the voice. Every claim, measured.", f"{HOME}/axell-gate/{C['axell-gate']['shot']}", f"{OUT}/img/og.jpg")
-    open(f"{OUT}/robots.txt", "w").write("User-agent: *\nAllow: /\nSitemap: https://www.axellsdojo.com/sitemap.xml\n")
+    open(f"{OUT}/robots.txt", "w").write("User-agent: *\nAllow: /\nDisallow: /get/\nSitemap: https://www.axellsdojo.com/sitemap.xml\n")
+    os.makedirs(f"{OUT}/.well-known", exist_ok=True)
+    import datetime
+    open(f"{OUT}/.well-known/security.txt", "w").write("Contact: mailto:contact@axellsdojo.com\nExpires: " + (datetime.date.today() + datetime.timedelta(days=360)).isoformat()
+        + "T00:00:00Z\nPreferred-Languages: en, de\nCanonical: https://www.axellsdojo.com/.well-known/security.txt\n")
     urls = ["/"] + [f"/{SLUG[r]}/" for r in PLUGINS] + ["/dojo/", "/contact/"]
     open(f"{OUT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>https://www.axellsdojo.com{u}</loc></url>\n" for u in urls) + "</urlset>\n")

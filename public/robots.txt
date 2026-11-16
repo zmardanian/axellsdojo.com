@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /get/
 Sitemap: https://www.axellsdojo.com/sitemap.xml

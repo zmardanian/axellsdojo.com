@@ -1,5 +1,5 @@
-// Download buttons point at the release page; when GitHub's public API answers, they are upgraded to the newest
-// release's files (and the version is shown). Scroll reveals for elements marked .reveal.
+// Download buttons go through /get/<plugin>/<system> (the site's Worker redirects to the newest release file); when
+// GitHub's public API answers, the version is shown. Scroll reveals for elements marked .reveal.
 (function () {
   const cache = {};
   function latest(repo) {
@@ -13,10 +13,6 @@
   document.querySelectorAll(".dl[data-repo]").forEach(function (box) {
     latest(box.dataset.repo).then(function (rel) {
       if (!rel || !rel.assets) return;
-      box.querySelectorAll("[data-asset]").forEach(function (a) {
-        const hit = rel.assets.find(function (x) { return x.name.indexOf(a.dataset.asset) !== -1; });
-        if (hit) a.href = hit.browser_download_url;
-      });
       const v = box.querySelector("[data-version]");
       if (v && rel.tag_name) v.textContent = "Version " + rel.tag_name.replace(/^v/, "");
     });
