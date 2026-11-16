@@ -55,7 +55,10 @@ async function note(env, row) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url), m = url.pathname.match(/^\/get\/([a-z0-9-]+)\/(windows|linux)\/?$/);
-    if (!m || !BAKED[m[1]] || !BAKED[m[1]].suffix[m[2]]) return env.ASSETS.fetch(new Request(new URL("/404.html", url), request));
+    if (!m || !BAKED[m[1]] || !BAKED[m[1]].suffix[m[2]]) {
+      const nf = await env.ASSETS.fetch(new URL("/404", url));
+      return new Response(nf.body, { status: 404, headers: { "Content-Type": "text/html; charset=utf-8" } });
+    }
     const entry = BAKED[m[1]], system = m[2], page = "https://github.com/zmardanian/" + entry.repo + "/releases/latest";
     if (request.method !== "GET") return Response.redirect(page, 302);
     const hit = await newest(entry, system, ctx), ua = request.headers.get("User-Agent") || "", cf = request.cf || {};
