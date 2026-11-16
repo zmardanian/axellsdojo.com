@@ -43,9 +43,9 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-gate/releases/download/v4.0.1/AxellGate-4.0.1-windows-x64.tar.gz",
-   "file": "AxellGate-4.0.1-windows-x64.tar.gz",
-   "version": "4.0.1"
+   "url": "https://github.com/zmardanian/axell-gate/releases/download/v4.0.2/AxellGate-4.0.2-windows-x64.tar.gz",
+   "file": "AxellGate-4.0.2-windows-x64.tar.gz",
+   "version": "4.0.2"
   },
   "linux": {
    "url": "https://github.com/zmardanian/axell-gate/releases/download/v4.0.2/AxellGate-4.0.2-linux-x86_64.tar.gz",
