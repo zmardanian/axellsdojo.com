@@ -55,7 +55,7 @@ def seal(r, cls="seal"):
     return f'<span class="{cls}{" seal-wide" if len(k) > 1 else ""}" aria-hidden="true">{e(k)}</span>'
 
 STATS = [  # big numbers on the home page: every one from the plugin's own measured section
-    ("axell-76", "2&times;", "closer to a real 1176LN than Universal Audio's own UADx 1176"),
+    ("axell-76", "0.44 dB", "from a real 1176LN on notes it never trained on - level with Universal Audio's own UADx 1176"),
     ("axell-velvet", "30&ndash;80&times;", "gentler on your vowels than a leading sibilance-aware de-esser"),
     ("axell-master", "0", "clipped samples after Opus, Vorbis, AAC and MP3 - the codecs streaming services use"),
     ("axell-gate", "7.7 dB", "less damage to the voice than a classic gate tuned perfectly for every take"),
