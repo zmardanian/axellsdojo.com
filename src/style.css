@@ -248,3 +248,16 @@ h2::after { content: ""; display: block; width: 90px; height: 2px; background: v
 html { scroll-padding-top: 84px; }
 /* links inside running text are underlined, not told apart by colour alone (WCAG 1.4.1) */
 main p a:not(.btn), footer p a, .note a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+/* contact form */
+.contact-form { max-width: 720px; margin: 48px auto 0; display: grid; gap: 16px; text-align: left; }
+.contact-form h3 { margin: 0; }
+.cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.contact-form label { display: grid; gap: 6px; color: var(--soft); font-size: 15px; }
+.contact-form small { color: var(--dim); }
+.contact-form input, .contact-form textarea { width: 100%; box-sizing: border-box; background: var(--bg2); color: var(--ink); border: 1px solid var(--line);
+  border-radius: 8px; padding: 12px 14px; font: inherit; }
+.contact-form input:focus, .contact-form textarea:focus { border-color: var(--acc); outline: none; box-shadow: 0 0 0 2px color-mix(in srgb, var(--acc) 35%, transparent); }
+.contact-form .btn { justify-self: start; border: 0; cursor: pointer; }
+.cf-note { color: var(--dim); font-size: 14px; margin: 0; }
+.cf-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+@media (max-width: 640px) { .cf-row { grid-template-columns: 1fr; } }

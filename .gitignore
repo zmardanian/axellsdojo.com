@@ -3,3 +3,4 @@ __pycache__/
 .preview/
 .wrangler/
 node_modules/
+.dev.vars

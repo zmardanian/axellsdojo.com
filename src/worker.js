@@ -5,6 +5,7 @@
 // bot: 0 = a person, 1 = a bot by its User-Agent, 2 = from a data centre, 3 = both systems in the same second (a link
 // checker), 4 = the owner's own device (opened /get/not-me once). Past 10 a minute from one address it only redirects.
 import BAKED from "./downloads.json";
+import { EmailMessage } from "cloudflare:email";
 
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS downloads (id INTEGER PRIMARY KEY, time TEXT NOT NULL, plugin TEXT NOT NULL, system TEXT NOT NULL,
@@ -102,9 +103,67 @@ text-decoration:none;box-shadow:0 10px 40px rgba(201,162,94,.35);transition:tran
 <p class="h"><a href="/">Back to the Dojo</a> &nbsp;&middot;&nbsp; <a href="https://github.com/zmardanian">GitHub</a></p></main></body></html>`;
 }
 
+// The contact form (/contact/#write): one email to the owner through Cloudflare's email service. The site keeps no copy -
+// only the time of each sent message (contact_sends), to cap mass sending, deleted after 30 days (privacy policy).
+const CAP_PER_DAY = 40;
+function page(title, text, status = 200) {
+  return new Response(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>${esc(title)} - Axell's Dojo</title><link rel="icon" href="/img/favicon.png"><style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0d12;color:#efe6d6;font:18px/1.6 system-ui,sans-serif;padding:24px 16px;text-align:center}
+h1{font-weight:400;color:#c9a25e}p{color:#a99d8d;max-width:520px;margin:8px auto}a{color:#c9a25e}</style></head><body><main>
+<h1>${esc(title)}</h1><p>${text}</p><p style="margin-top:24px"><a href="/contact/">Back</a> &middot; <a href="/">Axell's Dojo</a></p></main></body></html>`,
+    { status, headers: { ...SEC, "Content-Type": "text/html; charset=utf-8", "Content-Security-Policy": CSP } });
+}
+function b64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+async function contact(request, env) {
+  if (request.method !== "POST") return Response.redirect(new URL("/contact/#write", request.url).toString(), 303);
+  const ip = request.headers.get("CF-Connecting-IP") || "";
+  if (env.LIMIT && !(await env.LIMIT.limit({ key: "contact:" + ip })).success)
+    return page("Slow down", "Too many messages in a minute. Please wait a little, or write to contact@axellsdojo.com.", 429);
+  let f;
+  try { f = await request.formData(); } catch (e) { return page("Not sent", "The form could not be read. Please try again.", 400); }
+  const one = (k, max) => String(f.get(k) || "").replace(/[\r\n]+/g, " ").trim().slice(0, max);   // header-safe, one line
+  const name = one("name", 100), email = one("email", 254), message = String(f.get("message") || "").trim();
+  if (one("website", 200)) return page("Thank you", "Your message is on its way.");   // the hidden trap field: a bot, quietly dropped
+  if (!/^[^\s@<>",;]+@[^\s@<>",;]+\.[^\s@<>",;]{2,}$/.test(email))
+    return page("Not sent", "That email address does not look right - I need it to answer you. Please go back and check it.", 400);
+  if (message.length < 10 || message.length > 5000)
+    return page("Not sent", "The message should be between 10 and 5000 characters. Please go back and adjust it.", 400);
+  if (!env.MAIL || !env.CONTACT_TO) return page("Not sent", "The form is not available right now. Please write to <a href=\"mailto:contact@axellsdojo.com\">contact@axellsdojo.com</a>.", 503);
+  if (env.DB) {
+    try {
+      await env.DB.prepare("CREATE TABLE IF NOT EXISTS contact_sends (time TEXT NOT NULL)").run();
+      await env.DB.prepare("DELETE FROM contact_sends WHERE time < datetime('now', '-30 days')").run();
+      const n = await env.DB.prepare("SELECT count(*) AS n FROM contact_sends WHERE time >= datetime('now', '-1 day')").first("n");
+      if (n >= CAP_PER_DAY) return page("Not sent", "The form has had too many messages today. Please write to <a href=\"mailto:contact@axellsdojo.com\">contact@axellsdojo.com</a>.", 429);
+    } catch (e) { console.log("contact cap not checked:", e.message); }
+  }
+  const from = "website@axellsdojo.com", subject = "Contact form: " + (name || email);
+  const raw = [
+    `From: "axellsdojo.com" <${from}>`, `To: <${env.CONTACT_TO}>`, `Reply-To: ${name ? `"=?UTF-8?B?${b64(name)}?=" ` : ""}<${email}>`,
+    `Subject: =?UTF-8?B?${b64(subject)}?=`, `Date: ${new Date().toUTCString()}`, `Message-ID: <${crypto.randomUUID()}@axellsdojo.com>`,
+    "MIME-Version: 1.0", "Content-Type: text/plain; charset=utf-8", "Content-Transfer-Encoding: base64", "",
+    b64(`From: ${name || "(no name)"} <${email}>\n\n${message}\n`).replace(/.{76}/g, "$&\r\n"),
+  ].join("\r\n");
+  try {
+    await env.MAIL.send(new EmailMessage(from, env.CONTACT_TO, raw));
+  } catch (e) {
+    console.log("contact mail failed:", e.message);
+    return page("Not sent", "Something went wrong on my side. Please write to <a href=\"mailto:contact@axellsdojo.com\">contact@axellsdojo.com</a>.", 502);
+  }
+  if (env.DB) { try { await env.DB.prepare("INSERT INTO contact_sends (time) VALUES (datetime('now'))").run(); } catch (e) {} }
+  return page("Thank you", `Your message is on its way. I'll answer at <b>${esc(email)}</b>.`);
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.pathname === "/contact/send") return contact(request, env);
     if (url.pathname.replace(/\/$/, "") === "/get/not-me") {
       return new Response("<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width'><title>Not counted</title>" +
         "<p style='font:18px system-ui;margin:3em auto;max-width:30em;padding:0 1em'>Downloads from this browser are no longer counted. <a href='/'>Back to the Dojo</a></p>",

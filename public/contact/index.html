@@ -20,7 +20,7 @@
 <link rel="preload" href="/fonts/jost-400.woff2?v=7726a5cd6f" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/cormorant-garamond-500.woff2?v=d80df8ff5a" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/yuji-syuku-400-kanji.woff2?v=0b79abf636" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/style.css?v=f5fe2ee8d0">
+<link rel="stylesheet" href="/style.css?v=65998f1f62">
 <style>:root{--acc:#d3ad66}</style>
 </head>
 <body>
@@ -55,6 +55,15 @@
     <div><h3>Bugs &amp; ideas</h3><p>Open an issue on the plugin's <a href="https://github.com/zmardanian">GitHub</a> page &mdash; it helps everyone who hits the same thing.</p></div>
     <div><h3>Get the suite</h3><p><a href="/download">axellsdojo.com/download</a> &mdash; Windows installer and Linux, free.</p></div>
   </div>
+  <form id="write" class="contact-form" method="post" action="/contact/send">
+    <h3>Or write here</h3>
+    <div class="cf-row"><label>Your name <small>(optional)</small><input name="name" maxlength="100" autocomplete="name"></label>
+    <label>Your email <small>(for the answer)</small><input name="email" type="email" required maxlength="254" autocomplete="email"></label></div>
+    <label>Message<textarea name="message" required minlength="10" maxlength="5000" rows="6"></textarea></label>
+    <label class="cf-trap" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+    <p class="cf-note">Sent as an email to me, nothing is stored on this site &mdash; see the <a href="/privacy/">privacy policy</a>.</p>
+    <button class="btn btn-primary" type="submit"><b>Send message</b></button>
+  </form>
 </section>
 <section class="section support reveal">
   <div class="support-card">

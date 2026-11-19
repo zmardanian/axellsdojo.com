@@ -374,7 +374,8 @@ def dojo_page():
 
 OWNER = ("Alexandru Georgian Petre", "Bahnhofstraße 62", "64404 Bickenbach", "Germany")
 def owner_block():
-    return "<p>" + "<br>".join(e(x) for x in OWNER) + '<br>Email: <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a></p>'
+    return "<p>" + "<br>".join(e(x) for x in OWNER) + '<br>Email: <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a>' \
+        '<br>Contact form: <a href="/contact/#write">axellsdojo.com/contact</a></p>'
 
 def impressum_page():
     body = f"""<main><section class="section legal"><p class="label">IMPRESSUM &middot; LEGAL NOTICE</p><h2>Impressum</h2>
@@ -433,9 +434,13 @@ payment providers. When you follow such a link, the respective provider processe
 embeds nothing from them - no scripts, no frames, no tracking pixels. Fonts, images and audio are served from this site only; no
 request goes to a font or media service.</p>
 
-<h3>6. Email</h3>
+<h3>6. Email and the contact form</h3>
 <p>If you write to contact@axellsdojo.com, the message is forwarded by Cloudflare Email Routing to my mailbox and kept as long as
 needed to answer it and for any follow-up. Legal basis: Art. 6 (1) (b) or (f) GDPR.</p>
+<p>The <a href="/contact/#write">contact form</a> sends your name (optional), your email address and your message the same way:
+as an email through Cloudflare's email service to my mailbox, where it is kept as long as needed to answer it. The website itself
+keeps no copy; it notes only the time of each sent message (no content, no address, no IP address) to stop mass sending, and deletes
+that note after 30 days. Legal basis: Art. 6 (1) (b) or (f) GDPR.</p>
 
 <h3>7. Your rights</h3>
 <p>You have the right to access (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18), data
@@ -487,6 +492,15 @@ def contact_page():
     <div><h3>Bugs &amp; ideas</h3><p>Open an issue on the plugin's <a href="https://github.com/zmardanian">GitHub</a> page &mdash; it helps everyone who hits the same thing.</p></div>
     <div><h3>Get the suite</h3><p><a href="/download">axellsdojo.com/download</a> &mdash; Windows installer and Linux, free.</p></div>
   </div>
+  <form id="write" class="contact-form" method="post" action="/contact/send">
+    <h3>Or write here</h3>
+    <div class="cf-row"><label>Your name <small>(optional)</small><input name="name" maxlength="100" autocomplete="name"></label>
+    <label>Your email <small>(for the answer)</small><input name="email" type="email" required maxlength="254" autocomplete="email"></label></div>
+    <label>Message<textarea name="message" required minlength="10" maxlength="5000" rows="6"></textarea></label>
+    <label class="cf-trap" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+    <p class="cf-note">Sent as an email to me, nothing is stored on this site &mdash; see the <a href="/privacy/">privacy policy</a>.</p>
+    <button class="btn btn-primary" type="submit"><b>Send message</b></button>
+  </form>
 </section>
 </main>"""
     return head("About & contact - Axell Yobag, Axell's Dojo", "Axell Yobag - rap artist and producer, maker of the free Axell Signature audio plugins for Windows and Linux. Contact: contact@axellsdojo.com.", "#d3ad66", "/contact/") + body.replace("\n</main>", "\n" + support("Everything here", "04 &nbsp; SUPPORT") + "\n</main>") + foot()
