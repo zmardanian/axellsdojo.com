@@ -494,6 +494,8 @@ def build():
     if os.path.isdir(OUT): shutil.rmtree(OUT)
     os.makedirs(f"{OUT}/img", exist_ok=True)
     for f in ("site.js", "_headers", "_redirects"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
+    for f in os.listdir(f"{SITE}/src"):   # the IndexNow key (Bing, Yandex, Seznam, Naver): a 32-hex-character .txt
+        if len(f) == 36 and f.endswith(".txt"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
     open(f"{OUT}/style.css", "w").write(CSS); shutil.copytree(f"{SITE}/src/fonts", f"{OUT}/fonts", ignore=shutil.ignore_patterns("KANJI.txt"))
     import json
     AUDIO.update(json.load(open(f"{SITE}/src/audio/audio.json")))
