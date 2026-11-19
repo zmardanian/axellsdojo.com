@@ -87,7 +87,7 @@ function thanks(name, system, hit, to) {
 color:#efe6d6;font:17px/1.6 JO,system-ui,sans-serif;padding:24px 16px;text-align:center}
 .k{font-family:YU,serif;font-size:42px;color:#fff3e6;background:#c0362c;display:inline-block;padding:2px 12px;border-radius:5px;transform:rotate(-4deg)}
 h1{font-family:GV,cursive;font-weight:400;color:var(--g);font-size:clamp(54px,12vw,86px);line-height:1.1;margin:18px 0 4px}
-p{color:#a99d8d;max-width:520px;margin:8px auto}.f{font-size:13px;color:#6f6658}a{color:var(--g)}
+p{color:#a99d8d;max-width:520px;margin:8px auto}.f{font-size:13px;color:#8a806f}a{color:var(--g)}
 .b{display:inline-flex;flex-direction:column;align-items:center;margin:26px 0 10px;padding:16px 34px 12px;border-radius:10px;background:var(--g);color:#0b0d12;
 text-decoration:none;box-shadow:0 10px 40px rgba(201,162,94,.35);transition:transform .15s}.b:hover{transform:translateY(-2px)}
 .b b{letter-spacing:.16em;text-transform:uppercase;font-weight:500}.b small{font-size:12px;letter-spacing:.06em;opacity:.8}
