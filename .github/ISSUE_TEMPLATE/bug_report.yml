@@ -1,0 +1,36 @@
+name: Bug report
+description: Something in axellsdojo.com doesn't work or sounds wrong
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time! For a **security** problem, please use [a private report](https://github.com/zmardanian/axellsdojo.com/security/advisories/new) instead.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Page URL and browser
+      placeholder: https://www.axellsdojo.com/... in Firefox 135
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Screenshots, sample rate and buffer size, a crash log. Please don't attach recordings you don't want public.
