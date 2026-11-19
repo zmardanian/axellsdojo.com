@@ -155,7 +155,7 @@ def downloads_manifest():
         out[DLSLUG(r)] = en
     json.dump(out, open(f"{SITE}/src/downloads.json", "w"), indent=1)
 
-def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 11 &middot; 64-bit &middot; VST3", sub_l="Ubuntu 22.04+, Debian 12+, Fedora &middot; x86_64"):
+def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 11 &middot; 64-bit &middot; VST3", sub_l="Ubuntu 22.04+ &middot; Debian 12+ &middot; Fedora"):
     rel = f"{GH}/{repo}/releases/latest"
     pat_w = "setup.exe" if repo == "axell-signature-dojo" else "windows-x64.tar.gz"
     return f"""<div class="dl" data-repo="{repo}">
