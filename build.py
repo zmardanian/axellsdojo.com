@@ -94,6 +94,7 @@ def head(title, desc, accent="#c9a25e", path="/", og="og.jpg", ld=None):
 <style>:root{{--acc:{accent}}}</style>{ldjson(ld)}
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header class="nav">
   <a class="brand" href="/"><span class="seal seal-wide seal-sm" aria-hidden="true">道場</span><span>Axell's Dojo</span></a>
   <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-support" href="{KOFI}" rel="noopener" aria-label="Support on Ko-fi">{CUP}<span>Support</span></a><a class="nav-cta" href="/#get">Download</a></nav>
@@ -107,7 +108,7 @@ def foot():
   <div class="foot-links">{links}<a href="/dojo/">Axell Signature Dojo</a></div>
   <div class="foot-small">
     <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="{GH}">GitHub</a> &middot; <a href="{KOFI}" rel="noopener">Support on Ko-fi</a> &middot; <a href="/impressum/">Impressum</a> &middot; <a href="/privacy/">Privacy</a> &middot; Licensed under the GNU AGPLv3.</p>
-    <p>1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
+    <p>VST is a registered trademark of Steinberg Media Technologies GmbH. 1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
   </div>
 </footer>
 <script src="/site.js?v={VER['site.js']}" defer></script>
@@ -388,7 +389,8 @@ open-source project; voluntary tips are accepted on <a href="{KOFI}" rel="noopen
 for their content. When the links were set, no unlawful content was apparent; if any becomes known, the link will be removed.</p>
 <h3>Urheberrecht &middot; Copyright and licences</h3>
 <p>The plugins, their source code and this website are published under the GNU AGPLv3. The audio examples are licensed under
-CC BY-SA 4.0 (see <a href="/credits/">Credits</a>); the typefaces under the SIL Open Font License. 1176, 1176LN, LA-2A, UADx and
+CC BY-SA 4.0 (see <a href="/credits/">Credits</a>); the typefaces under the SIL Open Font License. VST is a registered trademark of
+Steinberg Media Technologies GmbH. 1176, 1176LN, LA-2A, UADx and
 Universal Audio are trademarks of their owners; the Axell plugins are independent works, not affiliated with or endorsed by them.</p>
 <p class="note">Privacy: see the <a href="/privacy/">privacy policy</a>.</p>
 </section></main>"""
@@ -527,7 +529,9 @@ def build():
     have = open(f"{SITE}/src/fonts/KANJI.txt").read()
     for d_, _, fs in os.walk(OUT):
         for f in fs:
-            if f.endswith(".html"):
+            if f.endswith(".html"):   # the skip link's target: every page's <main>
+                h = open(f"{d_}/{f}").read()
+                if 'id="main"' not in h: open(f"{d_}/{f}", "w").write(h.replace("<main", '<main id="main"', 1))
                 miss = set(re.findall(r"[\u3000-\u9fff]", open(f"{d_}/{f}").read())) - set(have)
                 if miss: raise SystemExit(f"{f}: kanji {miss} not in the brush font - run tools/fetch_fonts.py")
     print("built", OUT, sum(len(fs) for _, _, fs in os.walk(OUT)), "files")

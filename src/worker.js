@@ -68,6 +68,11 @@ async function note(env, row) {
 }
 
 const KOFI = "https://ko-fi.com/axellyobag";
+// _headers only covers the static files: every response this Worker makes gets the same protection here
+const SEC = { "Strict-Transport-Security": "max-age=31536000; includeSubDomains", "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY", "Referrer-Policy": "strict-origin-when-cross-origin", "Cross-Origin-Opener-Policy": "same-origin",
+  "X-Robots-Tag": "noindex", "Cache-Control": "no-store" };
+const CSP = "default-src 'none'; style-src 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 // the page shown while the download starts: one second, then the browser fetches the file from GitHub
 function thanks(name, system, hit, to) {
@@ -103,16 +108,16 @@ export default {
     if (url.pathname.replace(/\/$/, "") === "/get/not-me") {
       return new Response("<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width'><title>Not counted</title>" +
         "<p style='font:18px system-ui;margin:3em auto;max-width:30em;padding:0 1em'>Downloads from this browser are no longer counted. <a href='/'>Back to the Dojo</a></p>",
-        { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "X-Robots-Tag": "noindex",
+        { headers: { ...SEC, "Content-Type": "text/html; charset=utf-8", "Content-Security-Policy": CSP,
           "Set-Cookie": "axell_owner=1; Max-Age=315360000; Path=/get; Secure; HttpOnly; SameSite=Lax" } });
     }
     const m = url.pathname.match(/^\/get\/([a-z0-9-]+)\/(windows|linux)\/?$/);
     if (!m || !BAKED[m[1]] || !BAKED[m[1]].suffix[m[2]]) {
       const nf = await env.ASSETS.fetch(new URL("/404", url));
-      return new Response(nf.body, { status: 404, headers: { "Content-Type": "text/html; charset=utf-8" } });
+      return new Response(nf.body, { status: 404, headers: { ...SEC, "Content-Type": "text/html; charset=utf-8" } });
     }
     const entry = BAKED[m[1]], system = m[2], page = "https://github.com/zmardanian/" + entry.repo + "/releases/latest";
-    if (request.method !== "GET") return Response.redirect(page, 302);
+    if (request.method !== "GET") return new Response(null, { status: 302, headers: { ...SEC, Location: page } });
     const hit = await newest(entry, system, ctx), ua = request.headers.get("User-Agent") || "", cf = request.cf || {};
     let bot = BOT.test(ua) ? 1 : DATACENTRE.has(cf.asn) || HOSTING.test(cf.asOrganization || "") ? 2 : 0;
     if (/(^|;\s*)axell_owner=1/.test(request.headers.get("Cookie") || "")) bot = 4;
@@ -123,11 +128,10 @@ export default {
     if (!limited) ctx.waitUntil(note(env, [new Date().toISOString().slice(0, 19).replace("T", " "), entry.name, system, hit ? hit.version : null, hit ? hit.file : null,
       cf.country || null, cf.city || null, from || "(direct)", device(ua), browser(ua), bot, cf.asOrganization || null]));
     // a person gets a thank-you page that starts the download itself (and asks for a tip); tools and bots get the plain redirect
-    const to = hit ? hit.url : page;
+    // only ever to GitHub: a changed or broken API answer can never send a visitor somewhere else
+    const to = hit && /^https:\/\/github\.com\/zmardanian\//.test(hit.url) ? hit.url : page;
     if (bot === 1 || !/text\/html/.test(request.headers.get("Accept") || ""))
-      return new Response(null, { status: 302, headers: { Location: to, "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } });
-    return new Response(thanks(entry.name, system, hit, to), { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store",
-      "X-Robots-Tag": "noindex", "Referrer-Policy": "strict-origin-when-cross-origin", "X-Content-Type-Options": "nosniff",
-      "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'" } });
+      return new Response(null, { status: 302, headers: { ...SEC, Location: to } });
+    return new Response(thanks(entry.name, system, hit, to), { headers: { ...SEC, "Content-Type": "text/html; charset=utf-8", "Content-Security-Policy": CSP } });
   },
 };
