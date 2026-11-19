@@ -419,7 +419,7 @@ Universal Audio are trademarks of their owners; the Axell plugins are independen
 def privacy_page():
     body = f"""<main><section class="section legal"><p class="label">PRIVACY &middot; DATENSCHUTZERKL&Auml;RUNG</p><h2>Privacy policy</h2>
 <p class="lede">What happens to your data when you visit axellsdojo.com - in short: no accounts, no advertising, no tracking cookies,
-and no IP address is ever stored by this site. As of 19 November 2026.</p>
+and no IP address is ever stored by this site. As of 20 November 2026.</p>
 
 <h3>1. Who is responsible</h3>{owner_block()}
 
@@ -427,7 +427,8 @@ and no IP address is ever stored by this site. As of 19 November 2026.</p>
 <p>The site is served by Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA, which processes data on my behalf
 (data processing agreement under Art. 28 GDPR). To deliver pages and protect the site against attacks, Cloudflare processes your
 IP address, the time, the page requested, your browser's user agent and the referring page in its server logs, briefly and under its own
-retention rules. Cloudflare is certified under the EU-U.S. Data Privacy Framework (Art. 45 GDPR). Legal basis: Art. 6 (1) (f) GDPR -
+retention rules. Cloudflare is certified under the EU-U.S. Data Privacy Framework (Art. 45 GDPR); its data processing agreement also contains
+the EU standard contractual clauses (Art. 46 GDPR) as a further safeguard. Legal basis: Art. 6 (1) (f) GDPR -
 the legitimate interest in a secure, working website.</p>
 <p>Cloudflare's bot protection may set a technically necessary cookie (<code>__cf_bm</code>, valid 30 minutes) that tells people from
 automated attacks; it is required for the service you asked for (&sect; 25 (2) no. 2 TDDDG) and not used for anything else.</p>
