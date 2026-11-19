@@ -96,7 +96,7 @@ def head(title, desc, accent="#c9a25e", path="/", og="og.jpg", ld=None):
 <body>
 <header class="nav">
   <a class="brand" href="/"><span class="seal seal-wide seal-sm" aria-hidden="true">道場</span><span>Axell's Dojo</span></a>
-  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-cta" href="/#get">Download</a></nav>
+  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-support" href="{KOFI}" rel="noopener">Support</a><a class="nav-cta" href="/#get">Download</a></nav>
 </header>
 """
 
@@ -106,7 +106,7 @@ def foot():
   <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
   <div class="foot-links">{links}<a href="/dojo/">Axell Signature Dojo</a></div>
   <div class="foot-small">
-    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="{GH}">GitHub</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="{GH}">GitHub</a> &middot; <a href="{KOFI}" rel="noopener">Support on Ko-fi</a> &middot; Licensed under the GNU AGPLv3.</p>
     <p>1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
   </div>
 </footer>
@@ -115,6 +115,28 @@ def foot():
 </body>
 </html>
 """
+
+KOFI = "https://ko-fi.com/axellyobag"
+CUP = ('<svg class="cup" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'
+       '<path class="steam" d="M10 4c-1.5 2 1.5 3 0 5M15 3c-1.5 2 1.5 3 0 5M20 4c-1.5 2 1.5 3 0 5"/><path d="M5 13h19v7a7 7 0 0 1-7 7h-5a7 7 0 0 1-7-7z"/>'
+       '<path d="M24 15h1.5a3.5 3.5 0 0 1 0 7H23.5"/></g><path d="M14.5 23.2l-3-2.9a1.9 1.9 0 0 1 2.7-2.7l.3.3.3-.3a1.9 1.9 0 0 1 2.7 2.7z" fill="currentColor"/></svg>')
+def support(what, label="SUPPORT THE DOJO"):
+    """the Ko-fi card: one per page, in the page's accent colour"""
+    return f"""<section class="section support reveal">
+  <div class="support-card">
+    <div class="support-bg" aria-hidden="true">道</div>
+    <div class="support-text">
+      <p class="label">{label}</p>
+      <h2>Free forever. <span class="script">Kept alive by you.</span></h2>
+      <p class="lede">{what} costs nothing and never will &mdash; no subscriptions, no licence keys, no ads. If it has earned a place in your mixes, a tip keeps the Dojo going: test gear, this website and the long nights between releases.</p>
+      <ul class="support-points"><li>One-time or monthly</li><li>From &euro;3, or any amount</li><li>No account needed</li></ul>
+    </div>
+    <div class="support-cta">
+      <a class="btn btn-primary btn-kofi" href="{KOFI}" rel="noopener">{CUP}<b>Support on Ko-fi</b><small>ko-fi.com/axellyobag</small></a>
+      <p class="support-note">Secure checkout on Ko-fi. Every supporter is part of the Dojo &mdash; thank you.</p>
+    </div>
+  </div>
+</section>"""
 
 DLSLUG = lambda repo: "dojo" if repo == "axell-signature-dojo" else SLUG[repo]
 def downloads_manifest():
@@ -247,6 +269,7 @@ def home():
   </div>
   {dl_buttons("axell-signature-dojo", "Get the suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo, then the plugins from its Plugins page")}
 </section>
+{support("The whole suite &mdash; nine plugins and the Dojo &mdash;")}
 </main>
 """
     return head("Axell's Dojo - nine audio plugins forged for the voice", "Free, open-source VST3 plugins for Windows and Linux - EQ, compression, gating, de-reverb, de-essing, saturation, reverb and mastering, each measured against the real thing.", ld={"@context": "https://schema.org", "@type": "WebSite", "name": "Axell's Dojo", "url": "https://www.axellsdojo.com/", "author": AUTHOR}) + body + foot()
@@ -313,6 +336,7 @@ def plugin_page(r):
   {dl_buttons(r)}
   <p class="hosts">Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour</p>
 </section>
+{support(e(NAME[r]))}
 <section class="section family"><p class="label">THE SUITE</p><div class="family-row">{others}</div></section>
 </main>
 """
@@ -340,6 +364,7 @@ def dojo_page():
 </section>
 <section class="section"><p class="label">01 &nbsp; WHAT IT DOES</p><h2>Everything around the plugins.</h2><div class="whys">{why}</div></section>
 <section class="section"><p class="label">02 &nbsp; A CLOSER LOOK</p><h2>Every page.</h2><div class="gallery">{"".join(gal)}</div></section>
+{support("The Dojo, like every Axell plugin,")}
 </main>
 """
     return head("Axell Signature Dojo - your vocal chain, tuned to your voice", "Installs and updates the Axell plugins, tunes a complete vocal chain to your voice from one dry take, opens it in REAPER. One Windows installer carries the whole suite.", ACC[r], "/dojo/", "og-dojo.jpg") + body + foot()
@@ -389,7 +414,7 @@ def contact_page():
   </div>
 </section>
 </main>"""
-    return head("About & contact - Axell Yobag, Axell's Dojo", "Axell Yobag - rap artist and producer, maker of the free Axell Signature audio plugins for Windows and Linux. Contact: contact@axellsdojo.com.", "#d3ad66", "/contact/") + body + foot()
+    return head("About & contact - Axell Yobag, Axell's Dojo", "Axell Yobag - rap artist and producer, maker of the free Axell Signature audio plugins for Windows and Linux. Contact: contact@axellsdojo.com.", "#d3ad66", "/contact/") + body.replace("\n</main>", "\n" + support("Everything here", "04 &nbsp; SUPPORT") + "\n</main>") + foot()
 
 def build():
     downloads_manifest()

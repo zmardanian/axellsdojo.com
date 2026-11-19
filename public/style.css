@@ -193,3 +193,34 @@ h2::after { content: ""; display: block; width: 90px; height: 2px; background: v
 .ab-plugin { display: inline-flex; align-items: center; gap: 8px; font-family: var(--script); font-size: 30px; color: var(--acc); margin-bottom: 6px; }
 .ab-plugin:hover { text-decoration: none; filter: brightness(1.15); }
 .ab-plugin .seal-sm { font-family: var(--brush); }
+
+/* support (Ko-fi) */
+.nav .nav-support { color: var(--gold); }
+.support { padding-top: 72px; }
+.support-card { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: center;
+  padding: 48px; border-radius: 18px; border: 1px solid color-mix(in srgb, var(--acc) 35%, var(--line));
+  background: radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--acc) 16%, transparent), transparent 55%),
+    linear-gradient(160deg, var(--bg2), var(--bg) 70%);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .04); }
+.support-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: linear-gradient(var(--acc), transparent); }
+.support-bg { position: absolute; right: -30px; bottom: -90px; font-family: var(--brush); font-size: 340px; line-height: 1;
+  color: var(--acc); opacity: .06; pointer-events: none; user-select: none; }
+.support-text, .support-cta { position: relative; }
+.support h2 .script { display: block; color: var(--acc); font-size: 1.15em; line-height: 1.15; margin-top: 4px; }
+.support .lede { margin-bottom: 18px; }
+.support-points { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0; }
+.support-points li { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); padding: 6px 12px;
+  border: 1px solid var(--line); border-radius: 999px; background: rgba(0, 0, 0, .2); }
+.support-cta { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+.btn-kofi { min-width: 300px; padding: 18px 28px 14px; }
+.btn-kofi .cup { width: 34px; height: 34px; margin-bottom: 6px; }
+.btn-kofi .steam { stroke-dasharray: 3 3; animation: steam 2.4s linear infinite; opacity: .8; }
+@keyframes steam { to { stroke-dashoffset: -12; } }
+.btn-kofi small { text-transform: none; letter-spacing: .04em; }
+.support-note { margin: 0; color: var(--dim); font-size: 13px; max-width: 300px; }
+@media (max-width: 860px) {
+  .support-card { grid-template-columns: 1fr; padding: 32px 22px; gap: 28px; }
+  .support-bg { font-size: 240px; bottom: -60px; }
+  .btn-kofi { min-width: 0; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .btn-kofi .steam { animation: none; } }
