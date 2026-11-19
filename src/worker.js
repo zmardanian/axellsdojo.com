@@ -63,6 +63,7 @@ async function note(env, row) {
     }
     await env.DB.prepare("INSERT INTO downloads (time, plugin, system, version, file, country, city, from_page, device, browser, bot, network) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
       .bind(...row).run();
+    await env.DB.prepare("DELETE FROM downloads WHERE time < datetime('now', '-24 months')").run();   // kept 24 months (privacy policy)
   } catch (e) { console.log("download not noted:", e.message); }
 }
 

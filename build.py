@@ -106,7 +106,7 @@ def foot():
   <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
   <div class="foot-links">{links}<a href="/dojo/">Axell Signature Dojo</a></div>
   <div class="foot-small">
-    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="{GH}">GitHub</a> &middot; <a href="{KOFI}" rel="noopener">Support on Ko-fi</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="{GH}">GitHub</a> &middot; <a href="{KOFI}" rel="noopener">Support on Ko-fi</a> &middot; <a href="/impressum/">Impressum</a> &middot; <a href="/privacy/">Privacy</a> &middot; Licensed under the GNU AGPLv3.</p>
     <p>1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
   </div>
 </footer>
@@ -267,7 +267,7 @@ def home():
   <div class="tri">
     <div><h3>One installer</h3><p>The Axell Signature Suite installer puts the Dojo and all nine plugins on Windows 10 / 11 in one step &mdash; each one optional.</p></div>
     <div><h3>Tested on every build</h3><p>Every Windows build is made and tested by GitHub Actions and checked to sound the same as the Linux build &mdash; most of them bit for bit.</p></div>
-    <div><h3>Free, for good</h3><p>Open source under the AGPLv3. No accounts, no licence keys, no subscriptions, nothing phoning home.</p></div>
+    <div><h3>Free, for good</h3><p>Open source under the AGPLv3. No accounts, no licence keys, no subscriptions, no telemetry &mdash; the Dojo only asks GitHub for new versions.</p></div>
   </div>
   {dl_buttons("axell-signature-dojo", "Get the suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo, then the plugins from its Plugins page")}
 </section>
@@ -371,6 +371,78 @@ def dojo_page():
     return head("Axell Signature Dojo - your vocal chain, tuned to your voice", "Installs and updates the Axell plugins, tunes a complete vocal chain to your voice from one dry take, opens it in REAPER. One Windows installer carries the whole suite.", ACC[r], "/dojo/", "og-dojo.jpg") + body + foot()
 
 
+OWNER = ("Alexandru Georgian Petre", "Bahnhofstraße 62", "64404 Bickenbach", "Germany")
+def owner_block():
+    return "<p>" + "<br>".join(e(x) for x in OWNER) + '<br>Email: <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a></p>'
+
+def impressum_page():
+    body = f"""<main><section class="section legal"><p class="label">IMPRESSUM &middot; LEGAL NOTICE</p><h2>Impressum</h2>
+<p class="lede">Angaben gem&auml;&szlig; &sect; 5 DDG &middot; Information according to &sect; 5 of the German Digital Services Act (DDG)</p>
+<h3>Anbieter &middot; Provider</h3>{owner_block()}
+<p>Axell Yobag is the artist name of the provider. Axell's Dojo and the Axell Signature plugins are a private
+open-source project; voluntary tips are accepted on <a href="{KOFI}" rel="noopener">Ko-fi</a>.</p>
+<h3>Verantwortlich f&uuml;r den Inhalt &middot; Responsible for the content</h3>
+<p>according to &sect; 18 (2) MStV: Alexandru Georgian Petre, address as above.</p>
+<h3>Haftung f&uuml;r Links &middot; Links</h3>
+<p>This site links to external websites (GitHub, Ko-fi, the sources named on the credits page). Their operators are responsible
+for their content. When the links were set, no unlawful content was apparent; if any becomes known, the link will be removed.</p>
+<h3>Urheberrecht &middot; Copyright and licences</h3>
+<p>The plugins, their source code and this website are published under the GNU AGPLv3. The audio examples are licensed under
+CC BY-SA 4.0 (see <a href="/credits/">Credits</a>); the typefaces under the SIL Open Font License. 1176, 1176LN, LA-2A, UADx and
+Universal Audio are trademarks of their owners; the Axell plugins are independent works, not affiliated with or endorsed by them.</p>
+<p class="note">Privacy: see the <a href="/privacy/">privacy policy</a>.</p>
+</section></main>"""
+    return head("Impressum - Axell's Dojo", "Legal notice (Impressum) of axellsdojo.com.", path="/impressum/") + body + foot()
+
+def privacy_page():
+    body = f"""<main><section class="section legal"><p class="label">PRIVACY &middot; DATENSCHUTZERKL&Auml;RUNG</p><h2>Privacy policy</h2>
+<p class="lede">What happens to your data when you visit axellsdojo.com - in short: no accounts, no advertising, no tracking cookies,
+and no IP address is ever stored by this site. As of 19 November 2026.</p>
+
+<h3>1. Who is responsible</h3>{owner_block()}
+
+<h3>2. Hosting and delivery (Cloudflare)</h3>
+<p>The site is served by Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA, which processes data on my behalf
+(data processing agreement under Art. 28 GDPR). To deliver pages and protect the site against attacks, Cloudflare processes your
+IP address, the time, the page requested, your browser's user agent and the referring page in its server logs, briefly and under its own
+retention rules. Cloudflare is certified under the EU-U.S. Data Privacy Framework (Art. 45 GDPR). Legal basis: Art. 6 (1) (f) GDPR -
+the legitimate interest in a secure, working website.</p>
+<p>Cloudflare's bot protection may set a technically necessary cookie (<code>__cf_bm</code>, valid 30 minutes) that tells people from
+automated attacks; it is required for the service you asked for (&sect; 25 (2) no. 2 TDDDG) and not used for anything else.</p>
+
+<h3>3. Visitor statistics (Cloudflare Web Analytics)</h3>
+<p>The pages load Cloudflare Web Analytics, which counts page views and load times without cookies, without storing IP addresses
+and without following you across sites; I only see totals. Legal basis: Art. 6 (1) (f) GDPR - the legitimate interest in knowing
+which pages are used.</p>
+
+<h3>4. The download counter</h3>
+<p>The download buttons go through <code>axellsdojo.com/get/...</code> before they forward you to the file on GitHub. Each download
+stores: the time, the plugin, Windows or Linux, the version, the country and city and the name of your internet provider (derived by
+Cloudflare from your IP address), the page you came from, your device type (e.g. Windows, iOS) and browser family. <b>Your IP
+address itself is not stored.</b> It is used only for a moment to limit downloads from one address to ten a minute, so the counter
+cannot be flooded. The records are kept in Cloudflare's D1 database and deleted automatically after 24 months. Legal basis:
+Art. 6 (1) (f) GDPR - the legitimate interest in knowing how often and where the plugins are used.</p>
+<p>If you open <code>axellsdojo.com/get/not-me</code>, a cookie (<code>axell_owner</code>, 10 years) marks your browser's downloads as
+the author's own tests. It is only ever set when you open that address yourself.</p>
+
+<h3>5. Downloads, Ko-fi and other links</h3>
+<p>Plugin files are downloaded from GitHub (GitHub, Inc., USA); tips are handled by Ko-fi (Ko-fi Labs Limited, UK) and its
+payment providers. When you follow such a link, the respective provider processes your data under its own privacy policy. This site
+embeds nothing from them - no scripts, no frames, no tracking pixels. Fonts, images and audio are served from this site only; no
+request goes to a font or media service.</p>
+
+<h3>6. Email</h3>
+<p>If you write to contact@axellsdojo.com, the message is forwarded by Cloudflare Email Routing to my mailbox and kept as long as
+needed to answer it and for any follow-up. Legal basis: Art. 6 (1) (b) or (f) GDPR.</p>
+
+<h3>7. Your rights</h3>
+<p>You have the right to access (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18), data
+portability (Art. 20) and to <b>object</b> to processing based on legitimate interests (Art. 21 GDPR). Write to
+contact@axellsdojo.com. You may also complain to a data protection authority - for me, Der Hessische Beauftragte f&uuml;r Datenschutz
+und Informationsfreiheit, Wiesbaden (datenschutz.hessen.de). There is no automated decision-making or profiling.</p>
+</section></main>"""
+    return head("Privacy policy - Axell's Dojo", "Privacy policy (Datenschutzerklärung) of axellsdojo.com.", path="/privacy/") + body + foot()
+
 def credits_page():
     body = """<main><section class="section"><p class="label">CREDITS</p><h2>The music in the examples.</h2>
 <p class="lede">Every before/after example on this site is made from the <a href="https://github.com/OnAir-Music/OnAir-Music-Dataset">OnAir Music Dataset</a>
@@ -428,6 +500,8 @@ def build():
     shutil.copytree(f"{SITE}/src/audio", f"{OUT}/audio", ignore=shutil.ignore_patterns("audio.json"))
     os.makedirs(f"{OUT}/contact", exist_ok=True); open(f"{OUT}/contact/index.html", "w").write(contact_page())
     os.makedirs(f"{OUT}/credits", exist_ok=True); open(f"{OUT}/credits/index.html", "w").write(credits_page())
+    for slug, page in (("impressum", impressum_page), ("privacy", privacy_page)):
+        os.makedirs(f"{OUT}/{slug}", exist_ok=True); open(f"{OUT}/{slug}/index.html", "w").write(page())
     open(f"{OUT}/index.html", "w").write(home())
     for r in PLUGINS:
         os.makedirs(f"{OUT}/{SLUG[r]}", exist_ok=True); open(f"{OUT}/{SLUG[r]}/index.html", "w").write(plugin_page(r))

@@ -235,3 +235,9 @@ h2::after { content: ""; display: block; width: 90px; height: 2px; background: v
   .btn-kofi { min-width: 0; width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .btn-kofi .steam { animation: none; } }
+
+/* legal pages */
+.legal { max-width: 860px; }
+.legal h3 { font-family: var(--serif); font-size: 26px; font-weight: 600; margin: 34px 0 6px; color: var(--acc); }
+.legal p { color: var(--soft); }
+.legal code { font-size: 14px; color: var(--ink); }
