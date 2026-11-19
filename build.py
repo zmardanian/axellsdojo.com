@@ -498,7 +498,7 @@ def contact_page():
     <label>Your email <small>(for the answer)</small><input name="email" type="email" required maxlength="254" autocomplete="email"></label></div>
     <label>Message<textarea name="message" required minlength="10" maxlength="5000" rows="6"></textarea></label>
     <label class="cf-trap" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
-    <p class="cf-note">Sent as an email to me, nothing is stored on this site &mdash; see the <a href="/privacy/">privacy policy</a>.</p>
+    <p class="cf-note">Sent to me as an email; this site keeps no copy &mdash; see the <a href="/privacy/">privacy policy</a>.</p>
     <button class="btn btn-primary" type="submit"><b>Send message</b></button>
   </form>
 </section>
