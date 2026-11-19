@@ -96,7 +96,7 @@ def head(title, desc, accent="#c9a25e", path="/", og="og.jpg", ld=None):
 <body>
 <header class="nav">
   <a class="brand" href="/"><span class="seal seal-wide seal-sm" aria-hidden="true">道場</span><span>Axell's Dojo</span></a>
-  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-support" href="{KOFI}" rel="noopener">Support</a><a class="nav-cta" href="/#get">Download</a></nav>
+  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-support" href="{KOFI}" rel="noopener" aria-label="Support on Ko-fi">{CUP}<span>Support</span></a><a class="nav-cta" href="/#get">Download</a></nav>
 </header>
 """
 
@@ -235,6 +235,7 @@ def home():
   <p class="hero-tag">Nine plugins forged for the voice. Every claim, measured.</p>
   <p class="spec">WINDOWS &nbsp;&middot;&nbsp; LINUX &nbsp;&middot;&nbsp; VST3 &nbsp;&middot;&nbsp; FREE &amp; OPEN SOURCE</p>
   {dl_buttons("axell-signature-dojo", "Get the whole suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo installs the plugins")}
+  <p class="hero-support"><span>Free forever</span><span class="dot">&middot;</span><a href="{KOFI}" rel="noopener">{CUP}Support on Ko-fi</a></p>
   <p class="hosts">Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour</p>
   <div class="seal-row">{seals}</div>
 </section>
@@ -251,6 +252,7 @@ def home():
   <p class="lede">Every number below comes from published tests &mdash; against real hardware recordings, research benchmarks and the respected commercial plugins &mdash; with the scripts in each repository, so anyone can check them.</p>
   <div class="stats">{stats}</div>
 </section>
+{support("The whole suite &mdash; nine plugins and the Dojo &mdash;")}
 
 <section class="section split reveal">
   <div><p class="label">03 &nbsp; THE DOJO</p><h2>Your chain, tuned to your voice.</h2>
@@ -269,7 +271,6 @@ def home():
   </div>
   {dl_buttons("axell-signature-dojo", "Get the suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo, then the plugins from its Plugins page")}
 </section>
-{support("The whole suite &mdash; nine plugins and the Dojo &mdash;")}
 </main>
 """
     return head("Axell's Dojo - nine audio plugins forged for the voice", "Free, open-source VST3 plugins for Windows and Linux - EQ, compression, gating, de-reverb, de-essing, saturation, reverb and mastering, each measured against the real thing.", ld={"@context": "https://schema.org", "@type": "WebSite", "name": "Axell's Dojo", "url": "https://www.axellsdojo.com/", "author": AUTHOR}) + body + foot()

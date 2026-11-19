@@ -151,7 +151,13 @@ h2::after { content: ""; display: block; width: 90px; height: 2px; background: v
   .split { grid-template-columns: 1fr; }
   .windows .tri { grid-template-columns: 1fr; }
   .foot { grid-template-columns: 1fr; }
-  .nav nav a:not(.nav-cta) { display: none; }
+  .nav nav a:not(.nav-cta):not(.nav-support) { display: none; }
+  .nav .nav-support span { display: none; }
+  .nav nav { gap: 10px; }
+  .nav .nav-support { padding: 6px 8px; border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent); border-radius: 6px; }
+  .hero-support { gap: 8px; font-size: 12px; letter-spacing: .1em; }
+  .hero-support span, .hero-support a { white-space: nowrap; }
+  .hero-support a { padding: 6px 12px; }
   .cards, .stats, .whys, .gallery { grid-template-columns: 1fr; }
   .btn { min-width: 0; width: 100%; }
   .hero { padding-top: 64px; }
@@ -190,7 +196,17 @@ h2::after { content: ""; display: block; width: 90px; height: 2px; background: v
 .ab-plugin .seal-sm { font-family: var(--brush); }
 
 /* support (Ko-fi) */
-.nav .nav-support { color: var(--gold); }
+.nav .nav-support { display: inline-flex; align-items: center; gap: 7px; color: var(--gold); }
+.nav .nav-support .cup { width: 20px; height: 20px; }
+.nav .nav-support:hover { color: var(--ink); }
+.hero-support { position: relative; display: flex; justify-content: center; align-items: center; gap: 12px; margin: 22px 0 0;
+  font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--soft); }
+.hero-support .dot { color: var(--dim); }
+.hero-support a { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); padding: 6px 14px; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--gold) 40%, transparent); transition: background .2s, border-color .2s; }
+.hero-support a:hover { text-decoration: none; background: color-mix(in srgb, var(--gold) 12%, transparent); border-color: var(--gold); }
+.hero-support .cup { width: 20px; height: 20px; }
+.hero-support .steam, .nav-support .steam { stroke-dasharray: 3 3; animation: steam 2.4s linear infinite; opacity: .8; }
 .support { padding-top: 72px; }
 .support-card { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: center;
   padding: 48px; border-radius: 18px; border: 1px solid color-mix(in srgb, var(--acc) 35%, var(--line));
