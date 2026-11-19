@@ -155,7 +155,7 @@ def downloads_manifest():
         out[DLSLUG(r)] = en
     json.dump(out, open(f"{SITE}/src/downloads.json", "w"), indent=1)
 
-def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 11 &middot; 64-bit &middot; VST3", sub_l="x86_64 &middot; one-line install"):
+def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 11 &middot; 64-bit &middot; VST3", sub_l="Ubuntu 22.04+, Debian 12+, Fedora &middot; x86_64"):
     rel = f"{GH}/{repo}/releases/latest"
     pat_w = "setup.exe" if repo == "axell-signature-dojo" else "windows-x64.tar.gz"
     return f"""<div class="dl" data-repo="{repo}">
@@ -493,7 +493,15 @@ def contact_page():
 
 def build():
     downloads_manifest()
-    if os.path.isdir(OUT): shutil.rmtree(OUT)
+    # sitemap <lastmod>: a page keeps its date until its HTML changes (search engines only trust accurate dates)
+    old = {}
+    if os.path.isdir(OUT):
+        sm = f"{OUT}/sitemap.xml"
+        dates = dict(re.findall(r"<loc>https://www.axellsdojo.com([^<]*)</loc><lastmod>([^<]*)</lastmod>", open(sm).read())) if os.path.exists(sm) else {}
+        for u in ["/"] + [f"/{SLUG[r]}/" for r in PLUGINS] + ["/dojo/", "/contact/"]:
+            f = f"{OUT}{u}index.html"
+            if os.path.exists(f): old[u] = (dates.get(u), hashlib.sha256(open(f, "rb").read()).hexdigest())
+        shutil.rmtree(OUT)
     os.makedirs(f"{OUT}/img", exist_ok=True)
     for f in ("site.js", "_headers", "_redirects"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
     for f in os.listdir(f"{SITE}/src"):   # the IndexNow key (Bing, Yandex, Seznam, Naver): a 32-hex-character .txt
@@ -524,8 +532,12 @@ def build():
     open(f"{OUT}/.well-known/security.txt", "w").write("Contact: mailto:contact@axellsdojo.com\nExpires: " + (datetime.date.today() + datetime.timedelta(days=360)).isoformat()
         + "T00:00:00Z\nPreferred-Languages: en, de\nCanonical: https://www.axellsdojo.com/.well-known/security.txt\n")
     urls = ["/"] + [f"/{SLUG[r]}/" for r in PLUGINS] + ["/dojo/", "/contact/"]
+    today = datetime.date.today().isoformat()
+    def lastmod(u):
+        d, h = old.get(u, (None, None))
+        return d if d and h == hashlib.sha256(open(f"{OUT}{u}index.html", "rb").read()).hexdigest() else today
     open(f"{OUT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + "".join(f"  <url><loc>https://www.axellsdojo.com{u}</loc></url>\n" for u in urls) + "</urlset>\n")
+        + "".join(f"  <url><loc>https://www.axellsdojo.com{u}</loc><lastmod>{lastmod(u)}</lastmod></url>\n" for u in urls) + "</urlset>\n")
     have = open(f"{SITE}/src/fonts/KANJI.txt").read()
     for d_, _, fs in os.walk(OUT):
         for f in fs:
