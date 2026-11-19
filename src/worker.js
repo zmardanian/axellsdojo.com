@@ -67,6 +67,36 @@ async function note(env, row) {
   } catch (e) { console.log("download not noted:", e.message); }
 }
 
+const KOFI = "https://ko-fi.com/axellyobag";
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+// the page shown while the download starts: one second, then the browser fetches the file from GitHub
+function thanks(name, system, hit, to) {
+  const what = name === "Signature Suite + Dojo" ? (system === "windows" ? "the Axell Signature Suite installer" : "the Axell Signature Dojo") : name;
+  const file = hit ? `${esc(hit.file)} &middot; version ${esc(hit.version)}` : "the release page on GitHub";
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="1;url=${esc(to)}"><meta name="robots" content="noindex"><title>Thank you - Axell's Dojo</title>
+<link rel="icon" href="/img/favicon.png"><style>
+@font-face{font-family:GV;src:url(/fonts/great-vibes-400.woff2) format("woff2")}@font-face{font-family:JO;src:url(/fonts/jost-400.woff2) format("woff2")}
+@font-face{font-family:YU;src:url(/fonts/yuji-syuku-400-kanji.woff2) format("woff2")}
+:root{--g:#c9a25e}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(90% 70% at 50% 0%,#1b1712,#0b0d12 70%);
+color:#efe6d6;font:17px/1.6 JO,system-ui,sans-serif;padding:24px 16px;text-align:center}
+.k{font-family:YU,serif;font-size:42px;color:#fff3e6;background:#c0362c;display:inline-block;padding:2px 12px;border-radius:5px;transform:rotate(-4deg)}
+h1{font-family:GV,cursive;font-weight:400;color:var(--g);font-size:clamp(54px,12vw,86px);line-height:1.1;margin:18px 0 4px}
+p{color:#a99d8d;max-width:520px;margin:8px auto}.f{font-size:13px;color:#6f6658}a{color:var(--g)}
+.b{display:inline-flex;flex-direction:column;align-items:center;margin:26px 0 10px;padding:16px 34px 12px;border-radius:10px;background:var(--g);color:#0b0d12;
+text-decoration:none;box-shadow:0 10px 40px rgba(201,162,94,.35);transition:transform .15s}.b:hover{transform:translateY(-2px)}
+.b b{letter-spacing:.16em;text-transform:uppercase;font-weight:500}.b small{font-size:12px;letter-spacing:.06em;opacity:.8}
+.s{width:34px;height:34px;margin-bottom:4px}.h{margin-top:28px;font-size:13px;letter-spacing:.14em;text-transform:uppercase}</style></head><body><main>
+<span class="k" aria-hidden="true">道場</span><h1>Thank you.</h1>
+<p>Your download of <b style="color:#efe6d6">${esc(what)}</b> is starting. If it doesn't, <a href="${esc(to)}">click here</a>.</p>
+<p class="f">${file}</p>
+<p style="margin-top:22px">Everything in the Dojo is free and stays free &mdash; no subscriptions, no licence keys. If it earns a place in your mixes, a coffee keeps it going.</p>
+<a class="b" href="${KOFI}" rel="noopener"><svg class="s" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+<path d="M10 4c-1.5 2 1.5 3 0 5M15 3c-1.5 2 1.5 3 0 5M20 4c-1.5 2 1.5 3 0 5"/><path d="M5 13h19v7a7 7 0 0 1-7 7h-5a7 7 0 0 1-7-7z"/><path d="M24 15h1.5a3.5 3.5 0 0 1 0 7H23.5"/></g>
+<path d="M14.5 23.2l-3-2.9a1.9 1.9 0 0 1 2.7-2.7l.3.3.3-.3a1.9 1.9 0 0 1 2.7 2.7z" fill="currentColor"/></svg><b>Buy Axell a coffee</b><small>on Ko-fi &middot; from &euro;3</small></a>
+<p class="h"><a href="/">Back to the Dojo</a> &nbsp;&middot;&nbsp; <a href="https://github.com/zmardanian">GitHub</a></p></main></body></html>`;
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -92,6 +122,12 @@ export default {
     try { const ref = new URL(request.headers.get("Referer")); from = ref.hostname.endsWith("axellsdojo.com") ? ref.pathname : ref.hostname; } catch (e) {}
     if (!limited) ctx.waitUntil(note(env, [new Date().toISOString().slice(0, 19).replace("T", " "), entry.name, system, hit ? hit.version : null, hit ? hit.file : null,
       cf.country || null, cf.city || null, from || "(direct)", device(ua), browser(ua), bot, cf.asOrganization || null]));
-    return new Response(null, { status: 302, headers: { Location: hit ? hit.url : page, "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } });
+    // a person gets a thank-you page that starts the download itself (and asks for a tip); tools and bots get the plain redirect
+    const to = hit ? hit.url : page;
+    if (bot === 1 || !/text\/html/.test(request.headers.get("Accept") || ""))
+      return new Response(null, { status: 302, headers: { Location: to, "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } });
+    return new Response(thanks(entry.name, system, hit, to), { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store",
+      "X-Robots-Tag": "noindex", "Referrer-Policy": "strict-origin-when-cross-origin", "X-Content-Type-Options": "nosniff",
+      "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'" } });
   },
 };

@@ -273,7 +273,7 @@ def home():
 </section>
 </main>
 """
-    return head("Axell's Dojo - nine audio plugins forged for the voice", "Free, open-source VST3 plugins for Windows and Linux - EQ, compression, gating, de-reverb, de-essing, saturation, reverb and mastering, each measured against the real thing.", ld={"@context": "https://schema.org", "@type": "WebSite", "name": "Axell's Dojo", "url": "https://www.axellsdojo.com/", "author": AUTHOR}) + body + foot()
+    return head("Free Vocal Plugins (VST3) for Windows & Linux - Axell's Dojo", "Nine free, open-source VST3 vocal plugins for Windows and Linux: a 1176 compressor, LA-2A style opto, neural de-esser, de-reverb, noise gate, EQ, saturation, reverb and a mastering limiter - each measured against the real thing.", ld={"@context": "https://schema.org", "@type": "WebSite", "name": "Axell's Dojo", "url": "https://www.axellsdojo.com/", "author": AUTHOR}) + body + foot()
 
 
 AUDIO = {}
@@ -341,7 +341,7 @@ def plugin_page(r):
 <section class="section family"><p class="label">THE SUITE</p><div class="family-row">{others}</div></section>
 </main>
 """
-    return head(f"{NAME[r]} - {TAG[r]}", f"{NAME[r]}: {c['pitch'][0]} Free VST3 for Windows and Linux.", ACC[r], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg", ld=app_ld(NAME[r], c['pitch'][0], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg")) + body + foot()
+    return head(f"{NAME[r]} - free {SUITE_LINE[r]} plugin (VST3, Windows & Linux)", f"{NAME[r]}: {TAG[r]} {c['pitch'][0]} Free and open-source VST3 for Windows and Linux.", ACC[r], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg", ld=app_ld(NAME[r], c['pitch'][0], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg")) + body + foot()
 
 def dojo_page():
     r = "axell-signature-dojo"; c = C[r]; u, w, h = img(r, c["shot"], 1800)
@@ -368,7 +368,7 @@ def dojo_page():
 {support("The Dojo, like every Axell plugin,")}
 </main>
 """
-    return head("Axell Signature Dojo - your vocal chain, tuned to your voice", "Installs and updates the Axell plugins, tunes a complete vocal chain to your voice from one dry take, opens it in REAPER. One Windows installer carries the whole suite.", ACC[r], "/dojo/", "og-dojo.jpg") + body + foot()
+    return head("Axell Signature Dojo - free vocal chain tuner and plugin installer (Windows & Linux)", "Installs and updates the Axell plugins, tunes a complete vocal chain to your voice from one dry take, opens it in REAPER. One Windows installer carries the whole suite.", ACC[r], "/dojo/", "og-dojo.jpg") + body + foot()
 
 
 OWNER = ("Alexandru Georgian Petre", "Bahnhofstraße 62", "64404 Bickenbach", "Germany")
