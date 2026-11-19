@@ -266,3 +266,9 @@ main p a:not(.btn), footer p a, .note a { text-decoration: underline; text-decor
 .cf-note { color: var(--dim); font-size: 14px; margin: 0; }
 .cf-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 @media (max-width: 640px) { .cf-row { grid-template-columns: 1fr; } }
+/* "Windows protected your PC" help under the suite download */
+.dl-help { max-width: 640px; margin: 14px auto 0; color: var(--soft); font-size: 14px; text-align: left; }
+.dl-help summary { cursor: pointer; color: var(--dim); text-align: center; list-style-position: inside; }
+.dl-help summary:hover { color: var(--soft); }
+.dl-help p { margin: 10px 0 0; line-height: 1.6; }
+.dl-help code { background: var(--bg2); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; font-size: 13px; white-space: nowrap; }

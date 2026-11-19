@@ -20,7 +20,7 @@
 <link rel="preload" href="/fonts/jost-400.woff2?v=7726a5cd6f" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/cormorant-garamond-500.woff2?v=d80df8ff5a" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/yuji-syuku-400-kanji.woff2?v=0b79abf636" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/style.css?v=65998f1f62">
+<link rel="stylesheet" href="/style.css?v=a9c91b6041">
 <style>:root{--acc:#c9a25e}</style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Axell's Dojo", "url": "https://www.axellsdojo.com/", "author": {"@type": "Person", "name": "Axell Yobag", "url": "https://www.axellsdojo.com/contact/"}}</script>
 </head>
@@ -42,6 +42,11 @@
   <a class="btn btn-primary" href="/get/dojo/windows" rel="nofollow"><b>Get the whole suite for Windows</b><small>One installer &middot; the Dojo + all nine plugins</small></a>
   <a class="btn btn-ghost" href="/get/dojo/linux" rel="nofollow"><b>Download for Linux</b><small>The Dojo installs the plugins</small></a>
   <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="https://github.com/zmardanian/axell-signature-dojo/releases/latest">all files &amp; checksums</a> &middot; <a href="https://github.com/zmardanian/axell-signature-dojo">source on GitHub</a></p>
+  <details class="dl-help"><summary>Windows says &ldquo;Windows protected your PC&rdquo;?</summary>
+  <p>The installer is free and not yet code-signed, so SmartScreen doesn't know it. Click <b>More info</b>, then <b>Run anyway</b>.
+  To be sure it's the original file, compare its fingerprint with <code>SHA256SUMS.txt</code> on the release page &mdash; in PowerShell:
+  <code>Get-FileHash .\AxellSignatureSuite-*-setup.exe</code>. On Linux: <code>sha256sum -c SHA256SUMS.txt</code>.
+  Every file is built from the public source on GitHub.</p></details>
 </div>
   <p class="hero-support"><span>Free forever</span><span class="dot">&middot;</span><a href="https://ko-fi.com/axellyobag" rel="noopener"><svg class="cup" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path class="steam" d="M10 4c-1.5 2 1.5 3 0 5M15 3c-1.5 2 1.5 3 0 5M20 4c-1.5 2 1.5 3 0 5"/><path d="M5 13h19v7a7 7 0 0 1-7 7h-5a7 7 0 0 1-7-7z"/><path d="M24 15h1.5a3.5 3.5 0 0 1 0 7H23.5"/></g><path d="M14.5 23.2l-3-2.9a1.9 1.9 0 0 1 2.7-2.7l.3.3.3-.3a1.9 1.9 0 0 1 2.7 2.7z" fill="currentColor"/></svg>Support on Ko-fi</a></p>
   <p class="hosts">Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour</p>
@@ -157,6 +162,11 @@
   <a class="btn btn-primary" href="/get/dojo/windows" rel="nofollow"><b>Get the suite for Windows</b><small>One installer &middot; the Dojo + all nine plugins</small></a>
   <a class="btn btn-ghost" href="/get/dojo/linux" rel="nofollow"><b>Download for Linux</b><small>The Dojo, then the plugins from its Plugins page</small></a>
   <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="https://github.com/zmardanian/axell-signature-dojo/releases/latest">all files &amp; checksums</a> &middot; <a href="https://github.com/zmardanian/axell-signature-dojo">source on GitHub</a></p>
+  <details class="dl-help"><summary>Windows says &ldquo;Windows protected your PC&rdquo;?</summary>
+  <p>The installer is free and not yet code-signed, so SmartScreen doesn't know it. Click <b>More info</b>, then <b>Run anyway</b>.
+  To be sure it's the original file, compare its fingerprint with <code>SHA256SUMS.txt</code> on the release page &mdash; in PowerShell:
+  <code>Get-FileHash .\AxellSignatureSuite-*-setup.exe</code>. On Linux: <code>sha256sum -c SHA256SUMS.txt</code>.
+  Every file is built from the public source on GitHub.</p></details>
 </div>
 </section>
 </main>

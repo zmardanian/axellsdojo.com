@@ -170,8 +170,16 @@ def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 1
     return f"""<div class="dl" data-repo="{repo}">
   <a class="btn btn-primary" href="/get/{DLSLUG(repo)}/windows" rel="nofollow"><b>{windows_label}</b><small>{sub_w}</small></a>
   <a class="btn btn-ghost" href="/get/{DLSLUG(repo)}/linux" rel="nofollow"><b>Download for Linux</b><small>{sub_l}</small></a>
-  <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>
+  <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>{SAFE if repo == "axell-signature-dojo" else ""}
 </div>"""
+
+# the suite installer is not code-signed (yet): say so before Windows does, and how to check the file
+SAFE = """
+  <details class="dl-help"><summary>Windows says &ldquo;Windows protected your PC&rdquo;?</summary>
+  <p>The installer is free and not yet code-signed, so SmartScreen doesn't know it. Click <b>More info</b>, then <b>Run anyway</b>.
+  To be sure it's the original file, compare its fingerprint with <code>SHA256SUMS.txt</code> on the release page &mdash; in PowerShell:
+  <code>Get-FileHash .\\AxellSignatureSuite-*-setup.exe</code>. On Linux: <code>sha256sum -c SHA256SUMS.txt</code>.
+  Every file is built from the public source on GitHub.</p></details>"""
 
 HIDE_AUDIO = set()
 FEATURED = [("axell-gate", "vocals"), ("axell-dereverb", "vocals"), ("axell-master", "mix")]
