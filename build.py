@@ -24,7 +24,7 @@ CSS = open(f"{SITE}/src/fonts.css").read() + open(f"{SITE}/src/style.css").read(
 VER = {"style.css": hashlib.sha256(CSS.encode()).hexdigest()[:10], "site.js": hashlib.sha256(open(f"{SITE}/src/site.js", "rb").read()).hexdigest()[:10]}
 import re
 FONT_URL = {n: u for u, n in re.findall(r"url\((/fonts/([a-z-]+?)-\d[^)]*)\)", CSS)}
-PRELOAD = "".join(f'<link rel="preload" href="{FONT_URL[n]}" as="font" type="font/woff2" crossorigin>\n' for n in ("great-vibes", "jost", "cormorant-garamond"))
+PRELOAD = "".join(f'<link rel="preload" href="{FONT_URL[n]}" as="font" type="font/woff2" crossorigin>\n' for n in ("great-vibes", "jost", "cormorant-garamond", "yuji-syuku"))   # yuji: the 7 KB kanji seal, part of every hero title
 
 def webp(src, dst, width=1600):
     os.makedirs(os.path.dirname(dst), exist_ok=True)
