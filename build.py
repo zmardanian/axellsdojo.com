@@ -69,10 +69,19 @@ def ldjson(d):
     return "" if not d else '\n<script type="application/ld+json">' + json.dumps(d, ensure_ascii=False).replace("</", "<\\/") + "</script>"
 
 AUTHOR = {"@type": "Person", "name": "Axell Yobag", "url": "https://www.axellsdojo.com/contact/"}
-def app_ld(name, desc, path, og, os_="Windows 10, Windows 11, Linux"):
-    return {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": name, "description": desc, "url": f"https://www.axellsdojo.com{path}",
-            "image": f"https://www.axellsdojo.com/img/{og}", "applicationCategory": "MultimediaApplication", "applicationSubCategory": "Audio plugin (VST3)",
-            "operatingSystem": os_, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "author": AUTHOR}
+def app_ld(name, desc, path, og, os_="Windows 10, Windows 11, Linux", repo=None):
+    d = {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": name, "description": desc, "url": f"https://www.axellsdojo.com{path}",
+         "image": f"https://www.axellsdojo.com/img/{og}", "applicationCategory": "MultimediaApplication", "applicationSubCategory": "Audio plugin (VST3)",
+         "operatingSystem": os_, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "author": AUTHOR,
+         "isAccessibleForFree": True, "license": "https://www.gnu.org/licenses/agpl-3.0.html"}
+    if repo:   # the released version and where the files and the source are (no ratings: there are none to show)
+        import json
+        rel = json.load(open(f"{SITE}/src/downloads.json")).get(DLSLUG(repo), {})
+        ver = (rel.get("windows") or rel.get("linux") or {}).get("version")
+        if ver: d["softwareVersion"] = ver
+        d["downloadUrl"] = f"{GH}/{repo}/releases/latest"
+        d["sameAs"] = f"{GH}/{repo}"
+    return d
 
 def head(title, desc, accent="#c9a25e", path="/", og="og.jpg", ld=None):
     return f"""<!doctype html>
@@ -342,7 +351,7 @@ def plugin_page(r):
 <section class="section family"><p class="label">THE SUITE</p><div class="family-row">{others}</div></section>
 </main>
 """
-    return head(f"{NAME[r]} - free {SUITE_LINE[r]} plugin (VST3, Windows & Linux)", f"{NAME[r]}: {TAG[r]} {c['pitch'][0]} Free and open-source VST3 for Windows and Linux.", ACC[r], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg", ld=app_ld(NAME[r], c['pitch'][0], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg")) + body + foot()
+    return head(f"{NAME[r]} - free {SUITE_LINE[r]} plugin (VST3, Windows & Linux)", f"{NAME[r]}: {TAG[r]} {c['pitch'][0]} Free and open-source VST3 for Windows and Linux.", ACC[r], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg", ld=app_ld(NAME[r], c['pitch'][0], f"/{SLUG[r]}/", f"og-{SLUG[r]}.jpg", repo=r)) + body + foot()
 
 def dojo_page():
     r = "axell-signature-dojo"; c = C[r]; u, w, h = img(r, c["shot"], 1800)
@@ -369,7 +378,9 @@ def dojo_page():
 {support("The Dojo, like every Axell plugin,")}
 </main>
 """
-    return head("Axell Signature Dojo - free vocal chain tuner and plugin installer (Windows & Linux)", "Installs and updates the Axell plugins, tunes a complete vocal chain to your voice from one dry take, opens it in REAPER. One Windows installer carries the whole suite.", ACC[r], "/dojo/", "og-dojo.jpg") + body + foot()
+    return head("Axell Signature Dojo - free vocal chain tuner and plugin installer (Windows & Linux)", "Installs and updates the Axell plugins, tunes a complete vocal chain to your voice from one dry take, opens it in REAPER. One Windows installer carries the whole suite.", ACC[r], "/dojo/", "og-dojo.jpg",
+        ld=dict(app_ld("Axell Signature Dojo", "Installs and updates the Axell plugins and tunes a complete vocal chain to your voice from one dry take.",
+                       "/dojo/", "og-dojo.jpg", repo=r), applicationSubCategory="Audio plugin manager and vocal chain tuner")) + body + foot()
 
 
 OWNER = ("Alexandru Georgian Petre", "Bahnhofstraße 62", "64404 Bickenbach", "Germany")
