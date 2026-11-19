@@ -183,7 +183,7 @@ export default {
     // a few downloads a minute is a person; past that the link still works but is not stored, so nobody can flood the counter
     const limited = env.LIMIT && !(await env.LIMIT.limit({ key: request.headers.get("CF-Connecting-IP") || "" })).success;
     let from = "";
-    try { const ref = new URL(request.headers.get("Referer")); from = ref.hostname.endsWith("axellsdojo.com") ? ref.pathname : ref.hostname; } catch (e) {}
+    try { const ref = new URL(request.headers.get("Referer")); from = ref.hostname === "axellsdojo.com" || ref.hostname.endsWith(".axellsdojo.com") ? ref.pathname : ref.hostname; } catch (e) {}
     if (!limited) ctx.waitUntil(note(env, [new Date().toISOString().slice(0, 19).replace("T", " "), entry.name, system, hit ? hit.version : null, hit ? hit.file : null,
       cf.country || null, cf.city || null, from || "(direct)", device(ua), browser(ua), bot, cf.asOrganization || null]));
     // a person gets a thank-you page that starts the download itself (and asks for a tip); tools and bots get the plain redirect
