@@ -125,3 +125,15 @@
     }
   });
 })();
+
+// the plugin window, live: the filmed loop fades in over the screenshot once it really plays; only while on screen,
+// never with reduced motion or Save-Data, and paused when scrolled away
+(function () {
+  const v = document.querySelector(".hero-loop");
+  if (!v || !("IntersectionObserver" in window)) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || (navigator.connection && navigator.connection.saveData)) return;
+  v.addEventListener("playing", function () { v.classList.add("on"); });
+  new IntersectionObserver(function (en) {
+    if (en[0].isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(function () {}); } else v.pause();
+  }, { threshold: 0.35 }).observe(v);
+})();

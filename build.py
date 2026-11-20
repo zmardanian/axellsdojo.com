@@ -396,6 +396,13 @@ def ab_card(r, it, show_plugin=False):
   <p class="ab-meta">Preset <b>{e(it['preset'])}</b> &middot; {lvl}{sim}<br>Source: {e(it['source'])} &middot; <a href="/credits/">{e(it.get('license', 'CC BY-SA 4.0'))}</a></p>
 </div>"""
 
+def hero_loop(r):
+    """the real plugin window, filmed while audio runs through it (each repo's GuiSnapshot with AXELL_VIDEO_DIR):
+    a silent loop laid exactly over the screenshot; site.js starts it only when visible and motion is welcome"""
+    v = f"/video/{SLUG[r]}.mp4"
+    if not os.path.exists(f"{SITE}/src{v}"): return ""
+    return f'<video class="hero-loop" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="{v}"></video>'
+
 def closeup(r):
     """one tight crop of the plugin's signature control with a short callout (src/img/closeups, cut from the screenshot)"""
     import json
@@ -462,7 +469,7 @@ def plugin_page(r):
   <p class="spec">{e(SPEC[r])}</p>
   {dl_buttons(r)}
   <p class="suite-up">Want all nine? One installer, one updater &rarr; <a href="/dojo/">get the whole suite</a></p>
-  <div class="hero-shot rise">{tag(u, w, h, c["alt"], "hero")}</div>
+  <div class="hero-shot rise">{tag(u, w, h, c["alt"], "hero")}{hero_loop(r)}</div>
   <p class="pitch"><b>{c['pitch'][0]}</b> {c['pitch'][1]}</p>
   {closeup(r)}
 </section>
@@ -502,7 +509,7 @@ def dojo_page():
   <p class="spec">{e(SPEC[r])}</p>
   {dl_buttons(r, "Get the suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo installs the plugins")}
   {HOSTS}
-  <div class="hero-shot rise">{tag(u, w, h, c["alt"], "hero")}</div>
+  <div class="hero-shot rise">{tag(u, w, h, c["alt"], "hero")}{hero_loop(r)}</div>
   <p class="pitch"><b>{c['pitch'][0]}</b> {c['pitch'][1]}</p>
 </section>
 <section class="section"><p class="label">01 &nbsp; WHAT IT DOES</p><h2>Everything around the plugins.</h2><div class="whys">{why}</div></section>
@@ -744,6 +751,7 @@ def build():
     for f in ("site.js", "_headers", "_redirects"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
     shutil.copy(f"{SITE}/src/img/vst-compatible.svg", f"{OUT}/img/vst-compatible.svg")
     shutil.copytree(f"{SITE}/src/img/closeups", f"{OUT}/img/closeups", dirs_exist_ok=True, ignore=shutil.ignore_patterns("closeups.json"))
+    shutil.copytree(f"{SITE}/src/video", f"{OUT}/video", dirs_exist_ok=True)
     for f in os.listdir(f"{SITE}/src"):   # the IndexNow key (Bing, Yandex, Seznam, Naver): a 32-hex-character .txt
         if len(f) == 36 and f.endswith(".txt"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
     open(f"{OUT}/style.css", "w").write(CSS); shutil.copytree(f"{SITE}/src/fonts", f"{OUT}/fonts", ignore=shutil.ignore_patterns("KANJI.txt"))
