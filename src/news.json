@@ -1,0 +1,62 @@
+{
+ "penta-eq": {
+  "version": "3.0.1",
+  "date": "2026-10-27",
+  "url": "https://github.com/zmardanian/axell-penta-eq/releases/tag/v3.0.1",
+  "point": "Version on the interface"
+ },
+ "duo-compressor": {
+  "version": "4.0.3",
+  "date": "2026-11-15",
+  "url": "https://github.com/zmardanian/axell-duo-compressor/releases/tag/v4.0.3",
+  "point": "Lighter, the same sound"
+ },
+ "gate": {
+  "version": "4.0.2",
+  "date": "2026-11-15",
+  "url": "https://github.com/zmardanian/axell-gate/releases/tag/v4.0.2",
+  "point": "The name in the suite's script wordmark"
+ },
+ "dereverb": {
+  "version": "4.0.1",
+  "date": "2026-11-15",
+  "url": "https://github.com/zmardanian/axell-dereverb/releases/tag/v4.0.1",
+  "point": "Faster, the same sound"
+ },
+ "velvet": {
+  "version": "3.0.4",
+  "date": "2026-11-15",
+  "url": "https://github.com/zmardanian/axell-velvet/releases/tag/v3.0.4",
+  "point": "Lighter, the same sound"
+ },
+ "master": {
+  "version": "4.0.3",
+  "date": "2026-11-15",
+  "url": "https://github.com/zmardanian/axell-master/releases/tag/v4.0.3",
+  "point": "Lighter, same sound"
+ },
+ "space": {
+  "version": "4.0.1",
+  "date": "2026-11-15",
+  "url": "https://github.com/zmardanian/axell-space/releases/tag/v4.0.1",
+  "point": "The same sound, a little lighter"
+ },
+ "forbidden-seal": {
+  "version": "4.0.2",
+  "date": "2026-11-15",
+  "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/tag/v4.0.2",
+  "point": "Faster, the same sound"
+ },
+ "76": {
+  "version": "3.2.0",
+  "date": "2026-11-14",
+  "url": "https://github.com/zmardanian/axell-76/releases/tag/v3.2.0",
+  "point": "Anchored to a real 1176LN"
+ },
+ "dojo": {
+  "version": "3.3.3",
+  "date": "2026-11-19",
+  "url": "https://github.com/zmardanian/axell-signature-dojo/releases/tag/v3.3.3",
+  "point": "Linux: runs on Ubuntu 22.04 and newer"
+ }
+}

@@ -149,10 +149,13 @@ def support(what, label="SUPPORT THE DOJO"):
 </section>"""
 
 DLSLUG = lambda repo: "dojo" if repo == "axell-signature-dojo" else SLUG[repo]
+# a release whose notes open without a short bold headline gets one here (from its notes / README)
+NEWS_POINT = {("axell-forbidden-seal", "v4.0.2"): "Faster, the same sound"}
+
 def downloads_manifest():
     """src/downloads.json for the Worker: per plugin the release files known now (its fallback when GitHub's API does not answer)"""
     import json, subprocess
-    out = {}
+    out, news = {}, {}
     for r in ORDER:
         rels = json.loads(subprocess.run(["gh", "api", f"repos/zmardanian/{r}/releases?per_page=6"], capture_output=True, text=True, check=True).stdout)
         suf = {"windows": "windows-x64-setup.exe" if r == "axell-signature-dojo" else "windows-x64.tar.gz", "linux": "linux-x86_64.tar.gz"}
@@ -162,7 +165,15 @@ def downloads_manifest():
                           for rel in rels if not rel["draft"] and not rel["prerelease"] for a in rel["assets"] if a["name"].endswith(sfx)), None)
             if not en[k]: raise SystemExit(f"{r}: no {k} release file")
         out[DLSLUG(r)] = en
+        # "what's new" for the page: the newest release's first bold point (or its heading), its date and link
+        rel = next(x for x in rels if not x["draft"] and not x["prerelease"])
+        body = rel.get("body") or ""
+        m = re.search(r"^[-*] \*\*(.+?)\*\*", body, re.M) or re.search(r"^#+ .*? - (?!\d{4}-)(.+)$", body, re.M) or re.search(r"^[-*] (.{20,90}?)[.;,(]", body, re.M)
+        news[DLSLUG(r)] = {"version": rel["tag_name"].lstrip("v"), "date": rel["published_at"][:10], "url": rel["html_url"],
+                           "point": NEWS_POINT.get((r, rel["tag_name"])) or (m.group(1).strip().rstrip(".") if m else "")}
+        if news[DLSLUG(r)]["point"]: news[DLSLUG(r)]["point"] = news[DLSLUG(r)]["point"][0].upper() + news[DLSLUG(r)]["point"][1:]
     json.dump(out, open(f"{SITE}/src/downloads.json", "w"), indent=1)
+    json.dump(news, open(f"{SITE}/src/news.json", "w"), indent=1)
 
 def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 11 &middot; 64-bit &middot; VST3", sub_l="Ubuntu 22.04+ &middot; Debian 12+ &middot; Fedora"):
     rel = f"{GH}/{repo}/releases/latest"
@@ -170,8 +181,17 @@ def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 1
     return f"""<div class="dl" data-repo="{repo}">
   <a class="btn btn-primary" href="/get/{DLSLUG(repo)}/windows" rel="nofollow"><b>{windows_label}</b><small>{sub_w}</small></a>
   <a class="btn btn-ghost" href="/get/{DLSLUG(repo)}/linux" rel="nofollow"><b>Download for Linux</b><small>{sub_l}</small></a>
-  <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>{SAFE if repo == "axell-signature-dojo" else ""}
+  <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>{whats_new(repo)}{SAFE if repo == "axell-signature-dojo" else ""}
 </div>"""
+
+def whats_new(repo):
+    """the newest release's headline and date, from src/news.json (written with downloads.json)"""
+    import json, datetime
+    try: n = json.load(open(f"{SITE}/src/news.json")).get(DLSLUG(repo))
+    except OSError: return ""
+    if not n or not n.get("point"): return ""
+    d = datetime.date.fromisoformat(n["date"]).strftime("%-d %b %Y")
+    return f'\n  <p class="dl-news">New in {e(n["version"])} <span>({d})</span>: {e(n["point"])} &middot; <a href="{e(n["url"])}">release notes</a></p>'
 
 # the suite installer is not code-signed (yet): say so before Windows does, and how to check the file
 SAFE = """
