@@ -273,5 +273,7 @@ main p a:not(.btn), footer p a, .note a { text-decoration: underline; text-decor
 .dl-mac { flex-basis: 100%; margin: 2px 0 0; text-align: center; color: var(--soft); font-size: 14px; }
 .dl-news { flex-basis: 100%; margin: 0; text-align: center; color: var(--soft); font-size: 14px; }
 .dl-news span { color: var(--dim); }
+.dl-trust { flex-basis: 100%; margin: 0; text-align: center; color: var(--dim); font-size: 13px; letter-spacing: .02em; }
+.dl-trust a { color: var(--soft); }
 .legal pre.key { background: var(--bg2); border: 1px solid var(--line); padding: 12px 14px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
 .legal ul { padding-left: 20px; }

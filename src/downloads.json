@@ -7,14 +7,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-penta-eq/releases/download/v3.0.1/AxellPentaEQ-3.0.1-windows-x64.tar.gz",
-   "file": "AxellPentaEQ-3.0.1-windows-x64.tar.gz",
-   "version": "3.0.1"
+   "url": "https://github.com/zmardanian/axell-penta-eq/releases/download/v3.0.2/AxellPentaEQ-3.0.2-windows-x64.tar.gz",
+   "file": "AxellPentaEQ-3.0.2-windows-x64.tar.gz",
+   "version": "3.0.2"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-penta-eq/releases/download/v3.0.1/AxellPentaEQ-3.0.1-linux-x86_64.tar.gz",
-   "file": "AxellPentaEQ-3.0.1-linux-x86_64.tar.gz",
-   "version": "3.0.1"
+   "url": "https://github.com/zmardanian/axell-penta-eq/releases/download/v3.0.2/AxellPentaEQ-3.0.2-linux-x86_64.tar.gz",
+   "file": "AxellPentaEQ-3.0.2-linux-x86_64.tar.gz",
+   "version": "3.0.2"
   }
  },
  "duo-compressor": {
@@ -25,14 +25,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-duo-compressor/releases/download/v4.0.3/AxellDuoCompressor-4.0.3-windows-x64.tar.gz",
-   "file": "AxellDuoCompressor-4.0.3-windows-x64.tar.gz",
-   "version": "4.0.3"
+   "url": "https://github.com/zmardanian/axell-duo-compressor/releases/download/v4.0.4/AxellDuoCompressor-4.0.4-windows-x64.tar.gz",
+   "file": "AxellDuoCompressor-4.0.4-windows-x64.tar.gz",
+   "version": "4.0.4"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-duo-compressor/releases/download/v4.0.3/AxellDuoCompressor-4.0.3-linux-x86_64.tar.gz",
-   "file": "AxellDuoCompressor-4.0.3-linux-x86_64.tar.gz",
-   "version": "4.0.3"
+   "url": "https://github.com/zmardanian/axell-duo-compressor/releases/download/v4.0.4/AxellDuoCompressor-4.0.4-linux-x86_64.tar.gz",
+   "file": "AxellDuoCompressor-4.0.4-linux-x86_64.tar.gz",
+   "version": "4.0.4"
   }
  },
  "gate": {

@@ -1,27 +1,27 @@
 {
  "penta-eq": {
-  "version": "3.0.1",
-  "date": "2026-10-27",
-  "url": "https://github.com/zmardanian/axell-penta-eq/releases/tag/v3.0.1",
-  "point": "Version on the interface"
+  "version": "3.0.2",
+  "date": "2026-11-20",
+  "url": "https://github.com/zmardanian/axell-penta-eq/releases/tag/v3.0.2",
+  "point": "Your DAW remembers the chosen preset; works with screen readers"
  },
  "duo-compressor": {
-  "version": "4.0.3",
-  "date": "2026-11-15",
-  "url": "https://github.com/zmardanian/axell-duo-compressor/releases/tag/v4.0.3",
-  "point": "Lighter, the same sound"
+  "version": "4.0.4",
+  "date": "2026-11-20",
+  "url": "https://github.com/zmardanian/axell-duo-compressor/releases/tag/v4.0.4",
+  "point": "Your DAW remembers the chosen preset; works with screen readers"
  },
  "gate": {
   "version": "4.0.3",
   "date": "2026-11-20",
   "url": "https://github.com/zmardanian/axell-gate/releases/tag/v4.0.3",
-  "point": "Your DAW's preset menu shows the right factory preset after a project is reopened"
+  "point": "Your DAW remembers the chosen preset; works with screen readers"
  },
  "dereverb": {
   "version": "4.0.2",
   "date": "2026-11-20",
   "url": "https://github.com/zmardanian/axell-dereverb/releases/tag/v4.0.2",
-  "point": "The name in the suite's script wordmark"
+  "point": "Your DAW remembers the chosen preset; works with screen readers"
  },
  "velvet": {
   "version": "3.0.4",
