@@ -354,6 +354,7 @@ def home():
 
 
 AUDIO = {}
+GRAPHS = {}
 GENRE = {"boom-bap": "boom bap", "rnb": "R&B"}
 WF_BINS = 96
 _WF_CACHE = f"{SITE}/.wf-cache.json"
@@ -395,6 +396,43 @@ def ab_card(r, it, show_plugin=False):
   <p class="ab-meta">Preset <b>{e(it['preset'])}</b> &middot; {lvl}{sim}<br>Source: {e(it['source'])} &middot; <a href="/credits/">{e(it.get('license', 'CC BY-SA 4.0'))}</a></p>
 </div>"""
 
+def closeup(r):
+    """one tight crop of the plugin's signature control with a short callout (src/img/closeups, cut from the screenshot)"""
+    import json
+    try: m = json.load(open(f"{SITE}/src/img/closeups/closeups.json")).get(r)
+    except OSError: m = None
+    if not m: return ""
+    return (f'<figure class="closeup reveal"><img src="{m["src"]}" width="{m["w"]}" height="{m["h"]}" alt="{e(m["cap"])}" loading="lazy" decoding="async">'
+            f'<figcaption><span class="dot" aria-hidden="true"></span>{e(m["cap"])}</figcaption></figure>')
+
+def graph_svg(r):
+    """what the plugin did to its trap example, measured: the average spectrum and the level over time, before (ink,
+    dashed) and after (the plugin's colour). Inline SVG: no script, no image request."""
+    g = GRAPHS.get(SLUG[r])
+    if not g: return ""
+    import math
+    W, H, P = 520, 220, 34
+    def poly(xs, ys, x0, x1, y0, y1):
+        pts = []
+        for x, y in zip(xs, ys):
+            px = P + (x - x0) / (x1 - x0) * (W - 2 * P); py = 14 + (1 - (min(max(y, y0), y1) - y0) / (y1 - y0)) * (H - 40)
+            pts.append(f"{px:.1f},{py:.1f}")
+        return " ".join(pts)
+    lx = [math.log10(f) for f in g["freq"]]; x0, x1 = math.log10(40), math.log10(18000)
+    ticks = "".join(f'<text x="{P + (math.log10(f) - x0) / (x1 - x0) * (W - 2 * P):.0f}" y="{H - 8}">{t}</text>'
+                    for f, t in [(100, "100"), (1000, "1k"), (10000, "10k")])
+    spec = (f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="Average spectrum before and after">{ticks}'
+            f'<polyline class="g-a" points="{poly(lx, g["a"], x0, x1, -60, 0)}"/><polyline class="g-b" points="{poly(lx, g["b"], x0, x1, -60, 0)}"/></svg>')
+    t = [i * 0.1 for i in range(len(g["la"]))]; lo = min(min(g["la"]), min(g["lb"])); lo = max(lo, max(max(g["la"]), max(g["lb"])) - 48)
+    hi = max(max(g["la"]), max(g["lb"])) + 2
+    lvl = (f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="Level over time before and after"><text x="{P}" y="{H - 8}">0 s</text>'
+           f'<text x="{W - P - 24}" y="{H - 8}">{t[-1]:.0f} s</text>'
+           f'<polyline class="g-a" points="{poly(t, g["la"], 0, t[-1], lo, hi)}"/><polyline class="g-b" points="{poly(t, g["lb"], 0, t[-1], lo, hi)}"/></svg>')
+    lv = "level-matched" if g["matched"] else "not level-matched"
+    return f"""<div class="graphs reveal"><figure><figcaption>Tone: average spectrum</figcaption>{spec}</figure>
+<figure><figcaption>Dynamics: level over time</figcaption>{lvl}</figure>
+<p class="g-key"><span class="k-a">Original</span> <span class="k-b">{e(SHORT[r])}</span> &middot; measured on the &ldquo;{e(g["clip"])}&rdquo; example above ({lv})</p></div>"""
+
 def listen(r):
     items = AUDIO.get(SLUG[r], [])
     if r in HIDE_AUDIO: items = []          # examples being redone (a synthetic room was a poor test for De-Reverb)
@@ -402,7 +440,7 @@ def listen(r):
     cards = [ab_card(r, it) for it in items]
     return f"""<section class="section listen"><p class="label">HEAR IT</p><h2>Before and after.</h2>
 <p class="lede">The same excerpt, the original and through {e(NAME[r])} with a factory preset. Press play, then switch &mdash; both play in sync, so you hear only the plugin. Headphones recommended.</p>
-<div class="abs">{"".join(cards)}</div></section>"""
+<div class="abs">{"".join(cards)}</div>{graph_svg(r)}</section>"""
 
 def plugin_page(r):
     c = C[r]; u, w, h = img(r, c["shot"], 1800)
@@ -426,6 +464,7 @@ def plugin_page(r):
   <p class="suite-up">Want all nine? One installer, one updater &rarr; <a href="/dojo/">get the whole suite</a></p>
   <div class="hero-shot rise">{tag(u, w, h, c["alt"], "hero")}</div>
   <p class="pitch"><b>{c['pitch'][0]}</b> {c['pitch'][1]}</p>
+  {closeup(r)}
 </section>
 {listen(r)}
 <section class="section">
@@ -704,12 +743,14 @@ def build():
     os.makedirs(f"{OUT}/img", exist_ok=True)
     for f in ("site.js", "_headers", "_redirects"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
     shutil.copy(f"{SITE}/src/img/vst-compatible.svg", f"{OUT}/img/vst-compatible.svg")
+    shutil.copytree(f"{SITE}/src/img/closeups", f"{OUT}/img/closeups", dirs_exist_ok=True, ignore=shutil.ignore_patterns("closeups.json"))
     for f in os.listdir(f"{SITE}/src"):   # the IndexNow key (Bing, Yandex, Seznam, Naver): a 32-hex-character .txt
         if len(f) == 36 and f.endswith(".txt"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
     open(f"{OUT}/style.css", "w").write(CSS); shutil.copytree(f"{SITE}/src/fonts", f"{OUT}/fonts", ignore=shutil.ignore_patterns("KANJI.txt"))
     import json
     AUDIO.update(json.load(open(f"{SITE}/src/audio/audio.json")))
-    shutil.copytree(f"{SITE}/src/audio", f"{OUT}/audio", ignore=shutil.ignore_patterns("audio.json"))
+    if os.path.exists(f"{SITE}/src/audio/graphs.json"): GRAPHS.update(json.load(open(f"{SITE}/src/audio/graphs.json")))
+    shutil.copytree(f"{SITE}/src/audio", f"{OUT}/audio", ignore=shutil.ignore_patterns("audio.json", "graphs.json"))
     os.makedirs(f"{OUT}/contact", exist_ok=True); open(f"{OUT}/contact/index.html", "w").write(contact_page())
     os.makedirs(f"{OUT}/credits", exist_ok=True); open(f"{OUT}/credits/index.html", "w").write(credits_page())
     for slug, page in (("impressum", impressum_page), ("privacy", privacy_page), ("code-signing", signing_page)):

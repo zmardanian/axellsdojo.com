@@ -32,10 +32,19 @@
   document.querySelectorAll(".ab").forEach(function (el) {
     const play = el.querySelector(".ab-play"), pos = el.querySelector(".ab-pos"), bar = el.querySelector(".ab-bar");
     const sw = el.querySelectorAll(".ab-switch button");
-    let bufs = null, srcs = null, gains = null, t0 = 0, off = 0, side = "a", raf = 0, loading = false;
+    let bufs = null, srcs = null, gains = null, t0 = 0, off = 0, side = "a", raf = 0, loading = false, an = null;
+    // live meters: the level of both versions while they play (the one you hear is drawn bright)
+    const meters = document.createElement("div"); meters.className = "ab-meters"; meters.setAttribute("aria-hidden", "true");
+    meters.innerHTML = '<span class="m m-a"><i></i></span><span class="m m-b"><i></i></span>';
+    bar.parentNode.insertBefore(meters, bar.nextSibling);
+    const mA = meters.querySelector(".m-a i"), mB = meters.querySelector(".m-b i"), tmp = new Float32Array(1024);
+    function lvl(node) { node.getFloatTimeDomainData(tmp); let s = 0; for (let i = 0; i < tmp.length; i++) s += tmp[i] * tmp[i];
+      const db = 10 * Math.log10(s / tmp.length + 1e-12); return Math.max(0, Math.min(1, (db + 48) / 48)); }
     function dur() { return bufs ? Math.min(bufs.a.duration, bufs.b.duration) : 1; }
     function now() { return srcs ? off + (ctx.currentTime - t0) : off; }
-    function draw() { pos.style.clipPath = "inset(0 " + (100 - 100 * Math.min(1, now() / dur())) + "% 0 0)"; if (srcs) raf = requestAnimationFrame(draw); }
+    function meter() { if (!an || !srcs) { mA.style.transform = mB.style.transform = "scaleX(0)"; return; }
+      mA.style.transform = "scaleX(" + lvl(an.a).toFixed(3) + ")"; mB.style.transform = "scaleX(" + lvl(an.b).toFixed(3) + ")"; }
+    function draw() { meter(); pos.style.clipPath = "inset(0 " + (100 - 100 * Math.min(1, now() / dur())) + "% 0 0)"; if (srcs) raf = requestAnimationFrame(draw); }
     function stop(keep) {
       if (srcs) { off = keep ? now() : 0; srcs.a.onended = null; srcs.a.stop(); srcs.b.stop(); srcs = null; }
       cancelAnimationFrame(raf); play.innerHTML = "&#9654;"; play.setAttribute("aria-label", "Play"); el.classList.remove("playing"); draw();
@@ -47,6 +56,7 @@
       ["a", "b"].forEach(function (k) {
         gains[k].gain.value = (k === side) ? 1 : 0; gains[k].connect(c.destination);
         srcs[k] = c.createBufferSource(); srcs[k].buffer = bufs[k]; srcs[k].connect(gains[k]);
+        if (!an) an = {}; if (!an[k]) { an[k] = c.createAnalyser(); an[k].fftSize = 1024; } srcs[k].connect(an[k]);
       });
       off = at; t0 = c.currentTime + 0.05; srcs.a.start(t0, at); srcs.b.start(t0, at);
       srcs.a.onended = function () { if (srcs) stop(false); };

@@ -1,0 +1,56 @@
+{
+ "axell-penta-eq": {
+  "src": "/img/closeups/penta-eq.webp",
+  "w": 1100,
+  "h": 233,
+  "cap": "Four colour modules in one rack: Inductor, Console, Passive Tube and Air."
+ },
+ "axell-duo-compressor": {
+  "src": "/img/closeups/duo-compressor.webp",
+  "w": 1100,
+  "h": 505,
+  "cap": "A FET and an opto side by side - in series or parallel, with ESS HOLD and VOICE HOLD below."
+ },
+ "axell-gate": {
+  "src": "/img/closeups/gate.webp",
+  "w": 1100,
+  "h": 297,
+  "cap": "SMART voice detection, and BEAT BLEED removal with the beat on the side-chain."
+ },
+ "axell-dereverb": {
+  "src": "/img/closeups/dereverb.webp",
+  "w": 1100,
+  "h": 359,
+  "cap": "REDUCTION, the live readout of what was removed, and TRUE TONE."
+ },
+ "axell-velvet": {
+  "src": "/img/closeups/velvet.webp",
+  "w": 1100,
+  "h": 646,
+  "cap": "The neural de-esser shows every ess it detects - and only those are cut."
+ },
+ "axell-master": {
+  "src": "/img/closeups/master.webp",
+  "w": 792,
+  "h": 715,
+  "cap": "Integrated loudness, true peak and the target for your platform at a glance."
+ },
+ "axell-space": {
+  "src": "/img/closeups/space.webp",
+  "w": 1100,
+  "h": 216,
+  "cap": "ESS DUCK, VOICE DUCK and UNMASK keep the tail out of the voice's way."
+ },
+ "axell-forbidden-seal": {
+  "src": "/img/closeups/forbidden-seal.webp",
+  "w": 753,
+  "h": 196,
+  "cap": "DRIVE is a katana drawn from its scabbard - the blade glows as you push it."
+ },
+ "axell-76": {
+  "src": "/img/closeups/76.webp",
+  "w": 1079,
+  "h": 526,
+  "cap": "The needle VU with attack and release - the 1176 as you know it."
+ }
+}
