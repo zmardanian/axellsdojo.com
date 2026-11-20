@@ -79,14 +79,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-velvet/releases/download/v3.0.4/AxellVelvet-3.0.4-windows-x64.tar.gz",
-   "file": "AxellVelvet-3.0.4-windows-x64.tar.gz",
-   "version": "3.0.4"
+   "url": "https://github.com/zmardanian/axell-velvet/releases/download/v3.0.5/AxellVelvet-3.0.5-windows-x64.tar.gz",
+   "file": "AxellVelvet-3.0.5-windows-x64.tar.gz",
+   "version": "3.0.5"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-velvet/releases/download/v3.0.4/AxellVelvet-3.0.4-linux-x86_64.tar.gz",
-   "file": "AxellVelvet-3.0.4-linux-x86_64.tar.gz",
-   "version": "3.0.4"
+   "url": "https://github.com/zmardanian/axell-velvet/releases/download/v3.0.5/AxellVelvet-3.0.5-linux-x86_64.tar.gz",
+   "file": "AxellVelvet-3.0.5-linux-x86_64.tar.gz",
+   "version": "3.0.5"
   }
  },
  "master": {
@@ -97,14 +97,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-master/releases/download/v4.0.3/AxellMaster-4.0.3-windows-x64.tar.gz",
-   "file": "AxellMaster-4.0.3-windows-x64.tar.gz",
-   "version": "4.0.3"
+   "url": "https://github.com/zmardanian/axell-master/releases/download/v4.0.4/AxellMaster-4.0.4-windows-x64.tar.gz",
+   "file": "AxellMaster-4.0.4-windows-x64.tar.gz",
+   "version": "4.0.4"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-master/releases/download/v4.0.3/AxellMaster-4.0.3-linux-x86_64.tar.gz",
-   "file": "AxellMaster-4.0.3-linux-x86_64.tar.gz",
-   "version": "4.0.3"
+   "url": "https://github.com/zmardanian/axell-master/releases/download/v4.0.4/AxellMaster-4.0.4-linux-x86_64.tar.gz",
+   "file": "AxellMaster-4.0.4-linux-x86_64.tar.gz",
+   "version": "4.0.4"
   }
  },
  "space": {
@@ -115,14 +115,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-space/releases/download/v4.0.1/AxellSpace-4.0.1-windows-x64.tar.gz",
-   "file": "AxellSpace-4.0.1-windows-x64.tar.gz",
-   "version": "4.0.1"
+   "url": "https://github.com/zmardanian/axell-space/releases/download/v4.0.2/AxellSpace-4.0.2-windows-x64.tar.gz",
+   "file": "AxellSpace-4.0.2-windows-x64.tar.gz",
+   "version": "4.0.2"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-space/releases/download/v4.0.1/AxellSpace-4.0.1-linux-x86_64.tar.gz",
-   "file": "AxellSpace-4.0.1-linux-x86_64.tar.gz",
-   "version": "4.0.1"
+   "url": "https://github.com/zmardanian/axell-space/releases/download/v4.0.2/AxellSpace-4.0.2-linux-x86_64.tar.gz",
+   "file": "AxellSpace-4.0.2-linux-x86_64.tar.gz",
+   "version": "4.0.2"
   }
  },
  "forbidden-seal": {
@@ -133,14 +133,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/download/v4.0.2/AxellForbiddenSeal-4.0.2-windows-x64.tar.gz",
-   "file": "AxellForbiddenSeal-4.0.2-windows-x64.tar.gz",
-   "version": "4.0.2"
+   "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/download/v4.0.3/AxellForbiddenSeal-4.0.3-windows-x64.tar.gz",
+   "file": "AxellForbiddenSeal-4.0.3-windows-x64.tar.gz",
+   "version": "4.0.3"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/download/v4.0.2/AxellForbiddenSeal-4.0.2-linux-x86_64.tar.gz",
-   "file": "AxellForbiddenSeal-4.0.2-linux-x86_64.tar.gz",
-   "version": "4.0.2"
+   "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/download/v4.0.3/AxellForbiddenSeal-4.0.3-linux-x86_64.tar.gz",
+   "file": "AxellForbiddenSeal-4.0.3-linux-x86_64.tar.gz",
+   "version": "4.0.3"
   }
  },
  "76": {
@@ -151,14 +151,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-76/releases/download/v3.2.0/Axell76-3.2.0-windows-x64.tar.gz",
-   "file": "Axell76-3.2.0-windows-x64.tar.gz",
-   "version": "3.2.0"
+   "url": "https://github.com/zmardanian/axell-76/releases/download/v3.2.1/Axell76-3.2.1-windows-x64.tar.gz",
+   "file": "Axell76-3.2.1-windows-x64.tar.gz",
+   "version": "3.2.1"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-76/releases/download/v3.2.0/Axell76-3.2.0-linux-x86_64.tar.gz",
-   "file": "Axell76-3.2.0-linux-x86_64.tar.gz",
-   "version": "3.2.0"
+   "url": "https://github.com/zmardanian/axell-76/releases/download/v3.2.1/Axell76-3.2.1-linux-x86_64.tar.gz",
+   "file": "Axell76-3.2.1-linux-x86_64.tar.gz",
+   "version": "3.2.1"
   }
  },
  "dojo": {

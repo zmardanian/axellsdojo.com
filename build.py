@@ -613,8 +613,10 @@ def credits_page():
 released under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a> licence.</p>
 <p>Tracks used: TRACKS_USED.</p>
 <p><b>Changes made:</b> 14-second excerpts, set to a working level (-18 LUFS; -20 LUFS for the mastering examples), processed through the
-Axell plugins with their factory presets, the processed version matched to the original's loudness (except the mastering examples), short
-fades. Where marked, a small room (De-Reverb) or headphone bleed of the song's instrumental (Gate) was simulated before processing.
+Axell plugins with their factory presets, the processed version matched to the original's loudness, short fades. The drum examples sum the
+song's kick, snare and break stems; the mastering examples sum all of a song's stems (an unmastered mix), and their "before" is that mix
+turned up to the master's loudness without a limiter. Where marked, a small room (De-Reverb) or headphone bleed of the song's instrumental
+(Gate) was simulated before processing.
 The processed excerpts are shared under the same licence, CC BY-SA 4.0. No endorsement by the artists or the OnAir Music project is implied.</p>
 <p>Typefaces: Great Vibes, Cormorant Garamond, Jost and Yuji Syuku (<a href="/fonts/OFL.txt">SIL Open Font License</a>), served from this site - no request goes to a font service.</p>
 </section></main>"""
