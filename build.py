@@ -16,7 +16,12 @@ NAME = {r: ("Axell 76" if r == "axell-76" else f"Axell {T.P[r][0]}") for r in OR
 KANJI = {r: T.P[r][1] for r in ORDER}
 ACC = {r: T.P[r][2] for r in ORDER}            # the dark-theme accent: the site is dark
 TAG = {r: T.P[r][4] for r in ORDER}
-SPEC = {r: T.P[r][5] for r in ORDER}
+SPEC = {r: T.P[r][5].replace("VST3", "VST\u00ae3", 1) for r in ORDER}
+# Steinberg's VST Compatible logo beside the VST3 claim on every page that promotes the plugins (VST usage guidelines;
+# a footer-only logo is not enough). Official artwork from steinbergmedia/vst3_doc (artwork/), negative variant.
+HOSTS = ('<p class="hosts"><img class="vst-logo" src="/img/vst-compatible.svg" width="64" height="41" alt="VST Compatible">'
+         'Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour'
+         '<br><span class="tm">VST is a registered trademark of Steinberg Media Technologies GmbH.</span></p>')
 e = html.escape
 import hashlib
 # a fingerprint per asset in its URL: a browser can never keep an outdated stylesheet or script after an update
@@ -116,7 +121,7 @@ def foot():
   <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
   <div class="foot-links">{links}<a href="/dojo/">Axell Signature Dojo</a></div>
   <div class="foot-small">
-    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="{GH}">GitHub</a> &middot; <a href="{KOFI}" rel="noopener">Support on Ko-fi</a> &middot; <a href="/impressum/">Impressum</a> &middot; <a href="/privacy/">Privacy</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="{GH}">GitHub</a> &middot; <a href="{KOFI}" rel="noopener">Support on Ko-fi</a> &middot; <a href="/impressum/">Impressum</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/code-signing/">Code signing policy</a> &middot; Licensed under the GNU AGPLv3.</p>
     <p>VST is a registered trademark of Steinberg Media Technologies GmbH. 1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
   </div>
 </footer>
@@ -271,10 +276,10 @@ def home():
   <p class="eyebrow">AXELL SIGNATURE &middot; THE SUITE</p>
   <h1 class="script hero-title">Axell's Dojo</h1>
   <p class="hero-tag">Nine plugins forged for the voice. Every claim, measured.</p>
-  <p class="spec">WINDOWS &nbsp;&middot;&nbsp; LINUX &nbsp;&middot;&nbsp; VST3 &nbsp;&middot;&nbsp; FREE &amp; OPEN SOURCE</p>
+  <p class="spec">WINDOWS &nbsp;&middot;&nbsp; LINUX &nbsp;&middot;&nbsp; VST&reg;3 &nbsp;&middot;&nbsp; FREE &amp; OPEN SOURCE</p>
   {dl_buttons("axell-signature-dojo", "Get the whole suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo installs the plugins")}
   <p class="hero-support"><span>Free forever</span><span class="dot">&middot;</span><a href="{KOFI}" rel="noopener">{CUP}Support on Ko-fi</a></p>
-  <p class="hosts">Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour</p>
+  {HOSTS}
   <div class="seal-row">{seals}</div>
 </section>
 
@@ -373,7 +378,7 @@ def plugin_page(r):
   <p class="label">{"03" if gal else "02"} &nbsp; GET IT</p><h2>Windows first. Linux too.</h2>
   <p class="lede">Free and open source. Copy one folder into your VST3 folder &mdash; or install the whole suite in one go with the Axell Signature Suite installer, and let the Dojo keep everything up to date.</p>
   {dl_buttons(r)}
-  <p class="hosts">Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour</p>
+  {HOSTS}
 </section>
 {support(e(NAME[r]))}
 <section class="section family"><p class="label">THE SUITE</p><div class="family-row">{others}</div></section>
@@ -397,7 +402,7 @@ def dojo_page():
   <p class="hero-tag">{e(TAG[r])}</p>
   <p class="spec">{e(SPEC[r])}</p>
   {dl_buttons(r, "Get the suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo installs the plugins")}
-  <p class="hosts">Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour</p>
+  {HOSTS}
   <div class="hero-shot rise">{tag(u, w, h, c["alt"], "hero")}</div>
   <p class="pitch"><b>{c['pitch'][0]}</b> {c['pitch'][1]}</p>
 </section>
@@ -490,6 +495,56 @@ und Informationsfreiheit, Wiesbaden (datenschutz.hessen.de). There is no automat
 </section></main>"""
     return head("Privacy policy - Axell's Dojo", "Privacy policy (Datenschutzerklärung) of axellsdojo.com.", path="/privacy/") + body + foot()
 
+MINISIGN_PUB = open(os.path.expanduser("~/.minisign/axell.pub")).read().split("\n")[1].strip()
+
+def signing_page():
+    body = f"""<main><section class="section legal"><p class="label">SECURITY &middot; CODE SIGNING POLICY</p><h2>Code signing policy</h2>
+<p class="lede">How the Axell plugins and the Dojo are built, signed and checked, so you can trust that a download is exactly what was
+published from the open source code. As of 20 November 2026.</p>
+
+<h3>1. What is built, and where</h3>
+<p>Every release is built from the public source code on <a href="{GH}">GitHub</a> (GNU AGPLv3). The Windows files - the nine plugins
+(<code>.vst3</code>), the Axell Signature Dojo and the Axell Signature Suite installer - are built only by GitHub Actions, from the commit
+and tag named in each release, and tested there (the plugins' own test suites, pluginval at strictness 10, a sound match with the Linux
+build). The Linux archives are built on Ubuntu 22.04 from the same tag.</p>
+
+<h3>2. Windows code signing</h3>
+<p>Windows code signing is being set up with the SignPath Foundation, which signs open source software for free. Until that is in place,
+the Windows files are not code-signed, and Windows SmartScreen may show "Windows protected your PC" for the suite installer (choose
+More info, then Run anyway). Once it is active, signed releases carry:
+<i>Free code signing provided by <a href="https://about.signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a></i>.
+Only builds from GitHub Actions are ever submitted for signing, and every signing request is approved by hand.</p>
+
+<h3>3. Team and roles</h3>
+<p>The Axell suite is made by one person, Axell Yobag (<a href="{GH}">github.com/zmardanian</a>), who holds every role:</p>
+<ul>
+<li><b>Committers and reviewers:</b> Axell Yobag. Changes proposed by anyone else (pull requests) are reviewed before they are merged.</li>
+<li><b>Approvers:</b> Axell Yobag approves every release and every signing request.</li>
+</ul>
+<p>The GitHub account uses two-factor authentication, and the release branches and tags are protected against deletion and rewriting.</p>
+
+<h3>4. Checking a download yourself</h3>
+<p>Every release has a <code>SHA256SUMS.txt</code> with the fingerprint of each file, and from 20 November 2026 a
+<code>SHA256SUMS.txt.minisig</code> that signs it with the suite's release key (<a href="https://jedisct1.github.io/minisign/">minisign</a>).
+The public key:</p>
+<pre class="key">{MINISIGN_PUB}</pre>
+<p>On Linux: <code>minisign -Vm SHA256SUMS.txt -P {MINISIGN_PUB}</code>, then <code>sha256sum -c --ignore-missing SHA256SUMS.txt</code>.
+On Windows (PowerShell): <code>Get-FileHash &lt;file&gt;</code> and compare it with the line in <code>SHA256SUMS.txt</code>.
+The suite installer also carries a GitHub build attestation: <code>gh attestation verify &lt;file&gt; -R zmardanian/axell-signature-dojo</code>.
+The Axell Signature Dojo checks the fingerprint of every download before it installs anything.</p>
+
+<h3>5. Privacy</h3>
+<p>This program will not transfer any information to other networked systems unless specifically requested by the user or the person
+installing or operating it. The plugins never connect to the internet. The Dojo contacts GitHub (<code>api.github.com</code> and
+<code>github.com</code>) only when you click to check for updates or to install, to read the list of releases and download them; it
+sends nothing about you or your computer. See the <a href="/privacy/">privacy policy</a> for this website.</p>
+
+<h3>6. Reporting a problem</h3>
+<p>Security problems: please report them privately - see the security policy in each repository, or write to
+<a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a>.</p>
+</section></main>"""
+    return head("Code signing policy - Axell's Dojo", "How the Axell plugins and the Signature Dojo are built, signed and verified.", path="/code-signing/") + body + foot()
+
 def credits_page():
     body = """<main><section class="section"><p class="label">CREDITS</p><h2>The music in the examples.</h2>
 <p class="lede">Every before/after example on this site is made from the <a href="https://github.com/OnAir-Music/OnAir-Music-Dataset">OnAir Music Dataset</a>
@@ -558,6 +613,7 @@ def build():
         shutil.rmtree(OUT)
     os.makedirs(f"{OUT}/img", exist_ok=True)
     for f in ("site.js", "_headers", "_redirects"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
+    shutil.copy(f"{SITE}/src/img/vst-compatible.svg", f"{OUT}/img/vst-compatible.svg")
     for f in os.listdir(f"{SITE}/src"):   # the IndexNow key (Bing, Yandex, Seznam, Naver): a 32-hex-character .txt
         if len(f) == 36 and f.endswith(".txt"): shutil.copy(f"{SITE}/src/{f}", f"{OUT}/{f}")
     open(f"{OUT}/style.css", "w").write(CSS); shutil.copytree(f"{SITE}/src/fonts", f"{OUT}/fonts", ignore=shutil.ignore_patterns("KANJI.txt"))
@@ -566,7 +622,7 @@ def build():
     shutil.copytree(f"{SITE}/src/audio", f"{OUT}/audio", ignore=shutil.ignore_patterns("audio.json"))
     os.makedirs(f"{OUT}/contact", exist_ok=True); open(f"{OUT}/contact/index.html", "w").write(contact_page())
     os.makedirs(f"{OUT}/credits", exist_ok=True); open(f"{OUT}/credits/index.html", "w").write(credits_page())
-    for slug, page in (("impressum", impressum_page), ("privacy", privacy_page)):
+    for slug, page in (("impressum", impressum_page), ("privacy", privacy_page), ("code-signing", signing_page)):
         os.makedirs(f"{OUT}/{slug}", exist_ok=True); open(f"{OUT}/{slug}/index.html", "w").write(page())
     open(f"{OUT}/index.html", "w").write(home())
     for r in PLUGINS:

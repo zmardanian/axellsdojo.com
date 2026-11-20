@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code signing policy - Axell&#x27;s Dojo</title>
+<meta name="description" content="How the Axell plugins and the Signature Dojo are built, signed and verified.">
+<meta name="theme-color" content="#0b0d12">
+<meta property="og:title" content="Code signing policy - Axell&#x27;s Dojo">
+<meta property="og:description" content="How the Axell plugins and the Signature Dojo are built, signed and verified.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.axellsdojo.com/code-signing/">
+<meta property="og:image" content="https://www.axellsdojo.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.axellsdojo.com/code-signing/">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preload" href="/fonts/great-vibes-400.woff2?v=c59dc73d29" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jost-400.woff2?v=7726a5cd6f" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/cormorant-garamond-500.woff2?v=d80df8ff5a" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/yuji-syuku-400-kanji.woff2?v=0b79abf636" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=78b7ee649f">
+<style>:root{--acc:#c9a25e}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <a class="brand" href="/"><span class="seal seal-wide seal-sm" aria-hidden="true">道場</span><span>Axell's Dojo</span></a>
+  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-support" href="https://ko-fi.com/axellyobag" rel="noopener" aria-label="Support on Ko-fi"><svg class="cup" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path class="steam" d="M10 4c-1.5 2 1.5 3 0 5M15 3c-1.5 2 1.5 3 0 5M20 4c-1.5 2 1.5 3 0 5"/><path d="M5 13h19v7a7 7 0 0 1-7 7h-5a7 7 0 0 1-7-7z"/><path d="M24 15h1.5a3.5 3.5 0 0 1 0 7H23.5"/></g><path d="M14.5 23.2l-3-2.9a1.9 1.9 0 0 1 2.7-2.7l.3.3.3-.3a1.9 1.9 0 0 1 2.7 2.7z" fill="currentColor"/></svg><span>Support</span></a><a class="nav-cta" href="/#get">Download</a></nav>
+</header>
+<main id="main"><section class="section legal"><p class="label">SECURITY &middot; CODE SIGNING POLICY</p><h2>Code signing policy</h2>
+<p class="lede">How the Axell plugins and the Dojo are built, signed and checked, so you can trust that a download is exactly what was
+published from the open source code. As of 20 November 2026.</p>
+
+<h3>1. What is built, and where</h3>
+<p>Every release is built from the public source code on <a href="https://github.com/zmardanian">GitHub</a> (GNU AGPLv3). The Windows files - the nine plugins
+(<code>.vst3</code>), the Axell Signature Dojo and the Axell Signature Suite installer - are built only by GitHub Actions, from the commit
+and tag named in each release, and tested there (the plugins' own test suites, pluginval at strictness 10, a sound match with the Linux
+build). The Linux archives are built on Ubuntu 22.04 from the same tag.</p>
+
+<h3>2. Windows code signing</h3>
+<p>Windows code signing is being set up with the SignPath Foundation, which signs open source software for free. Until that is in place,
+the Windows files are not code-signed, and Windows SmartScreen may show "Windows protected your PC" for the suite installer (choose
+More info, then Run anyway). Once it is active, signed releases carry:
+<i>Free code signing provided by <a href="https://about.signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a></i>.
+Only builds from GitHub Actions are ever submitted for signing, and every signing request is approved by hand.</p>
+
+<h3>3. Team and roles</h3>
+<p>The Axell suite is made by one person, Axell Yobag (<a href="https://github.com/zmardanian">github.com/zmardanian</a>), who holds every role:</p>
+<ul>
+<li><b>Committers and reviewers:</b> Axell Yobag. Changes proposed by anyone else (pull requests) are reviewed before they are merged.</li>
+<li><b>Approvers:</b> Axell Yobag approves every release and every signing request.</li>
+</ul>
+<p>The GitHub account uses two-factor authentication, and the release branches and tags are protected against deletion and rewriting.</p>
+
+<h3>4. Checking a download yourself</h3>
+<p>Every release has a <code>SHA256SUMS.txt</code> with the fingerprint of each file, and from 20 November 2026 a
+<code>SHA256SUMS.txt.minisig</code> that signs it with the suite's release key (<a href="https://jedisct1.github.io/minisign/">minisign</a>).
+The public key:</p>
+<pre class="key">RWQJLVJSETsP7RRz1rdiugX9w09wtGCtwEc5hHU8k9S+crL/ekfTkQKG</pre>
+<p>On Linux: <code>minisign -Vm SHA256SUMS.txt -P RWQJLVJSETsP7RRz1rdiugX9w09wtGCtwEc5hHU8k9S+crL/ekfTkQKG</code>, then <code>sha256sum -c --ignore-missing SHA256SUMS.txt</code>.
+On Windows (PowerShell): <code>Get-FileHash &lt;file&gt;</code> and compare it with the line in <code>SHA256SUMS.txt</code>.
+The suite installer also carries a GitHub build attestation: <code>gh attestation verify &lt;file&gt; -R zmardanian/axell-signature-dojo</code>.
+The Axell Signature Dojo checks the fingerprint of every download before it installs anything.</p>
+
+<h3>5. Privacy</h3>
+<p>This program will not transfer any information to other networked systems unless specifically requested by the user or the person
+installing or operating it. The plugins never connect to the internet. The Dojo contacts GitHub (<code>api.github.com</code> and
+<code>github.com</code>) only when you click to check for updates or to install, to read the list of releases and download them; it
+sends nothing about you or your computer. See the <a href="/privacy/">privacy policy</a> for this website.</p>
+
+<h3>6. Reporting a problem</h3>
+<p>Security problems: please report them privately - see the security policy in each repository, or write to
+<a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a>.</p>
+</section></main><footer class="foot">
+  <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
+  <div class="foot-links"><a href="/penta-eq/">Axell Penta EQ</a> <a href="/duo-compressor/">Axell Duo Compressor</a> <a href="/gate/">Axell Gate</a> <a href="/dereverb/">Axell De-Reverb</a> <a href="/velvet/">Axell Velvet</a> <a href="/master/">Axell Master</a> <a href="/space/">Axell Space</a> <a href="/forbidden-seal/">Axell Forbidden Seal</a> <a href="/76/">Axell 76</a><a href="/dojo/">Axell Signature Dojo</a></div>
+  <div class="foot-small">
+    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="https://github.com/zmardanian">GitHub</a> &middot; <a href="https://ko-fi.com/axellyobag" rel="noopener">Support on Ko-fi</a> &middot; <a href="/impressum/">Impressum</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/code-signing/">Code signing policy</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>VST is a registered trademark of Steinberg Media Technologies GmbH. 1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
+  </div>
+</footer>
+<script src="/site.js?v=3f053eb369" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ce09d7285b9247608354813fd8e4a526"}'></script>
+</body>
+</html>

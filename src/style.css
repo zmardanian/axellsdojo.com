@@ -48,6 +48,9 @@ img { max-width: 100%; height: auto; display: block; }
 .hero-tag { position: relative; font-family: var(--serif); font-style: italic; font-size: clamp(22px, 3.2vw, 34px); margin: 8px auto 6px; max-width: 900px; }
 .spec { position: relative; color: var(--soft); letter-spacing: .28em; font-size: 12px; margin: 0 0 34px; }
 .hosts { position: relative; color: var(--dim); font-size: 14px; margin: 18px 0 0; }
+.hosts .vst-logo { display: block; width: 64px; height: auto; margin: 0 0 10px; }
+.hosts .tm { font-size: 12px; }
+.hero .hosts .vst-logo, .windows .hosts .vst-logo { margin-left: auto; margin-right: auto; }
 .pitch { max-width: 860px; margin: 40px auto 0; color: var(--soft); font-size: 18px; position: relative; }
 .pitch b { color: var(--ink); display: block; font-family: var(--serif); font-size: 26px; font-weight: 600; margin-bottom: 6px; }
 .hero-shot { position: relative; max-width: 1100px; margin: 54px auto 0; border-radius: 10px; overflow: hidden;
@@ -270,3 +273,5 @@ main p a:not(.btn), footer p a, .note a { text-decoration: underline; text-decor
 .dl-mac { flex-basis: 100%; margin: 2px 0 0; text-align: center; color: var(--soft); font-size: 14px; }
 .dl-news { flex-basis: 100%; margin: 0; text-align: center; color: var(--soft); font-size: 14px; }
 .dl-news span { color: var(--dim); }
+.legal pre.key { background: var(--bg2); border: 1px solid var(--line); padding: 12px 14px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+.legal ul { padding-left: 20px; }

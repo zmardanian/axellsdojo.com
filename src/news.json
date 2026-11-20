@@ -12,16 +12,16 @@
   "point": "Lighter, the same sound"
  },
  "gate": {
-  "version": "4.0.2",
-  "date": "2026-11-15",
-  "url": "https://github.com/zmardanian/axell-gate/releases/tag/v4.0.2",
-  "point": "The name in the suite's script wordmark"
+  "version": "4.0.3",
+  "date": "2026-11-20",
+  "url": "https://github.com/zmardanian/axell-gate/releases/tag/v4.0.3",
+  "point": "Your DAW's preset menu shows the right factory preset after a project is reopened"
  },
  "dereverb": {
-  "version": "4.0.1",
-  "date": "2026-11-15",
-  "url": "https://github.com/zmardanian/axell-dereverb/releases/tag/v4.0.1",
-  "point": "Faster, the same sound"
+  "version": "4.0.2",
+  "date": "2026-11-20",
+  "url": "https://github.com/zmardanian/axell-dereverb/releases/tag/v4.0.2",
+  "point": "The name in the suite's script wordmark"
  },
  "velvet": {
   "version": "3.0.4",

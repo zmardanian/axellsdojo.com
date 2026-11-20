@@ -43,14 +43,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-gate/releases/download/v4.0.2/AxellGate-4.0.2-windows-x64.tar.gz",
-   "file": "AxellGate-4.0.2-windows-x64.tar.gz",
-   "version": "4.0.2"
+   "url": "https://github.com/zmardanian/axell-gate/releases/download/v4.0.3/AxellGate-4.0.3-windows-x64.tar.gz",
+   "file": "AxellGate-4.0.3-windows-x64.tar.gz",
+   "version": "4.0.3"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-gate/releases/download/v4.0.2/AxellGate-4.0.2-linux-x86_64.tar.gz",
-   "file": "AxellGate-4.0.2-linux-x86_64.tar.gz",
-   "version": "4.0.2"
+   "url": "https://github.com/zmardanian/axell-gate/releases/download/v4.0.3/AxellGate-4.0.3-linux-x86_64.tar.gz",
+   "file": "AxellGate-4.0.3-linux-x86_64.tar.gz",
+   "version": "4.0.3"
   }
  },
  "dereverb": {
@@ -61,14 +61,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-dereverb/releases/download/v4.0.1/AxellDeReverb-4.0.1-windows-x64.tar.gz",
-   "file": "AxellDeReverb-4.0.1-windows-x64.tar.gz",
-   "version": "4.0.1"
+   "url": "https://github.com/zmardanian/axell-dereverb/releases/download/v4.0.2/AxellDeReverb-4.0.2-windows-x64.tar.gz",
+   "file": "AxellDeReverb-4.0.2-windows-x64.tar.gz",
+   "version": "4.0.2"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-dereverb/releases/download/v4.0.1/AxellDeReverb-4.0.1-linux-x86_64.tar.gz",
-   "file": "AxellDeReverb-4.0.1-linux-x86_64.tar.gz",
-   "version": "4.0.1"
+   "url": "https://github.com/zmardanian/axell-dereverb/releases/download/v4.0.2/AxellDeReverb-4.0.2-linux-x86_64.tar.gz",
+   "file": "AxellDeReverb-4.0.2-linux-x86_64.tar.gz",
+   "version": "4.0.2"
   }
  },
  "velvet": {
