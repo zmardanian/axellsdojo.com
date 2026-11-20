@@ -2,7 +2,7 @@
 plugin, generated from the same content as the repositories' README pages (~/axell-windows-port/brand/content.py and
 typeset_suite.py). Screenshots are converted to WebP. Downloads resolve to the newest release files at view time
 (GitHub's public releases API), with the release page as the fallback. Output: public/ (what Cloudflare serves)."""
-import html, os, shutil, sys
+import html, json, os, shutil, sys
 from PIL import Image
 sys.path.insert(0, os.path.expanduser("~/axell-windows-port/brand"))
 from content import C, ORDER, SUITE_LINE
@@ -20,8 +20,8 @@ SPEC = {r: T.P[r][5].replace("VST3", "VST\u00ae3", 1) for r in ORDER}
 # Steinberg's VST Compatible logo beside the VST3 claim on every page that promotes the plugins (VST usage guidelines;
 # a footer-only logo is not enough). Official artwork from steinbergmedia/vst3_doc (artwork/), negative variant.
 HOSTS = ('<p class="hosts"><img class="vst-logo" src="/img/vst-compatible.svg" width="64" height="41" alt="VST Compatible">'
-         'Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour'
-         '<br><span class="tm">VST is a registered trademark of Steinberg Media Technologies GmbH.</span></p>')
+         '<span>Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour'
+         '<br><span class="tm">VST is a registered trademark of Steinberg Media Technologies GmbH.</span></span></p>')
 e = html.escape
 import hashlib
 # a fingerprint per asset in its URL: a browser can never keep an outdated stylesheet or script after an update
@@ -343,19 +343,43 @@ def home():
 
 
 AUDIO = {}
-SHORT = {"axell-penta-eq": "Penta EQ", "axell-duo-compressor": "Duo", "axell-gate": "Gate", "axell-dereverb": "De-Reverb", "axell-velvet": "Velvet", "axell-master": "Master", "axell-space": "Space", "axell-forbidden-seal": "Seal", "axell-76": "Axell 76"}
+WF_BINS = 96
+_WF_CACHE = f"{SITE}/.wf-cache.json"
+_wf = json.load(open(_WF_CACHE)) if os.path.exists(_WF_CACHE) else {}
+def wf_peaks(url):
+    """the clip's loudness outline: WF_BINS peak values 0-100, decoded once with ffmpeg, cached by the file's hash"""
+    import array, subprocess
+    path = f"{SITE}/src{url}"; h = hashlib.sha256(open(path, "rb").read()).hexdigest()[:16]
+    if h not in _wf:
+        pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-ac", "1", "-ar", "8000", "-f", "s16le", "-"], capture_output=True, check=True).stdout
+        s = array.array("h", pcm); n = len(s) // WF_BINS
+        _wf[h] = [max((abs(v) for v in s[i * n:(i + 1) * n]), default=0) for i in range(WF_BINS)]
+        json.dump(_wf, open(_WF_CACHE, "w"))
+    return _wf[h]
+
+def wf_svg(a, b):
+    """both clips' outlines on one scale (a level change stays visible), mirrored around the centre line"""
+    top = max(max(a), max(b), 1)
+    def path(p):
+        y = [max(0.6, 19 * v / top) for v in p]
+        up = " ".join(f"L{i + .5:.1f} {20 - v:.1f}" for i, v in enumerate(y)); dn = " ".join(f"L{i + .5:.1f} {20 + v:.1f}" for i, v in reversed(list(enumerate(y))))
+        return f"M0 20 {up} L{WF_BINS} 20 {dn} Z"
+    return (f'<svg viewBox="0 0 {WF_BINS} 40" preserveAspectRatio="none" aria-hidden="true">'
+            f'<path class="wa" d="{path(a)}"/><path class="wb" d="{path(b)}"/></svg>')
+
+SHORT ={"axell-penta-eq": "Penta EQ", "axell-duo-compressor": "Duo", "axell-gate": "Gate", "axell-dereverb": "De-Reverb", "axell-velvet": "Velvet", "axell-master": "Master", "axell-space": "Space", "axell-forbidden-seal": "Seal", "axell-76": "Axell 76"}
 def ab_card(r, it, show_plugin=False):
     lvl = "level-matched" if it["matched"] else "not level-matched - loudness is the point"
     sim = f' &middot; <span class="sim">{e(it["simulated"])}</span>' if it["simulated"] else ""
     tag = f'<a class="ab-plugin" href="/{SLUG[r]}/" style="--acc:{ACC[r]}">{seal(r, "seal seal-sm")} {e(NAME[r])}</a>' if show_plugin else ""
-    return f"""<div class="ab reveal" style="--acc:{ACC[r]}" data-a="{it['a']}" data-b="{it['b']}">
+    return f"""<div class="ab reveal" style="--acc:{ACC[r]}" data-side="a" data-a="{it['a']}" data-b="{it['b']}">
   {tag}<div class="ab-head"><span class="ab-cat">{e(it['cat'].upper())}</span><h3>{e(it['title'])}</h3></div>
   <p class="ab-note">{e(it['note'])}</p>
   <div class="ab-ctl">
     <button class="ab-play" aria-label="Play">&#9654;</button>
     <div class="ab-switch" role="group" aria-label="Compare"><button class="on" data-side="a">Original</button><button data-side="b">{e(SHORT[r])}</button></div>
   </div>
-  <div class="ab-bar"><div class="ab-pos"></div></div>
+  <div class="ab-bar" title="Click to jump">{(w := wf_svg(wf_peaks(it['a']), wf_peaks(it['b'])))}<div class="ab-pos">{w}</div></div>
   <p class="ab-meta">Preset <b>{e(it['preset'])}</b> &middot; {lvl}{sim}<br>Source: {e(it['source'])} &middot; <a href="/credits/">CC BY-SA 4.0</a></p>
 </div>"""
 
@@ -390,13 +414,13 @@ def plugin_page(r):
   <div class="hero-shot rise">{tag(u, w, h, c["alt"], "hero")}</div>
   <p class="pitch"><b>{c['pitch'][0]}</b> {c['pitch'][1]}</p>
 </section>
+{listen(r)}
 <section class="section">
   <p class="label">01 &nbsp; WHY IT'S DIFFERENT</p><h2>Five reasons, all measured.</h2>
   <div class="whys">{why}</div>
   <p class="note">Every figure comes from the plugin's own test suites and published benchmarks &mdash; the full measurements, the method and every version's history are on <a href="{GH}/{r}">GitHub</a>.</p>
 </section>
 {gallery}
-{listen(r)}
 <section class="section windows reveal">
   <p class="label">{"03" if gal else "02"} &nbsp; GET IT</p><h2>Windows first. Linux too.</h2>
   <p class="lede">Free and open source. Copy one folder into your VST3 folder &mdash; or install the whole suite in one go with the Axell Signature Suite installer, and let the Dojo keep everything up to date.</p>

@@ -47,7 +47,7 @@
     let bufs = null, srcs = null, gains = null, t0 = 0, off = 0, side = "a", raf = 0, loading = false;
     function dur() { return bufs ? Math.min(bufs.a.duration, bufs.b.duration) : 1; }
     function now() { return srcs ? off + (ctx.currentTime - t0) : off; }
-    function draw() { pos.style.width = (100 * Math.min(1, now() / dur())) + "%"; if (srcs) raf = requestAnimationFrame(draw); }
+    function draw() { pos.style.clipPath = "inset(0 " + (100 - 100 * Math.min(1, now() / dur())) + "% 0 0)"; if (srcs) raf = requestAnimationFrame(draw); }
     function stop(keep) {
       if (srcs) { off = keep ? now() : 0; srcs.a.onended = null; srcs.a.stop(); srcs.b.stop(); srcs = null; }
       cancelAnimationFrame(raf); play.innerHTML = "&#9654;"; play.setAttribute("aria-label", "Play"); el.classList.remove("playing"); draw();
@@ -77,7 +77,7 @@
     });
     sw.forEach(function (b) {
       b.addEventListener("click", function () {
-        side = b.dataset.side; sw.forEach(function (x) { x.classList.toggle("on", x === b); });
+        side = b.dataset.side; el.dataset.side = side; sw.forEach(function (x) { x.classList.toggle("on", x === b); });
         if (srcs && gains) { const t = ctx.currentTime; ["a", "b"].forEach(function (k) {
           gains[k].gain.cancelScheduledValues(t); gains[k].gain.setValueAtTime(gains[k].gain.value, t);
           gains[k].gain.linearRampToValueAtTime(k === side ? 1 : 0, t + 0.015); }); }
