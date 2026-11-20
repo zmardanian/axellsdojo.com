@@ -600,14 +600,16 @@ def tracks_used():
     for items in AUDIO.values():
         for it in items:
             m = re.match(r"(.+?) - OnAir Music( feat\. [^(]+)? \((.+)\)$", it["source"])
-            if m: songs.setdefault((m.group(1), (m.group(2) or "").strip()), set()).add(m.group(3))
+            if m:
+                parts = songs.setdefault((m.group(1), (m.group(2) or "").strip()), set()); parts.add(m.group(3))
+                if it["simulated"] == "beat bleed simulated": parts.add("instrumental")     # the bleed is the song's own beat
     parts = [f"<i>{e(t)}</i>{' (' + e(f) + ')' if f else ''} - {e(', '.join(sorted(p)))}" for (t, f), p in sorted(songs.items())]
     return "; ".join(parts)
 
 def credits_page():
     body = """<main><section class="section"><p class="label">CREDITS</p><h2>The music in the examples.</h2>
 <p class="lede">Every before/after example on this site is made from the <a href="https://github.com/OnAir-Music/OnAir-Music-Dataset">OnAir Music Dataset</a>
-- stems of royalty-free songs by the <b>OnAir Music</b> project (Hrag, the Crescent MTL Project and SevagH), featuring <b>KXNE</b> and <b>Holocene</b>,
+- stems of royalty-free songs by the <b>OnAir Music</b> project (Hrag, the Crescent MTL Project and SevagH), featuring <b>KXNE</b>,
 released under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a> licence.</p>
 <p>Tracks used: TRACKS_USED.</p>
 <p><b>Changes made:</b> 14-second excerpts, set to a working level (-18 LUFS; -20 LUFS for the mastering examples), processed through the
