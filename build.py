@@ -343,7 +343,7 @@ def home():
 
 
 AUDIO = {}
-GENRE = {"boom-bap": "boom bap"}
+GENRE = {"boom-bap": "boom bap", "rnb": "R&B"}
 WF_BINS = 96
 _WF_CACHE = f"{SITE}/.wf-cache.json"
 _wf = json.load(open(_WF_CACHE)) if os.path.exists(_WF_CACHE) else {}
@@ -381,7 +381,7 @@ def ab_card(r, it, show_plugin=False):
     <div class="ab-switch" role="group" aria-label="Compare"><button class="on" data-side="a">Original</button><button data-side="b">{e(SHORT[r])}</button></div>
   </div>
   <div class="ab-bar" title="Click to jump">{(w := wf_svg(wf_peaks(it['a']), wf_peaks(it['b'])))}<div class="ab-pos">{w}</div></div>
-  <p class="ab-meta">Preset <b>{e(it['preset'])}</b> &middot; {lvl}{sim}<br>Source: {e(it['source'])} &middot; <a href="/credits/">CC BY-SA 4.0</a></p>
+  <p class="ab-meta">Preset <b>{e(it['preset'])}</b> &middot; {lvl}{sim}<br>Source: {e(it['source'])} &middot; <a href="/credits/">{e(it.get('license', 'CC BY-SA 4.0'))}</a></p>
 </div>"""
 
 def listen(r):
@@ -606,10 +606,24 @@ def tracks_used():
     parts = [f"<i>{e(t)}</i>{' (' + e(f) + ')' if f else ''} - {e(', '.join(sorted(p)))}" for (t, f), p in sorted(songs.items())]
     return "; ".join(parts)
 
+def cc_tracks():
+    """the a cappellas from ccMixter: title, artist, link and licence for each (CC BY asks for all four)"""
+    seen = {}
+    for items in AUDIO.values():
+        for it in items:
+            if it.get("cc"): seen[it["cc"]["url"]] = it["cc"]
+    if not seen: return ""
+    rows = "".join(f'<li><a href="{e(c["url"])}" rel="noopener"><i>{e(c["title"])}</i></a> by {e(c["artist"])} - '
+                   f'<a href="{e(c["license_url"])}" rel="noopener">{e(c["license"])}</a></li>' for c in sorted(seen.values(), key=lambda c: c["title"]))
+    return (f"""<p>The a cappella vocals come from <a href="https://ccmixter.org/" rel="noopener">ccMixter</a>, shared by their singers and
+rappers under Creative Commons Attribution licences:</p><ul>{rows}</ul>
+<p>Changes made to them: 14-second excerpts, set to a working level, processed through the Axell plugins as described above
+(the De-Reverb examples first get a modelled small room); the processed excerpts are shared under the same licence as their source.</p>""")
+
 def credits_page():
     body = """<main><section class="section"><p class="label">CREDITS</p><h2>The music in the examples.</h2>
-<p class="lede">Every before/after example on this site is made from the <a href="https://github.com/OnAir-Music/OnAir-Music-Dataset">OnAir Music Dataset</a>
-- stems of royalty-free songs by the <b>OnAir Music</b> project (Hrag, the Crescent MTL Project and SevagH), featuring <b>KXNE</b>,
+<p class="lede">The before/after examples on this site are made from openly licensed recordings: stems from the <a href="https://github.com/OnAir-Music/OnAir-Music-Dataset">OnAir Music Dataset</a>
+- royalty-free songs by the <b>OnAir Music</b> project (Hrag, the Crescent MTL Project and SevagH), featuring <b>KXNE</b>,
 released under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a> licence.</p>
 <p>Tracks used: TRACKS_USED.</p>
 <p><b>Changes made:</b> 14-second excerpts, set to a working level (-18 LUFS; -20 LUFS for the mastering examples), processed through the
@@ -618,9 +632,10 @@ song's kick, snare and break stems; the mastering examples sum all of a song's s
 turned up to the master's loudness without a limiter. Where marked, a small room (De-Reverb) or headphone bleed of the song's instrumental
 (Gate) was simulated before processing.
 The processed excerpts are shared under the same licence, CC BY-SA 4.0. No endorsement by the artists or the OnAir Music project is implied.</p>
+CC_TRACKS
 <p>Typefaces: Great Vibes, Cormorant Garamond, Jost and Yuji Syuku (<a href="/fonts/OFL.txt">SIL Open Font License</a>), served from this site - no request goes to a font service.</p>
 </section></main>"""
-    body = body.replace("TRACKS_USED", tracks_used())
+    body = body.replace("TRACKS_USED", tracks_used()).replace("CC_TRACKS", cc_tracks())
     return head("Credits - Axell's Dojo", "The music used in the before/after examples and its licence.", path="/credits/") + body + foot()
 
 def contact_page():

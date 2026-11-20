@@ -176,7 +176,7 @@ h2::after { content: ""; display: block; width: 90px; height: 2px; background: v
   display: flex; flex-direction: column; }
 .ab.playing { border-color: color-mix(in srgb, var(--acc) 60%, transparent); box-shadow: 0 0 50px color-mix(in srgb, var(--acc) 14%, transparent); }
 .ab-head { display: flex; align-items: baseline; gap: 12px; }
-.ab-cat { font-size: 11px; letter-spacing: .26em; color: var(--acc); }
+.ab-cat { flex: none; white-space: nowrap; font-size: 11px; letter-spacing: .26em; color: var(--acc); }
 .ab h3 { font-family: var(--serif); font-size: 26px; font-weight: 600; margin: 0; }
 .ab-note { color: var(--soft); margin: 6px 0 18px; min-height: 3.2em; flex: 1; }   /* the controls line up across a row of cards */
 .ab-ctl { display: flex; align-items: center; gap: 14px; }
