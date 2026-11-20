@@ -1,22 +1,5 @@
-// Download buttons go through /get/<plugin>/<system> (the site's Worker redirects to the newest release file); when
-// GitHub's public API answers, the version is shown. Scroll reveals for elements marked .reveal.
+// Scroll reveals for elements marked .reveal (the release version is written into the page at build time).
 (function () {
-  const cache = {};
-  function latest(repo) {
-    if (!cache[repo]) {
-      cache[repo] = fetch("https://api.github.com/repos/zmardanian/" + repo + "/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .catch(function () { return null; });
-    }
-    return cache[repo];
-  }
-  document.querySelectorAll(".dl[data-repo]").forEach(function (box) {
-    latest(box.dataset.repo).then(function (rel) {
-      if (!rel || !rel.assets) return;
-      const v = box.querySelector("[data-version]");
-      if (v && rel.tag_name) v.textContent = "Version " + rel.tag_name.replace(/^v/, "");
-    });
-  });
   const els = document.querySelectorAll(".reveal");
   if (!("IntersectionObserver" in window)) { els.forEach(function (el) { el.classList.add("in"); }); return; }
   const io = new IntersectionObserver(function (entries) {
@@ -29,6 +12,11 @@
 // drift); one player at a time; the bar seeks. Loaded on the first press (no audio downloaded until then).
 (function () {
   let ctx = null, current = null;
+  let unlocked = false;
+  function unlockIOS() {
+    if (unlocked) return; unlocked = true;
+    try { const a = new Audio("data:audio/wav;base64,UklGRpYDAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="); a.loop = true; a.setAttribute("playsinline", ""); a.play().catch(function () {}); } catch (e) {}
+  }
   function audioCtx() {
     if (!ctx) {
       // Safari (iOS 16.4+): play as media, so the ring/silent switch does not mute the examples
@@ -71,7 +59,7 @@
     play.addEventListener("click", function () {
       if (srcs) { stop(true); return; }
       if (bufs) { start(off >= dur() - 0.05 ? 0 : off); return; }
-      if (loading) return; loading = true; el.classList.add("loading"); audioCtx().resume();
+      if (loading) return; loading = true; el.classList.add("loading"); unlockIOS(); audioCtx().resume();
       Promise.all([load(el.dataset.a), load(el.dataset.b)]).then(function (r) { bufs = { a: r[0], b: r[1] }; el.classList.remove("loading"); start(0); })
         .catch(function () { el.classList.remove("loading"); loading = false; play.textContent = "!"; play.setAttribute("aria-label", "Could not load the audio - try again"); });
     });
@@ -111,6 +99,15 @@
     if (!w || !l) return;
     if (linux) {
       w.classList.replace("btn-primary", "btn-ghost"); l.classList.replace("btn-ghost", "btn-primary"); dl.insertBefore(l, w);
+    } else if (/Android|iPhone|iPad|iPod/.test(ua) || (mac && "ontouchend" in document)) {
+      const n = document.createElement("p"); n.className = "dl-mac";
+      n.textContent = "Desktop plugins for Windows and Linux - open this page on your computer. ";
+      if (navigator.share) {
+        const b = document.createElement("button"); b.type = "button"; b.className = "dl-share"; b.textContent = "Send the link to yourself";
+        b.addEventListener("click", function () { navigator.share({ title: document.title, url: location.href }).catch(function () {}); });
+        n.appendChild(b);
+      }
+      dl.insertBefore(n, dl.querySelector(".dl-meta"));
     } else if (mac) {
       const n = document.createElement("p"); n.className = "dl-mac";
       n.textContent = "On a Mac? There is no macOS version yet - the plugins run on Windows and Linux.";

@@ -316,3 +316,15 @@ h1.h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(34px, 5vw,
   .card:hover, .card:hover .card-shot img, .ab-play:hover { transform: none; }
   .ab.loading .ab-play { animation: none; }
 }
+
+/* proof band: full-bleed raised surface, centred */
+.section.proof { position: relative; background: var(--bg2); box-shadow: 0 0 0 100vmax var(--bg2); clip-path: inset(0 -100vmax);
+  border-block: 1px solid var(--line); padding-block: clamp(64px, 9vw, 112px); margin-top: 72px; }
+.dl-share { margin-left: 6px; font: inherit; color: var(--ink); background: transparent; border: 1px solid var(--line);
+  border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+/* the plugin's seal travels from its home card into its page (browsers without View Transitions just navigate) */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  .card .seal, .hero-plugin .seal-lg { view-transition-name: var(--vt); }
+  ::view-transition-group(*) { animation-duration: .45s; }
+}

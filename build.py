@@ -202,13 +202,19 @@ def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 1
     return f"""<div class="dl" data-repo="{repo}">
   <a class="btn btn-primary" href="/get/{DLSLUG(repo)}/windows" rel="nofollow"><b>{windows_label}</b><small>{sub_w}</small></a>
   <a class="btn btn-ghost" href="/get/{DLSLUG(repo)}/linux" rel="nofollow"><b>Download for Linux</b><small>{sub_l}</small></a>
-  <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>{whats_new(repo)}
+  <p class="dl-meta"><span class="ver">{ver_of(repo)}</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>{whats_new(repo)}
   <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a>{accessible(repo)}</p>{SIGNPATH if repo == "axell-signature-dojo" and extras else ""}{SAFE if repo == "axell-signature-dojo" and extras else ""}
 </div>"""
 
 # every control named for screen readers (JUCE's accessibility: Windows Narrator, macOS VoiceOver) from these releases on
 ACCESSIBLE_FROM = {"gate": "4.0.3", "dereverb": "4.0.2", "penta-eq": "3.0.2", "duo-compressor": "4.0.4", "velvet": "3.0.5",
                    "space": "4.0.2", "forbidden-seal": "4.0.3", "master": "4.0.4", "76": "3.2.1"}
+def ver_of(repo):
+    import json
+    try: v = json.load(open(f"{SITE}/src/news.json")).get(DLSLUG(repo), {}).get("version")
+    except OSError: v = None
+    return f"Version {v}" if v else "Latest release"
+
 def accessible(repo):
     import json
     try: v = json.load(open(f"{SITE}/src/news.json")).get(DLSLUG(repo), {}).get("version", "0")
@@ -289,7 +295,7 @@ def home():
     cards = []
     for r in PLUGINS:
         u, w, h = img(r, C[r]["shot"], 1200)
-        cards.append(f"""<a class="card reveal" href="/{SLUG[r]}/" style="--acc:{ACC[r]}">
+        cards.append(f"""<a class="card reveal" href="/{SLUG[r]}/" style="--acc:{ACC[r]}; --vt:seal-{SLUG[r]}">
   <div class="card-shot"{' style="--pos:50% 45%"' if r == "axell-76" else ""}>{tag(u, w, h, "", "card")}</div>
   <div class="card-body">{seal(r)}<h3>{e(NAME[r] if r == "axell-76" else NAME[r].replace("Axell ", ""))}</h3><p class="card-tag">{e(TAG[r])}</p>
   <p class="card-line">{e(SUITE_LINE[r])}</p></div></a>""")
@@ -409,7 +415,7 @@ def plugin_page(r):
     others = "".join(f'<a href="/{SLUG[o]}/" style="--acc:{ACC[o]}">{seal(o)}<span>{e(NAME[o])}</span></a>' for o in PLUGINS if o != r)
     gallery = f'<section class="section"><p class="label">02 &nbsp; A CLOSER LOOK</p><h2>Every screen, every mode.</h2><div class="gallery">{"".join(gal)}</div></section>' if gal else ""
     body = f"""
-<main style="--acc:{ACC[r]}">
+<main style="--acc:{ACC[r]}; --vt:seal-{SLUG[r]}">
 <section class="hero hero-plugin">
   <div class="hero-bg" aria-hidden="true">{e(KANJI[r] or "76")}</div>
   <p class="eyebrow">AXELL SIGNATURE &middot; {e(SUITE_LINE[r].upper())}</p>
@@ -448,7 +454,7 @@ def dojo_page():
         if "workstation" in p: continue
         gu, gw, gh = img(r, p, 1400); gal.append(f'<figure class="reveal">{tag(gu, gw, gh, t, "gallery")}<figcaption>{e(t)}</figcaption></figure>')
     body = f"""
-<main style="--acc:{ACC[r]}">
+<main style="--acc:{ACC[r]}; --vt:seal-{SLUG[r]}">
 <section class="hero hero-plugin">
   <div class="hero-bg" aria-hidden="true">道場</div>
   <p class="eyebrow">AXELL SIGNATURE &middot; THE SUITE'S HOME</p>
