@@ -37,10 +37,10 @@
  "duo-compressor": [
   {
    "cat": "boom-bap",
-   "title": "Boom bap break",
+   "title": "Boom bap drums",
    "preset": "Drum Bus: Boom Bap Smash",
-   "note": "FET smash: a denser, harder-hitting break.",
-   "source": "Under My Skin - OnAir Music (break drums)",
+   "note": "FET smash: a denser, harder-hitting kit.",
+   "source": "Bouncin Around - OnAir Music (drums)",
    "matched": true,
    "a": "/audio/duo-compressor/boom-bap-a.mp3",
    "b": "/audio/duo-compressor/boom-bap-b.mp3",
@@ -282,10 +282,10 @@
  "76": [
   {
    "cat": "boom-bap",
-   "title": "Boom bap break",
+   "title": "Boom bap drums",
    "preset": "Drums - Break Crush",
-   "note": "The break crushed the way the 1176 does it.",
-   "source": "Under My Skin - OnAir Music (break drums)",
+   "note": "The kit crushed the way the 1176 does it.",
+   "source": "Bouncin Around - OnAir Music (drums)",
    "matched": true,
    "a": "/audio/76/boom-bap-a.mp3",
    "b": "/audio/76/boom-bap-b.mp3",
