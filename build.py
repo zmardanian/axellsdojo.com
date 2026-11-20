@@ -191,6 +191,11 @@ def downloads_manifest():
     json.dump(out, open(f"{SITE}/src/downloads.json", "w"), indent=1)
     json.dump(news, open(f"{SITE}/src/news.json", "w"), indent=1)
 
+# SignPath Foundation asks the download page to say the project uses them for code signing (while applying: being set up;
+# once accepted: "Free code signing provided by SignPath.io, certificate by SignPath Foundation")
+SIGNPATH = ('<p class="dl-trust">Windows code signing: being set up with the <a href="https://signpath.org/" rel="noopener">SignPath '
+            'Foundation</a>, free signing for open-source software &middot; <a href="/code-signing/">code signing policy</a></p>')
+
 def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 11 &middot; 64-bit &middot; VST3", sub_l="Ubuntu 22.04+ &middot; Debian 12+ &middot; Fedora"):
     rel = f"{GH}/{repo}/releases/latest"
     pat_w = "setup.exe" if repo == "axell-signature-dojo" else "windows-x64.tar.gz"
@@ -198,7 +203,7 @@ def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 1
   <a class="btn btn-primary" href="/get/{DLSLUG(repo)}/windows" rel="nofollow"><b>{windows_label}</b><small>{sub_w}</small></a>
   <a class="btn btn-ghost" href="/get/{DLSLUG(repo)}/linux" rel="nofollow"><b>Download for Linux</b><small>{sub_l}</small></a>
   <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>{whats_new(repo)}
-  <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a>{accessible(repo)}</p>{SAFE if repo == "axell-signature-dojo" else ""}
+  <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a>{accessible(repo)}</p>{SIGNPATH if repo == "axell-signature-dojo" else ""}{SAFE if repo == "axell-signature-dojo" else ""}
 </div>"""
 
 # every control named for screen readers (JUCE's accessibility: Windows Narrator, macOS VoiceOver) from these releases on
