@@ -385,16 +385,88 @@ def ab_card(r, it, show_plugin=False):
     lvl = "level-matched" if it["matched"] else "not level-matched - loudness is the point"
     sim = f' &middot; <span class="sim">{e(it["simulated"])}</span>' if it["simulated"] else ""
     tag = f'<a class="ab-plugin" href="/{SLUG[r]}/" style="--acc:{ACC[r]}">{seal(r, "seal seal-sm")} {e(NAME[r])}</a>' if show_plugin else ""
-    return f"""<div class="ab reveal" style="--acc:{ACC[r]}" data-side="a" data-a="{it['a']}" data-b="{it['b']}">
+    return f"""<div class="ab reveal" style="--acc:{ACC[r]}" data-side="a" data-a="{it['a']}" data-b="{it['b']}"{f' data-c="{it["c"]}"' if it.get("c") else ""}>
   {tag}<div class="ab-head"><span class="ab-cat">{e(GENRE.get(it['cat'], it['cat']).upper())}</span><h3>{e(it['title'])}</h3></div>
   <p class="ab-note">{e(it['note'])}</p>
   <div class="ab-ctl">
     <button class="ab-play" aria-label="Play">&#9654;</button>
-    <div class="ab-switch" role="group" aria-label="Compare"><button class="on" data-side="a">Original</button><button data-side="b">{e(SHORT[r])}</button></div>
+    <div class="ab-switch" role="group" aria-label="Compare"><button class="on" data-side="a">Original</button><button data-side="b">{e(SHORT[r])}</button>{'<button data-side="c" title="Only what the plugin took out, at its real level">Removed</button>' if it.get("c") else ""}</div>
   </div>
   <div class="ab-bar" title="Click to jump">{(w := wf_svg(wf_peaks(it['a']), wf_peaks(it['b'])))}<div class="ab-pos">{w}</div></div>
   <p class="ab-meta">Preset <b>{e(it['preset'])}</b> &middot; {lvl}{sim}<br>Source: {e(it['source'])} &middot; <a href="/credits/">{e(it.get('license', 'CC BY-SA 4.0'))}</a></p>
 </div>"""
+
+def md_html(md):
+    """the small Markdown subset of the plugin READMEs (bold, italic, code, links, nested lists, tables, paragraphs);
+    raw HTML lines pass through, images and <picture> headings are dropped (the manual brings its own screenshots)"""
+    import re
+    def inline(t):
+        t = re.sub(r"`([^`]+)`", r"<code>\1</code>", t)
+        t = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", t)
+        t = re.sub(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])", r"<i>\1</i>", t)
+        return re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", lambda m: f'<a href="{m.group(2) if m.group(2).startswith("http") else "#"}">{m.group(1)}</a>', t)
+    out, para, stack, table = [], [], [], []
+    def flush():
+        if para: out.append("<p>" + inline(" ".join(para)) + "</p>"); para.clear()
+        while stack: out.append("</li></ul>"); stack.pop()
+        if table:
+            rows = [r for r in table if not re.match(r"^\|[\s:|-]+\|$", r)]
+            cells = lambda r, t: "".join(f"<{t}>{inline(c.strip())}</{t}>" for c in r.strip().strip("|").split("|"))
+            out.append("<div class='tbl'><table><thead><tr>" + cells(rows[0], "th") + "</tr></thead><tbody>"
+                       + "".join("<tr>" + cells(r, "td") + "</tr>" for r in rows[1:]) + "</tbody></table></div>"); table.clear()
+    for line in md.split("\n"):
+        if re.match(r"\s*<(/?picture|source|img|br|/?p|/?div)\b", line) or not line.strip():
+            flush(); continue
+        if line.startswith("|"): para and flush(); table.append(line); continue
+        m = re.match(r"^(\s*)[-*] (.*)", line)
+        if m:
+            if para: out.append("<p>" + inline(" ".join(para)) + "</p>"); para.clear()
+            depth = len(m.group(1)) // 2
+            while len(stack) > depth + 1: out.append("</li></ul>"); stack.pop()
+            if len(stack) == depth + 1: out.append("</li><li>")
+            else: out.append("<ul><li>"); stack.append(depth)
+            out.append(inline(m.group(2))); continue
+        if stack and line.startswith("  "): out.append(" " + inline(line.strip())); continue
+        if stack: flush()
+        para.append(line.strip())
+    flush()
+    return "\n".join(out)
+
+MANUAL_SECTIONS = ("What it does", "How to use it", "The instrument")
+def manual_text(r):
+    """the README's own control reference: its 'What it does' / 'How to use it' / 'The instrument' sections"""
+    import re
+    md = open(f"{HOME}/{r}/README.md").read()
+    parts = re.split(r'<picture>\s*<source[^>]*>\s*<img alt="0\d ([^"]*?) - [^"]*"[^>]*>\s*</picture>', md)
+    return "".join(f"<h2>{e(parts[i])}</h2>\n" + md_html(parts[i + 1]) for i in range(1, len(parts) - 1, 2) if parts[i] in MANUAL_SECTIONS)
+
+def manual_page(r):
+    c = C[r]; u, w, h = img(r, c["shot"], 1800)
+    gal = "".join(f'<figure>{tag(*img(r, p, 1200), t, "gallery")}<figcaption>{e(t)}</figcaption></figure>' for p, t in c.get("gallery", []))
+    steps = f"""<ol class="steps">
+  <li><b>Install.</b> Windows: run the Axell Signature Suite installer (or copy <code>{e(NAME[r])}.vst3</code> to
+  <code>C:\\Program Files\\Common Files\\VST3</code>). Linux: unpack the archive and run <code>./install.sh</code>.</li>
+  <li><b>Rescan.</b> Let your DAW rescan its VST3 plugins; {e(NAME[r])} appears under the vendor <i>Axell Yobag</i>.</li>
+  <li><b>Insert it</b> on the track or bus it is made for, and start from a factory preset close to your material.</li>
+  <li><b>Listen, then adjust</b> the few controls described below; A/B compares two settings without losing either.</li>
+</ol>"""
+    body = f"""
+<main style="--acc:{ACC[r]}">
+<section class="section legal manual">
+  <p class="label">MANUAL &middot; {e(SUITE_LINE[r].upper())}</p><h1 class="h2">{e(NAME[r])}: getting started and every control</h1>
+  <p class="lede">{e(TAG[r])} This page explains every control, with the plugin's own screens. <a href="/{SLUG[r]}/">Back to {e(NAME[r])}</a>.</p>
+  <h2>Getting started</h2>{steps}
+  <figure class="man-shot">{tag(u, w, h, c["alt"], "hero")}<figcaption>The full window, as it opens.</figcaption></figure>
+  {closeup(r)}
+  {manual_text(r)}
+  {('<h2>Every screen, every mode</h2><div class="gallery">' + gal + '</div>') if gal else ""}
+  <p class="note">The complete reference, measurements and version history are in the
+  <a href="{GH}/{r}">repository on GitHub</a>.</p>
+  {dl_buttons(r)}
+</section>
+</main>
+"""
+    return head(f"{NAME[r]} manual - getting started and every control", f"How to use {NAME[r]}: installing, the presets and every control explained, with screenshots.", path=f"/{SLUG[r]}/manual/") + body + foot()
 
 def hero_loop(r):
     """the real plugin window, filmed while audio runs through it (each repo's GuiSnapshot with AXELL_VIDEO_DIR):
@@ -468,7 +540,7 @@ def plugin_page(r):
   <p class="hero-tag">{e(TAG[r])}</p>
   <p class="spec">{e(SPEC[r])}</p>
   {dl_buttons(r)}
-  <p class="suite-up">Want all nine? One installer, one updater &rarr; <a href="/dojo/">get the whole suite</a></p>
+  <p class="suite-up">Want all nine? One installer, one updater &rarr; <a href="/dojo/">get the whole suite</a> &middot; <a href="/{SLUG[r]}/manual/">read the manual</a></p>
   <div class="hero-shot rise">{tag(u, w, h, c["alt"], "hero")}{hero_loop(r)}</div>
   <p class="pitch"><b>{c['pitch'][0]}</b> {c['pitch'][1]}</p>
   {closeup(r)}
@@ -766,6 +838,7 @@ def build():
     open(f"{OUT}/index.html", "w").write(home())
     for r in PLUGINS:
         os.makedirs(f"{OUT}/{SLUG[r]}", exist_ok=True); open(f"{OUT}/{SLUG[r]}/index.html", "w").write(plugin_page(r))
+        os.makedirs(f"{OUT}/{SLUG[r]}/manual", exist_ok=True); open(f"{OUT}/{SLUG[r]}/manual/index.html", "w").write(manual_page(r))
     os.makedirs(f"{OUT}/dojo", exist_ok=True); open(f"{OUT}/dojo/index.html", "w").write(dojo_page())
     open(f"{OUT}/404.html", "w").write(head("Not found - Axell's Dojo", "This page does not exist.") + '<main><section class="hero"><div class="hero-bg" aria-hidden="true">迷</div>'
         '<p class="eyebrow">404</p><h1 class="script hero-title">Lost in the dojo</h1><p class="hero-tag">This page does not exist - but nine plugins do.</p>'
@@ -780,7 +853,7 @@ def build():
     import datetime
     open(f"{OUT}/.well-known/security.txt", "w").write("Contact: mailto:contact@axellsdojo.com\nExpires: " + (datetime.date.today() + datetime.timedelta(days=360)).isoformat()
         + "T00:00:00Z\nPreferred-Languages: en, de\nCanonical: https://www.axellsdojo.com/.well-known/security.txt\n")
-    urls = ["/"] + [f"/{SLUG[r]}/" for r in PLUGINS] + ["/dojo/", "/contact/"]
+    urls = ["/"] + [f"/{SLUG[r]}/" for r in PLUGINS] + [f"/{SLUG[r]}/manual/" for r in PLUGINS] + ["/dojo/", "/contact/"]
     today = datetime.date.today().isoformat()
     def lastmod(u):
         d, h = old.get(u, (None, None))

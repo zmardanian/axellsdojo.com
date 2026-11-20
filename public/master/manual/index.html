@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en" class="no-js"><script>document.documentElement.className="js"</script>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Axell Master manual - getting started and every control</title>
+<meta name="description" content="How to use Axell Master: installing, the presets and every control explained, with screenshots.">
+<meta name="theme-color" content="#0b0d12">
+<meta property="og:title" content="Axell Master manual - getting started and every control">
+<meta property="og:description" content="How to use Axell Master: installing, the presets and every control explained, with screenshots.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.axellsdojo.com/master/manual/">
+<meta property="og:image" content="https://www.axellsdojo.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.axellsdojo.com/master/manual/">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preload" href="/fonts/great-vibes-400.woff2?v=c59dc73d29" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jost-400.woff2?v=7726a5cd6f" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/cormorant-garamond-500.woff2?v=d80df8ff5a" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/yuji-syuku-400-kanji.woff2?v=0b79abf636" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=eab3032be4">
+<style>:root{--acc:#c9a25e}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <a class="brand" href="/"><span class="seal seal-wide seal-sm" aria-hidden="true">道場</span><span>Axell's Dojo</span></a>
+  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-support" href="https://ko-fi.com/axellyobag" rel="noopener" aria-label="Support on Ko-fi"><svg class="cup" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path class="steam" d="M10 4c-1.5 2 1.5 3 0 5M15 3c-1.5 2 1.5 3 0 5M20 4c-1.5 2 1.5 3 0 5"/><path d="M5 13h19v7a7 7 0 0 1-7 7h-5a7 7 0 0 1-7-7z"/><path d="M24 15h1.5a3.5 3.5 0 0 1 0 7H23.5"/></g><path d="M14.5 23.2l-3-2.9a1.9 1.9 0 0 1 2.7-2.7l.3.3.3-.3a1.9 1.9 0 0 1 2.7 2.7z" fill="currentColor"/></svg><span>Support</span></a><a class="nav-cta" href="/#get">Download</a></nav>
+</header>
+
+<main id="main" style="--acc:#55c992">
+<section class="section legal manual">
+  <p class="label">MANUAL &middot; MASTERING LIMITER</p><h1 class="h2">Axell Master: getting started and every control</h1>
+  <p class="lede">Loud, clean masters that survive the streaming codecs. This page explains every control, with the plugin's own screens. <a href="/master/">Back to Axell Master</a>.</p>
+  <h2>Getting started</h2><ol class="steps">
+  <li><b>Install.</b> Windows: run the Axell Signature Suite installer (or copy <code>Axell Master.vst3</code> to
+  <code>C:\Program Files\Common Files\VST3</code>). Linux: unpack the archive and run <code>./install.sh</code>.</li>
+  <li><b>Rescan.</b> Let your DAW rescan its VST3 plugins; Axell Master appears under the vendor <i>Axell Yobag</i>.</li>
+  <li><b>Insert it</b> on the track or bus it is made for, and start from a factory preset close to your material.</li>
+  <li><b>Listen, then adjust</b> the few controls described below; A/B compares two settings without losing either.</li>
+</ol>
+  <figure class="man-shot"><img src="/img/master/master-100pct-hidpi2x.webp" srcset="/img/master/master-100pct-hidpi2x-800.webp 800w, /img/master/master-100pct-hidpi2x.webp 1800w" sizes="(max-width: 1100px) 100vw, 1100px" width="1800" height="1140" alt="Axell Master" fetchpriority="high"><figcaption>The full window, as it opens.</figcaption></figure>
+  <figure class="closeup reveal"><img src="/img/closeups/master.webp" width="792" height="715" alt="Integrated loudness, true peak and the target for your platform at a glance." loading="lazy" decoding="async"><figcaption><span class="dot" aria-hidden="true"></span>Integrated loudness, true peak and the target for your platform at a glance.</figcaption></figure>
+  <h2>What it does</h2>
+<p>The mastering limiter of the Axell suite: an oversampled soft clipper into a true-peak limiter, with a loudness meter to the broadcast standard, delivery targets with LEARN, a level-matched COMPARE, psychoacoustically shaped dither for the export, and (2.0) a check of the master through the real streaming codecs, with SAFE to keep a loud master from clipping after YouTube or Spotify encode it. Built for rap, trap and boom-bap masters, and transparent enough for acoustic music.</p>
+<p><b>GAIN</b> drives the mix into the processing. <b>LEARN</b> sets it for you: play the song, press LEARN, then APPLY. GAIN moves to hit the chosen target. A second pass lands within a few tenths of an LU.</p>
+<p><b>CLIPPER</b> shaves the shortest peaks (kicks, snares) before the limiter, so the limiter works less and pumps less.</p>
+<ul><li>
+CLIP sets how much of the peak reduction is clipping.
+</li><li>
+SHAPE runs from soft (rounded) to hard (flat).
+</li><li>
+16x oversampling is the default (1x / 2x / 4x / 8x selectable). Even a hard clip of a bright mix stays clean:
+ aliasing is below -99 dBc.
+</li><li>
+The live curve shows the clipper's transfer and your loudest recent peak.
+</li></ul>
+<p><b>LIMITER</b> is a true-peak limiter (ceiling -24 to 0 dBTP, release 1-1000 ms, look-ahead 0.5-5 ms, stereo link). It has four program-dependent release styles:</p>
+<ul><li>
+<b>TRANSPARENT</b> (default): natural.
+</li><li>
+<b>PUNCHY</b>: drums keep their snap.
+</li><li>
+<b>LOUD</b>: the densest.
+</li><li>
+<b>SAFE</b>: the slowest.
+</li></ul>
+<p>A lone peak recovers fast and dense passages slowly. A bass-aware hold keeps the gain steady through a bass note's cycle: 40-50 Hz bass at 6 dB of limiting measures -139 dB THD+N in Transparent and Safe.</p>
+<p><b>LOUDNESS</b> follows ITU-R BS.1770-4 / EBU R128. It shows:</p>
+<ul><li>
+integrated (large), short-term, momentary;
+</li><li>
+loudness range (EBU Tech 3342);
+</li><li>
+true peak (8x, twice the standard's minimum);
+</li><li>
+PLR;
+</li><li>
+the input's integrated loudness.
+</li></ul>
+<p>Targets: -14 LUFS (Spotify / YouTube / Tidal), -16 (Apple Music), -9 (club / CD), -23 (EBU R128), -24 (ATSC A/85). The history shows the last seconds: peaks in and out, short-term loudness against the target, and clipper and limiter gain reduction.</p>
+<p><b>OUTPUT</b>:</p>
+<ul><li>
+<b>VOICE HOLD</b> (3.0, for a vocal or vocal bus): in the voice's pauses the limiter holds its gain instead of
+ releasing, so the drive does not lift the room and the breaths (Vocal Peak Catcher +12 dB on a real take: pauses
+ +8.1 -> +2.7 dB re the voice). On in the vocal presets; leave it off on a mix or a beat.
+</li><li>
+<b>ESS HOLD</b> (4.0, for a vocal or vocal bus): through each ess the limiter holds the word's gain instead of
+ releasing, so the drive does not push the esses above the vowels (Vocal Peak Catcher +12 dB, 28 real takes: esses
+ over their word +2.76 -> +0.40 dB, vowels within 0.02 dB). On in the vocal presets; leave it off on a mix or a beat.
+</li><li>
+<b>COMPARE</b> plays the unprocessed mix at the master's loudness, so you hear what the processing does and not just
+ "louder". In the audit it matched within 0.03 LU.
+</li><li>
+<b>DITHER</b> for the final export: 24-bit or 16-bit TPDF, or 16-bit shaped. The shaped mode uses the 9th-order
+ F-weighted minimally audible filter (Wannamaker, JAES 1992), which is 22 dB quieter than plain TPDF at 2-5 kHz.
+</li></ul>
+<p><b>STREAMING CODECS</b> (2.0). A -1 dBTP ceiling protects the file, but the services re-encode it, and a lossy codec's decoded peaks land higher than the master's. Measured on real rap masters at -9 LUFS, 1.0's -1 dBTP masters decoded at up to +1.1 dBTP (Vorbis 160, Spotify) and +0.6 (AAC), with clipped samples in every song.</p>
+<ul><li>
+<b>The check:</b> while the master plays, it is encoded and decoded with the real Opus 160 kbps (YouTube) and
+ Vorbis 160 kbps (Spotify) libraries, each at four frame offsets. Where the frames fall moves the decoded peak by up
+ to 0.9 dB, and the service's framing is unknown.
+</li><li>
+<b>Display:</b> the decoded true peak and clipped samples since the last change. Green = safe, amber = within
+ 0.3 dB of full scale, red = clips.
+</li><li>
+<b>Threading:</b> it runs on its own thread and never touches the audio. On / off with the STREAMING CODECS switch.
+</li><li>
+<b>SAFE:</b> lowers the ceiling until both codecs decode at -0.3 dBTP or below. Play the song again and press again
+ if offered: a lower ceiling means denser limiting, so it usually takes 1-3 presses.
+<ul><li>
+Verified on 9 loud masters: 0 clipped samples with Opus, Vorbis 160 / 320, FDK AAC 256 and MP3 320 at 6 frame
+ offsets each.
+</li><li>
+It costs 0.5-1.3 LU on a -9 LUFS master. That is the price of a loud master that survives streaming, and you
+ choose when to pay it.
+</li></ul>
+</li></ul>
+<p>There are 28 factory presets (2.0 added 20), grouped in the menu:</p>
+<ul><li>
+<b>MASTER:</b> streaming, Apple Music, hip-hop / R&B, pop, EDM, rock, lo-fi, club, acoustic, podcast, broadcast,
+ mix-bus safety.
+</li><li>
+<b>YOUR STUDIO (BOOM BAP):</b> boom bap streaming master, a loud master that survives the codecs without SAFE, booth
+ rap vocal bus, drum bus knock, beat tape master.
+</li><li>
+<b>VOCAL BUS:</b> peak catcher, upfront, ad-libs / doubles, sung vocal.
+</li><li>
+<b>BEAT / DRUM BUS:</b> drum bus punch, 808 / sub control, trap hard clip, sample-based glue.
+</li></ul>
+<p>Each 2.0 preset was checked on real material (DECISIONS M17), and its description shows as the tooltip of the preset name. User presets and A/B too. Presets never change GAIN: how hard to drive depends on the mix, not the genre.</p>
+<p><table> <tr><td align="center" width="50%"><img src="docs/screenshots/master-streaming.png" alt="STREAMING CODECS - the live check" width="100%"><br><sub>STREAMING CODECS - the live check</sub></td></tr> </table></p>
+  <h2>Every screen, every mode</h2><div class="gallery"><figure><img src="/img/master/master-streaming.webp" srcset="/img/master/master-streaming-800.webp 800w, /img/master/master-streaming.webp 1200w" sizes="(max-width: 860px) 100vw, 600px" width="1200" height="760" alt="STREAMING CODECS - the live check" loading="lazy" decoding="async"><figcaption>STREAMING CODECS - the live check</figcaption></figure></div>
+  <p class="note">The complete reference, measurements and version history are in the
+  <a href="https://github.com/zmardanian/axell-master">repository on GitHub</a>.</p>
+  <div class="dl" data-repo="axell-master">
+  <a class="btn btn-primary" href="/get/master/windows" rel="nofollow"><b>Download for Windows</b><small>Windows 10 / 11 &middot; 64-bit &middot; VST3</small></a>
+  <a class="btn btn-ghost" href="/get/master/linux" rel="nofollow"><b>Download for Linux</b><small>Ubuntu 22.04+ &middot; Debian 12+ &middot; Fedora</small></a>
+  <p class="dl-meta"><span class="ver">Version 4.0.4</span> &middot; <a href="https://github.com/zmardanian/axell-master/releases/latest">all files &amp; checksums</a> &middot; <a href="https://github.com/zmardanian/axell-master">source on GitHub</a></p>
+  <p class="dl-news">New in 4.0.4 <span>(20 Nov 2026)</span>: Your DAW remembers the chosen preset; works with screen readers &middot; <a href="https://github.com/zmardanian/axell-master/releases/tag/v4.0.4">release notes</a></p>
+  <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a> &middot; works with screen readers</p>
+</div>
+</section>
+</main>
+<footer class="foot">
+  <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
+  <div class="foot-links"><a href="/penta-eq/">Axell Penta EQ</a> <a href="/duo-compressor/">Axell Duo Compressor</a> <a href="/gate/">Axell Gate</a> <a href="/dereverb/">Axell De-Reverb</a> <a href="/velvet/">Axell Velvet</a> <a href="/master/">Axell Master</a> <a href="/space/">Axell Space</a> <a href="/forbidden-seal/">Axell Forbidden Seal</a> <a href="/76/">Axell 76</a><a href="/dojo/">Axell Signature Dojo</a></div>
+  <div class="foot-small">
+    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="https://github.com/zmardanian">GitHub</a> &middot; <a href="https://ko-fi.com/axellyobag" rel="noopener">Support on Ko-fi</a> &middot; <a href="/impressum/">Impressum</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/code-signing/">Code signing policy</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>VST is a registered trademark of Steinberg Media Technologies GmbH. 1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
+  </div>
+</footer>
+<script src="/site.js?v=adb61d68b3" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ce09d7285b9247608354813fd8e4a526"}'></script>
+</body>
+</html>

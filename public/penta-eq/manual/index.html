@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" class="no-js"><script>document.documentElement.className="js"</script>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Axell Penta EQ manual - getting started and every control</title>
+<meta name="description" content="How to use Axell Penta EQ: installing, the presets and every control explained, with screenshots.">
+<meta name="theme-color" content="#0b0d12">
+<meta property="og:title" content="Axell Penta EQ manual - getting started and every control">
+<meta property="og:description" content="How to use Axell Penta EQ: installing, the presets and every control explained, with screenshots.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.axellsdojo.com/penta-eq/manual/">
+<meta property="og:image" content="https://www.axellsdojo.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.axellsdojo.com/penta-eq/manual/">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preload" href="/fonts/great-vibes-400.woff2?v=c59dc73d29" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jost-400.woff2?v=7726a5cd6f" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/cormorant-garamond-500.woff2?v=d80df8ff5a" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/yuji-syuku-400-kanji.woff2?v=0b79abf636" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=eab3032be4">
+<style>:root{--acc:#c9a25e}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <a class="brand" href="/"><span class="seal seal-wide seal-sm" aria-hidden="true">道場</span><span>Axell's Dojo</span></a>
+  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-support" href="https://ko-fi.com/axellyobag" rel="noopener" aria-label="Support on Ko-fi"><svg class="cup" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path class="steam" d="M10 4c-1.5 2 1.5 3 0 5M15 3c-1.5 2 1.5 3 0 5M20 4c-1.5 2 1.5 3 0 5"/><path d="M5 13h19v7a7 7 0 0 1-7 7h-5a7 7 0 0 1-7-7z"/><path d="M24 15h1.5a3.5 3.5 0 0 1 0 7H23.5"/></g><path d="M14.5 23.2l-3-2.9a1.9 1.9 0 0 1 2.7-2.7l.3.3.3-.3a1.9 1.9 0 0 1 2.7 2.7z" fill="currentColor"/></svg><span>Support</span></a><a class="nav-cta" href="/#get">Download</a></nav>
+</header>
+
+<main id="main" style="--acc:#e2c04f">
+<section class="section legal manual">
+  <p class="label">MANUAL &middot; ANALOG-MATCHED EQ</p><h1 class="h2">Axell Penta EQ: getting started and every control</h1>
+  <p class="lede">The analog-matched EQ that listens to your esses. This page explains every control, with the plugin's own screens. <a href="/penta-eq/">Back to Axell Penta EQ</a>.</p>
+  <h2>Getting started</h2><ol class="steps">
+  <li><b>Install.</b> Windows: run the Axell Signature Suite installer (or copy <code>Axell Penta EQ.vst3</code> to
+  <code>C:\Program Files\Common Files\VST3</code>). Linux: unpack the archive and run <code>./install.sh</code>.</li>
+  <li><b>Rescan.</b> Let your DAW rescan its VST3 plugins; Axell Penta EQ appears under the vendor <i>Axell Yobag</i>.</li>
+  <li><b>Insert it</b> on the track or bus it is made for, and start from a factory preset close to your material.</li>
+  <li><b>Listen, then adjust</b> the few controls described below; A/B compares two settings without losing either.</li>
+</ol>
+  <figure class="man-shot"><img src="/img/penta-eq/penta-100pct-hidpi2x.webp" srcset="/img/penta-eq/penta-100pct-hidpi2x-800.webp 800w, /img/penta-eq/penta-100pct-hidpi2x.webp 1800w" sizes="(max-width: 1100px) 100vw, 1100px" width="1800" height="1161" alt="Axell Penta EQ" fetchpriority="high"><figcaption>The full window, as it opens.</figcaption></figure>
+  <figure class="closeup reveal"><img src="/img/closeups/penta-eq.webp" width="1100" height="233" alt="Four colour modules in one rack: Inductor, Console, Passive Tube and Air." loading="lazy" decoding="async"><figcaption><span class="dot" aria-hidden="true"></span>Four colour modules in one rack: Inductor, Console, Passive Tube and Air.</figcaption></figure>
+  <h2>What it does</h2>
+<p>An all-round equalizer VST3 for Linux and Windows by <b>Axell Yobag</b>: a surgical, analog-matched parametric EQ with dynamic and spectral bands, Mid/Side, curve drawing and reference matching, plus a rack of four character modules - <b>Inductor</b>, <b>Console E/G</b>, <b>Passive Tube</b> and <b>Air</b>. Built for rap and boom bap vocals, beats, 808s, the mix bus and the master.</p>
+<p><b>Parametric core</b></p>
+<ul><li>
+12 bands + dedicated high-pass and low-pass. Types: bell, low/high shelf, low/high cut (6–96 dB/oct with
+ resonance), notch, band-pass, tilt.
+</li><li>
+<b>Clean</b> mode: curves match the analog prototypes within ±0.1 dB up to 20 kHz - no "cramping" of high bells and
+ shelves near the top of the spectrum, for every band type, gain, Q and frequency at 44.1–192 kHz, without
+ exceptions (measured independently; see <i>Accuracy</i>).
+</li><li>
+<b>Character</b> mode per band: proportional Q (wider at small gains, narrower at big ones), cuts tighter than
+ boosts, and boosts that saturate gently with <b>Drive</b>.
+</li><li>
+<b>Dynamic</b> per band: threshold, range (cut <i>or</i> boost when loud), ratio, attack, release. The detector can listen
+ to the band's own region, to <b>another band's region</b> (cut 3 kHz when 9 kHz gets loud) or to the **external
+ side-chain<b> (duck the 808's fundamental with the kick), or (3.0) to the </b>esses**: the band moves only when Axell
+ Velvet's sibilance network hears an S, SH, Z or CH, so a de-essing band leaves bright vowels and consonants alone
+ (a quarter of the collateral of a self-keyed band, measured on held-out voices). De-essing, harshness, mud and boom
+ control.
+</li><li>
+<b>Spectral dynamics</b> per band: instead of moving as a whole, every frequency inside the band reacts on its own -
+ only what is too loud gets cut (a resonance, a whistle, a harsh partial, a sharp sibilant), the rest of the band
+ stays untouched. Zero added latency; the graph shows the live per-frequency gain.
+</li><li>
+Per band placement: <b>Stereo / Left / Right / Mid / Side</b>.
+</li><li>
+<b>Solo</b> a band's region to find problem frequencies.
+</li></ul>
+<p><b>Character rack</b> (each switchable, before or after the parametric EQ)</p>
+<ul><li>
+<b>Inductor</b> - class-A inductor channel EQ: 18 dB/oct HPF (50/80/160/300 Hz), resonant low shelf
+ (35/60/110/220 Hz), musical mid (360 Hz–7.2 kHz), very gentle 12 kHz shelf, transformer saturation that grabs
+ the lows first.
+</li><li>
+<b>Console E/G</b> - four-band console channel EQ with HPF/LPF and bell switches. <b>E</b>: constant bandwidth, punchy;
+ <b>G</b>: proportional Q and shelves with a little overshoot. Console clipping with Drive.
+</li><li>
+<b>Passive Tube</b> - passive LC program EQ with tube makeup. Boost <b>and</b> attenuate the same low frequency for the
+ classic trick: weight at the bottom and a dip just above that clears the mud. Broad high boost with bandwidth,
+ separate high attenuation shelf, push-pull tube colour.
+</li><li>
+<b>Air</b> - an ultra-wide, boost-only high shelf (2.5–40 kHz) that opens the top without extra sibilance.
+</li></ul>
+<p><b>Global</b></p>
+<ul><li>
+<b>Phase modes</b>: <i>Zero Latency</i> (analog magnitude, no delay - for tracking), <i>Natural Phase</i> (analog magnitude
+ <b>and</b> phase, 2.7 ms), <i>Linear Phase</i> (no phase shift; Low / Medium / High resolution). Latency is always reported
+ to the host.
+</li><li>
+Oversampling 1x / 2x / 4x for the drive stages, global <b>Drive</b>, <b>Input</b>/<b>Output</b> gain, <b>Mix</b>, static
+ loudness-matched <b>Auto Gain</b> (never pumps).
+</li><li>
+Spectrum analyzer: input (pre), output (post) and side-chain spectra, 1/6-octave smoothing, 4.5 dB/oct tilt,
+ peak hold, adjustable speed and EQ scale.
+</li><li>
+<b>Workflow</b>: select several bands and move them together, keyboard editing, copy/paste (also between
+ instances), invert, note readout and snapping, a band on a spectrum peak with one click, <b>Draw</b> a curve and let
+ the EQ build it, <b>Match</b> your track to a reference, <b>Gain Scale</b> (0–200 %).
+</li><li>
+<b>42 factory presets</b> (all loudness-matched), user presets with descriptions, preset browser with categories and
+ search, <b>A/B</b> compare (saved with the session), <b>undo/redo</b>.
+</li><li>
+Resizable vector GUI (75–200 %), sharp on HiDPI, tooltips on every control.
+</li></ul>
+<div class='tbl'><table><thead><tr><th>!<a href="#">Spectral dynamics: the live per-frequency gain of band 4</a></th><th>!<a href="#">Match</a></th></tr></thead><tbody><tr><td>!<a href="#">Draw a curve</a></td><td>!<a href="#">Several bands selected</a></td></tr><tr><td>!<a href="#">Preset browser</a></td><td>!<a href="#">Rap lead preset at 100 %</a></td></tr></tbody></table></div>
+<p><table> <tr><td align="center" width="50%"><img src="docs/screenshots/penta-spectral.png" alt="Spectral dynamics" width="100%"><br><sub>Spectral dynamics</sub></td><td align="center" width="50%"><img src="docs/screenshots/penta-match.png" alt="Reference MATCH" width="100%"><br><sub>Reference MATCH</sub></td></tr> <tr><td align="center" width="50%"><img src="docs/screenshots/penta-draw.png" alt="DRAW a curve" width="100%"><br><sub>DRAW a curve</sub></td><td align="center" width="50%"><img src="docs/screenshots/penta-browser.png" alt="The preset browser" width="100%"><br><sub>The preset browser</sub></td></tr> </table></p><h2>How to use it</h2>
+<p>### The graph</p>
+<div class='tbl'><table><thead><tr><th>Action</th><th>Result</th></tr></thead><tbody><tr><td>Click on empty space</td><td>add a bell band there (gain from the click height)</td></tr><tr><td>Drag on empty space</td><td>select the bands inside the frame (Ctrl/Shift: add to the selection)</td></tr><tr><td>Ctrl/Cmd + click a dot</td><td>add / remove it from the selection</td></tr><tr><td>Drag a dot</td><td>frequency (left/right) and gain (up/down); a selection moves together; cuts, notch and band-pass: up/down = resonance/Q</td></tr><tr><td>Shift + drag / Ctrl + drag</td><td>fine adjustment / Q</td></tr><tr><td>Mouse wheel on a dot</td><td>Q (Shift = fine), for the whole selection</td></tr><tr><td>Double-click a dot</td><td>gain back to 0 dB</td></tr><tr><td>Alt + click a dot</td><td>remove the band (or the selection)</td></tr><tr><td>Alt + click empty space</td><td>a new narrow band on the nearest spectrum peak (hold Alt to see it first)</td></tr><tr><td>Right-click a dot / empty space</td><td>band menu (type, slope, placement, mode, dynamic, spectral, invert, copy/paste, remove) / graph menu</td></tr></tbody></table></div>
+<div class='tbl'><table><thead><tr><th>Key</th><th>Action</th></tr></thead><tbody><tr><td>← → / ↑ ↓</td><td>frequency ±1 semitone / gain ±0.5 dB (Shift: 1/96 octave / 0.1 dB; cuts: ↑ ↓ = Q)</td></tr><tr><td>Del, Backspace</td><td>remove the selected bands</td></tr><tr><td>Ctrl+A, Esc, Tab / Shift+Tab</td><td>select all, select none, next / previous band</td></tr><tr><td>I, B</td><td>invert the gains, bypass</td></tr><tr><td>Ctrl+C, Ctrl+V</td><td>copy a band, paste it onto the selection or into a free band (works between instances)</td></tr><tr><td>Ctrl+Z, Ctrl+Shift+Z / Ctrl+Y</td><td>undo, redo</td></tr></tbody></table></div>
+<p>The readout shows the note of the frequency (e.g. <i>A4 +20ct</i>); <b>Snap frequency to notes</b> (analyzer or graph menu) makes drags and nudges land on semitones. <b>SCALE</b> in the graph's top bar scales the gain of every band (0–200 %, double-click = 100 %).</p>
+<p><b>DRAW</b>: paint the curve you want across the graph (several strokes are fine; unpainted parts count as flat), then <b>APPLY</b> - the EQ fits up to 12 bands to it (one undo step). <b>MATCH</b>: play a reference (a mix you like) through the side-chain, through this instance, or through another instance of the EQ in the session and capture it; play your track and capture it; set amount, smoothing and the largest correction and press <b>APPLY</b>. The level difference is removed - it matches tone, not loudness.</p>
+<p>Dynamic bands show a bar from their static gain to the end of their range; the white curve moves live, the faint curve is the static setting. The <b>ANALYZER</b> menu in the graph's corner sets pre/post/side-chain display, peak hold, tilt, speed and the EQ scale (±6/12/18/30 dB).</p>
+<p>### Band panel Band chips <b>HP 1 … 12 LP</b> select a band (grey chips are free: clicking one switches it on as a flat bell). <b>SOLO</b> (hold) plays only the band's region, <b>BYPASS</b> keeps the band but disables it, <b>REMOVE</b> deletes it. The right half holds the <b>DYNAMIC</b> section: threshold, range, ratio, attack, release, the detector source (<i>Self</i>, <i>Band n</i>, <i>External</i> or <i>Ess</i>) and <b>BROAD / SPECTRAL</b>. Spectral thresholds are per frequency: loud music reads about −45 to −25 dBFS per frequency, so around −30 dB the band catches ringing peaks and lets the rest pass.</p>
+<p>### Header Preset menu (opens the browser), previous/next, <b>SAVE</b>, <b>A / B / COPY</b>, <b>UNDO / REDO</b> (Ctrl+Z, Ctrl+Shift+Z or Ctrl+Y), phase mode, linear-phase resolution, oversampling, interface size.</p>
+<p>### Side-chain in REAPER The plugin has a stereo side-chain input (plug-in pins 3/4). On the track with Axell Penta EQ, set the track to 4 channels; on the trigger track (e.g. the kick) add a send to that track, <i>Audio: 1/2 → 3/4</i>. Then set a dynamic band's detector to <b>External</b>. The presets <i>Bass/Kick Carve</i> and <i>Sample Chop - Room for Vocals</i> use this.</p>
+<p>### Latency by mode (48 kHz)</p>
+<div class='tbl'><table><thead><tr><th>Mode</th><th>Latency</th></tr></thead><tbody><tr><td>Zero Latency, OS 1x</td><td>0</td></tr><tr><td>Natural Phase</td><td>128 samples (2.7 ms)</td></tr><tr><td>Linear Phase Low / Medium / High</td><td>2176 / 4352 / 17408 samples (45 / 91 / 363 ms)</td></tr><tr><td>Oversampling 2x / 4x</td><td>+ 71 / 79 samples (+ 25 / 33 at 88.2–96 kHz)</td></tr></tbody></table></div>
+<p>Linear Phase resolves narrow low-frequency moves better at higher resolution (Medium: from about 40 × Q Hz and 100 Hz up; High: from about 10 × Q Hz).</p>
+  <h2>Every screen, every mode</h2><div class="gallery"><figure><img src="/img/penta-eq/penta-spectral.webp" srcset="/img/penta-eq/penta-spectral-800.webp 800w, /img/penta-eq/penta-spectral.webp 1200w" sizes="(max-width: 860px) 100vw, 600px" width="1200" height="774" alt="Spectral dynamics" loading="lazy" decoding="async"><figcaption>Spectral dynamics</figcaption></figure><figure><img src="/img/penta-eq/penta-match.webp" srcset="/img/penta-eq/penta-match-800.webp 800w, /img/penta-eq/penta-match.webp 1200w" sizes="(max-width: 860px) 100vw, 600px" width="1200" height="774" alt="Reference MATCH" loading="lazy" decoding="async"><figcaption>Reference MATCH</figcaption></figure><figure><img src="/img/penta-eq/penta-draw.webp" srcset="/img/penta-eq/penta-draw-800.webp 800w, /img/penta-eq/penta-draw.webp 1200w" sizes="(max-width: 860px) 100vw, 600px" width="1200" height="774" alt="DRAW a curve" loading="lazy" decoding="async"><figcaption>DRAW a curve</figcaption></figure><figure><img src="/img/penta-eq/penta-browser.webp" srcset="/img/penta-eq/penta-browser-800.webp 800w, /img/penta-eq/penta-browser.webp 1200w" sizes="(max-width: 860px) 100vw, 600px" width="1200" height="774" alt="The preset browser" loading="lazy" decoding="async"><figcaption>The preset browser</figcaption></figure></div>
+  <p class="note">The complete reference, measurements and version history are in the
+  <a href="https://github.com/zmardanian/axell-penta-eq">repository on GitHub</a>.</p>
+  <div class="dl" data-repo="axell-penta-eq">
+  <a class="btn btn-primary" href="/get/penta-eq/windows" rel="nofollow"><b>Download for Windows</b><small>Windows 10 / 11 &middot; 64-bit &middot; VST3</small></a>
+  <a class="btn btn-ghost" href="/get/penta-eq/linux" rel="nofollow"><b>Download for Linux</b><small>Ubuntu 22.04+ &middot; Debian 12+ &middot; Fedora</small></a>
+  <p class="dl-meta"><span class="ver">Version 3.0.2</span> &middot; <a href="https://github.com/zmardanian/axell-penta-eq/releases/latest">all files &amp; checksums</a> &middot; <a href="https://github.com/zmardanian/axell-penta-eq">source on GitHub</a></p>
+  <p class="dl-news">New in 3.0.2 <span>(20 Nov 2026)</span>: Your DAW remembers the chosen preset; works with screen readers &middot; <a href="https://github.com/zmardanian/axell-penta-eq/releases/tag/v3.0.2">release notes</a></p>
+  <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a> &middot; works with screen readers</p>
+</div>
+</section>
+</main>
+<footer class="foot">
+  <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
+  <div class="foot-links"><a href="/penta-eq/">Axell Penta EQ</a> <a href="/duo-compressor/">Axell Duo Compressor</a> <a href="/gate/">Axell Gate</a> <a href="/dereverb/">Axell De-Reverb</a> <a href="/velvet/">Axell Velvet</a> <a href="/master/">Axell Master</a> <a href="/space/">Axell Space</a> <a href="/forbidden-seal/">Axell Forbidden Seal</a> <a href="/76/">Axell 76</a><a href="/dojo/">Axell Signature Dojo</a></div>
+  <div class="foot-small">
+    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="https://github.com/zmardanian">GitHub</a> &middot; <a href="https://ko-fi.com/axellyobag" rel="noopener">Support on Ko-fi</a> &middot; <a href="/impressum/">Impressum</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/code-signing/">Code signing policy</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>VST is a registered trademark of Steinberg Media Technologies GmbH. 1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
+  </div>
+</footer>
+<script src="/site.js?v=adb61d68b3" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ce09d7285b9247608354813fd8e4a526"}'></script>
+</body>
+</html>

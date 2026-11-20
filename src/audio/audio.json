@@ -2,7 +2,7 @@
  "penta-eq": [
   {
    "cat": "boom-bap",
-   "title": "Boom bap drums",
+   "title": "Drums that need crack and body",
    "preset": "Snare - Crack & Body",
    "note": "More crack and body on the snare, more snap in the kit - analog-matched curves.",
    "source": "Under My Skin - OnAir Music (kick, snare, break)",
@@ -14,7 +14,7 @@
   },
   {
    "cat": "trap",
-   "title": "Trap vocal",
+   "title": "A verse that needs weight and air",
    "preset": "Rap Lead - Passive Tube Polish",
    "note": "Passive tube curves: the verse gets weight, presence and air.",
    "source": "Ronin - OnAir Music feat. KXNE (guest verse)",
@@ -26,7 +26,7 @@
   },
   {
    "cat": "lo-fi",
-   "title": "Lo-fi piano",
+   "title": "A clean piano that should sound sampled",
    "preset": "Dusty Sampler (12-bit era)",
    "note": "A clean piano turned into a dusty sampler loop.",
    "source": "Under My Skin - OnAir Music (piano)",
@@ -40,7 +40,7 @@
  "duo-compressor": [
   {
    "cat": "boom-bap",
-   "title": "Boom bap drums",
+   "title": "A drum bus that should hit harder",
    "preset": "Aggressive Parallel (All)",
    "note": "Parallel smash: the ghost notes and the room come up, the kit hits harder.",
    "source": "Under My Skin - OnAir Music (kick, snare, break)",
@@ -52,7 +52,7 @@
   },
   {
    "cat": "trap",
-   "title": "Trap vocal",
+   "title": "A verse that jumps in level",
    "preset": "Vocal: Upfront Hip-Hop",
    "note": "A steady, upfront rap vocal - every word at the same level.",
    "source": "Ronin - OnAir Music feat. KXNE (guest verse)",
@@ -64,7 +64,7 @@
   },
   {
    "cat": "lo-fi",
-   "title": "Lo-fi piano",
+   "title": "A thin piano that needs density",
    "preset": "Vocal: Lo-fi Grit (All)",
    "note": "Grit and squash: the piano gets thick, close and dusty.",
    "source": "Under My Skin - OnAir Music (piano)",
@@ -78,7 +78,7 @@
  "gate": [
   {
    "cat": "boom-bap",
-   "title": "Boom bap drums",
+   "title": "Drum tails that ring too long",
    "preset": "Gated Snare (80s)",
    "note": "SHAPE cuts the drum tails short - no clicks, no kinks.",
    "source": "Under My Skin - OnAir Music (kick, snare, break)",
@@ -86,11 +86,12 @@
    "license": "CC BY-SA 4.0",
    "a": "/audio/gate/boom-bap-a.mp3",
    "b": "/audio/gate/boom-bap-b.mp3",
-   "simulated": ""
+   "simulated": "",
+   "c": "/audio/gate/boom-bap-c.mp3"
   },
   {
    "cat": "trap",
-   "title": "Trap vocal with beat bleed",
+   "title": "Beat bleeding from the headphones",
    "preset": "Rap Lead - Kill Beat Bleed",
    "note": "Before: the beat leaking from headphones (simulated, -18 dB). After: BLEED REMOVAL with the beat on the side-chain.",
    "source": "Ronin - OnAir Music feat. KXNE (guest verse)",
@@ -98,11 +99,12 @@
    "license": "CC BY-SA 4.0",
    "a": "/audio/gate/trap-a.mp3",
    "b": "/audio/gate/trap-b.mp3",
-   "simulated": "beat bleed simulated"
+   "simulated": "beat bleed simulated",
+   "c": "/audio/gate/trap-c.mp3"
   },
   {
    "cat": "lo-fi",
-   "title": "Lo-fi chords",
+   "title": "Chords that need a swung chop",
    "preset": "Swing Gate",
    "note": "RHYTHM chops the chords on a swung grid with click-free edges.",
    "source": "Under My Skin - OnAir Music (chords)",
@@ -110,13 +112,14 @@
    "license": "CC BY-SA 4.0",
    "a": "/audio/gate/lo-fi-a.mp3",
    "b": "/audio/gate/lo-fi-b.mp3",
-   "simulated": ""
+   "simulated": "",
+   "c": "/audio/gate/lo-fi-c.mp3"
   }
  ],
  "dereverb": [
   {
    "cat": "boom-bap",
-   "title": "Boom bap vocal in a bedroom",
+   "title": "A boom bap verse in a boxy bedroom",
    "preset": "Natural",
    "note": "Before: the verse recorded in a small bedroom (modelled). After: the room out, the voice kept.",
    "source": "The R-Word - Coruscate (ccMixter)",
@@ -131,11 +134,12 @@
    },
    "a": "/audio/dereverb/boom-bap-a.mp3",
    "b": "/audio/dereverb/boom-bap-b.mp3",
-   "simulated": "room simulated"
+   "simulated": "room simulated",
+   "c": "/audio/dereverb/boom-bap-c.mp3"
   },
   {
    "cat": "trap",
-   "title": "Trap vocal in a bedroom",
+   "title": "A trap verse in a boxy bedroom",
    "preset": "Natural",
    "note": "Before: the verse in a small bedroom (modelled). After: the room out, the voice kept.",
    "source": "Ronin - OnAir Music feat. KXNE (guest verse)",
@@ -143,11 +147,12 @@
    "license": "CC BY-SA 4.0",
    "a": "/audio/dereverb/trap-a.mp3",
    "b": "/audio/dereverb/trap-b.mp3",
-   "simulated": "room simulated"
+   "simulated": "room simulated",
+   "c": "/audio/dereverb/trap-c.mp3"
   },
   {
    "cat": "rnb",
-   "title": "Sung vocal in a bedroom",
+   "title": "A soul vocal in a boxy bedroom",
    "preset": "Natural",
    "note": "Before: a soul vocal in a small bedroom (modelled). After: dry and close, as if sung in a booth.",
    "source": "Light Me On Fire - Admiral Bob (ccMixter)",
@@ -162,13 +167,14 @@
    },
    "a": "/audio/dereverb/rnb-a.mp3",
    "b": "/audio/dereverb/rnb-b.mp3",
-   "simulated": "room simulated"
+   "simulated": "room simulated",
+   "c": "/audio/dereverb/rnb-c.mp3"
   }
  ],
  "velvet": [
   {
    "cat": "boom-bap",
-   "title": "Boom bap vocal, harsh mic",
+   "title": "Sharp esses from a harsh mic",
    "preset": "Harsh Mic Rescue",
    "note": "The neural de-esser takes the sharp esses down by about 11 dB - the voice untouched.",
    "source": "The R-Word - Coruscate (ccMixter)",
@@ -183,11 +189,12 @@
    },
    "a": "/audio/velvet/boom-bap-a.mp3",
    "b": "/audio/velvet/boom-bap-b.mp3",
-   "simulated": ""
+   "simulated": "",
+   "c": "/audio/velvet/boom-bap-c.mp3"
   },
   {
    "cat": "trap",
-   "title": "Trap vocal",
+   "title": "Bright esses on a trap verse",
    "preset": "Trap Vocal - Bright & Smooth",
    "note": "Bright and smooth: the esses down by about 7 dB, warmth everywhere else.",
    "source": "Ronin - OnAir Music feat. KXNE (guest verse)",
@@ -195,11 +202,12 @@
    "license": "CC BY-SA 4.0",
    "a": "/audio/velvet/trap-a.mp3",
    "b": "/audio/velvet/trap-b.mp3",
-   "simulated": ""
+   "simulated": "",
+   "c": "/audio/velvet/trap-c.mp3"
   },
   {
    "cat": "lo-fi",
-   "title": "Lo-fi piano",
+   "title": "A clean piano that should sound warm and lo-fi",
    "preset": "Lo-Fi Saturated",
    "note": "Saturated and warm - the lo-fi colour in one preset.",
    "source": "Under My Skin - OnAir Music (piano)",
@@ -213,7 +221,7 @@
  "master": [
   {
    "cat": "boom-bap",
-   "title": "Boom bap mix",
+   "title": "A boom bap mix that must be loud and clean",
    "preset": "Boom Bap Loud, Codec-Ready (-9)",
    "note": "Before: the unmastered mix turned up to the same loudness - it clips. After: Master, clean.",
    "source": "Under My Skin - OnAir Music (all stems)",
@@ -225,7 +233,7 @@
   },
   {
    "cat": "trap",
-   "title": "Trap mix",
+   "title": "A trap mix that clips when pushed",
    "preset": "Loud Rap / Trap",
    "note": "Before: the mix turned up to the same loudness with no limiter - it clips. After: loud and clean.",
    "source": "Ronin - OnAir Music feat. KXNE (all stems)",
@@ -237,7 +245,7 @@
   },
   {
    "cat": "lo-fi",
-   "title": "Lo-fi beat",
+   "title": "A lo-fi beat that must stay soft when loud",
    "preset": "Lo-Fi / Chill Master (-14)",
    "note": "Before: the beat turned up to the same loudness - it clips. After: Master keeps it soft and warm.",
    "source": "Bouncin Around - OnAir Music (all stems)",
@@ -251,7 +259,7 @@
  "space": [
   {
    "cat": "boom-bap",
-   "title": "Boom bap drums",
+   "title": "A dry kit with no room",
    "preset": "Real: Studio Live Room",
    "note": "A real live room around a dry kit.",
    "source": "Under My Skin - OnAir Music (kick, snare, break)",
@@ -263,7 +271,7 @@
   },
   {
    "cat": "trap",
-   "title": "Trap vocal",
+   "title": "A dry verse that needs a plate",
    "preset": "Vocal Plate",
    "note": "A vocal plate with ESS DUCK - no hissing tails.",
    "source": "Ronin - OnAir Music feat. KXNE (guest verse)",
@@ -275,7 +283,7 @@
   },
   {
    "cat": "rnb",
-   "title": "Soul vocal",
+   "title": "A soul vocal that needs a hall",
    "preset": "Hall Hook",
    "note": "A lush hall that blooms in the gaps between the lines.",
    "source": "Light Me On Fire - Admiral Bob (ccMixter)",
@@ -296,7 +304,7 @@
  "forbidden-seal": [
   {
    "cat": "boom-bap",
-   "title": "Boom bap drums",
+   "title": "Drums that need dirt and density",
    "preset": "Drums: Smash",
    "note": "Saturation smash: the kit gets loud, dense and dirty.",
    "source": "Under My Skin - OnAir Music (kick, snare, break)",
@@ -308,7 +316,7 @@
   },
   {
    "cat": "trap",
-   "title": "Trap 808",
+   "title": "An 808 lost on small speakers",
    "preset": "808: Distorted",
    "note": "The 808 distorted so it cuts through on small speakers - the sub stays clean.",
    "source": "Ronin - OnAir Music feat. KXNE (808)",
@@ -320,7 +328,7 @@
   },
   {
    "cat": "lo-fi",
-   "title": "Lo-fi piano",
+   "title": "A clean piano that needs tube grit",
    "preset": "Vocal: Tube Grit",
    "note": "Tube grit on a clean piano: the lo-fi colour from physics.",
    "source": "Under My Skin - OnAir Music (piano)",
@@ -334,7 +342,7 @@
  "76": [
   {
    "cat": "boom-bap",
-   "title": "Boom bap drums",
+   "title": "Drums that need the 1176 crush",
    "preset": "Drums - Break Crush",
    "note": "The kit crushed the way the 1176 does it.",
    "source": "Under My Skin - OnAir Music (kick, snare, break)",
@@ -346,7 +354,7 @@
   },
   {
    "cat": "trap",
-   "title": "Trap vocal",
+   "title": "A verse that must sit upfront",
    "preset": "Vocal - Aggressive",
    "note": "The 1176 pushed hard: every word upfront, the attitude kept.",
    "source": "Ronin - OnAir Music feat. KXNE (guest verse)",
@@ -358,7 +366,7 @@
   },
   {
    "cat": "rnb",
-   "title": "Soul vocal",
+   "title": "A soul vocal that needs all-buttons grit",
    "preset": "Vocal - All Buttons Grit",
    "note": "All buttons in: the famous 1176 grit on a soul vocal.",
    "source": "Light Me On Fire - Admiral Bob (ccMixter)",

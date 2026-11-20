@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" class="no-js"><script>document.documentElement.className="js"</script>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Axell Gate manual - getting started and every control</title>
+<meta name="description" content="How to use Axell Gate: installing, the presets and every control explained, with screenshots.">
+<meta name="theme-color" content="#0b0d12">
+<meta property="og:title" content="Axell Gate manual - getting started and every control">
+<meta property="og:description" content="How to use Axell Gate: installing, the presets and every control explained, with screenshots.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.axellsdojo.com/gate/manual/">
+<meta property="og:image" content="https://www.axellsdojo.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.axellsdojo.com/gate/manual/">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preload" href="/fonts/great-vibes-400.woff2?v=c59dc73d29" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jost-400.woff2?v=7726a5cd6f" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/cormorant-garamond-500.woff2?v=d80df8ff5a" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/yuji-syuku-400-kanji.woff2?v=0b79abf636" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=eab3032be4">
+<style>:root{--acc:#c9a25e}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <a class="brand" href="/"><span class="seal seal-wide seal-sm" aria-hidden="true">道場</span><span>Axell's Dojo</span></a>
+  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-support" href="https://ko-fi.com/axellyobag" rel="noopener" aria-label="Support on Ko-fi"><svg class="cup" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path class="steam" d="M10 4c-1.5 2 1.5 3 0 5M15 3c-1.5 2 1.5 3 0 5M20 4c-1.5 2 1.5 3 0 5"/><path d="M5 13h19v7a7 7 0 0 1-7 7h-5a7 7 0 0 1-7-7z"/><path d="M24 15h1.5a3.5 3.5 0 0 1 0 7H23.5"/></g><path d="M14.5 23.2l-3-2.9a1.9 1.9 0 0 1 2.7-2.7l.3.3.3-.3a1.9 1.9 0 0 1 2.7 2.7z" fill="currentColor"/></svg><span>Support</span></a><a class="nav-cta" href="/#get">Download</a></nav>
+</header>
+
+<main id="main" style="--acc:#3cc8bb">
+<section class="section legal manual">
+  <p class="label">MANUAL &middot; VOICE-AWARE GATE</p><h1 class="h2">Axell Gate: getting started and every control</h1>
+  <p class="lede">A gate that hears your voice, not just its level. This page explains every control, with the plugin's own screens. <a href="/gate/">Back to Axell Gate</a>.</p>
+  <h2>Getting started</h2><ol class="steps">
+  <li><b>Install.</b> Windows: run the Axell Signature Suite installer (or copy <code>Axell Gate.vst3</code> to
+  <code>C:\Program Files\Common Files\VST3</code>). Linux: unpack the archive and run <code>./install.sh</code>.</li>
+  <li><b>Rescan.</b> Let your DAW rescan its VST3 plugins; Axell Gate appears under the vendor <i>Axell Yobag</i>.</li>
+  <li><b>Insert it</b> on the track or bus it is made for, and start from a factory preset close to your material.</li>
+  <li><b>Listen, then adjust</b> the few controls described below; A/B compares two settings without losing either.</li>
+</ol>
+  <figure class="man-shot"><img src="/img/gate/gate-vocal-hidpi2x.webp" srcset="/img/gate/gate-vocal-hidpi2x-800.webp 800w, /img/gate/gate-vocal-hidpi2x.webp 1800w" sizes="(max-width: 1100px) 100vw, 1100px" width="1800" height="1125" alt="Axell Gate - VOCAL mode" fetchpriority="high"><figcaption>The full window, as it opens.</figcaption></figure>
+  <figure class="closeup reveal"><img src="/img/closeups/gate.webp" width="1100" height="297" alt="SMART voice detection, and BEAT BLEED removal with the beat on the side-chain." loading="lazy" decoding="async"><figcaption><span class="dot" aria-hidden="true"></span>SMART voice detection, and BEAT BLEED removal with the beat on the side-chain.</figcaption></figure>
+  <h2>What it does</h2>
+<p>The gate of the Axell suite, built for vocals and beats:</p>
+<ul><li>
+<b>VOCAL</b> opens on your voice, not on a level. It keeps every word start, sets breaths to the level you choose,
+ hears your room (it tells the voice from the room ringing on after it) and, with the beat on its side-chain,
+ removes the beat's headphone bleed in the gaps <i>and</i> under the voice.
+</li><li>
+<b>SHAPE</b> shortens drum tails without clicks and without the kink a release puts in a decay.
+</li><li>
+<b>RHYTHM</b> chops on the host's grid with click-free edges.
+</li></ul>
+<p><b>VOCAL</b></p>
+<ul><li>
+<b>SMART</b> detection: no threshold to set; the same setting works on a whisper and a shout. Four parts:
+<ul><li>
+<b>Two voice-activity networks</b> (3.0): 2.0's, trained on 27 voices with headphone bleed, room noise, rumble,
+ untreated-room reverberation, compression and breaths, decides wherever it is sure; on doubtful frames a second
+ network, trained on 111 voices, must agree. Far less voice lost on voices it never heard, fewer false openings.
+</li><li>
+<b>Room model:</b> learns your room's reverb time by itself, so the tail after a word is not taken for voice.
+</li><li>
+<b>Pause model:</b> knows that a 40 ms closure inside a word is not a pause.
+</li><li>
+<b>Decision:</b> a hidden Markov model over a short look-ahead.
+</li></ul>
+</li><li>
+<b>SPEED</b>: BEST (67 ms latency), FAST (42 ms), LIVE (0 ms, a classic level gate for monitoring while you record).
+</li><li>
+<b>SENSITIVITY</b>: opens more or less readily.
+</li><li>
+<b>BREATH</b>: how loud breaths stay (removed .. untouched).
+</li><li>
+<b>BLEED REMOVAL</b>: route the beat into the side-chain input. A frequency-domain Kalman filter learns how the beat
+ leaks from your headphones into the mic and subtracts it. It never needs a threshold and never adds bleed (a safety
+ check scales it down when the estimate does not fit). What it learned is saved with the project. The meter shows
+ how much quieter the gaps are (GAPS), how well the learned leak fits (FIT) and the beat's level. FREEZE keeps what
+ it learned.
+</li><li>
+<b>LEVEL</b> detection (and LIVE): KEY HP / KEY LP filter what the level detector hears; KEY LISTEN lets you hear it.
+</li></ul>
+<p><b>SHAPE</b> (programmed drums, samples, 808s)</p>
+<ul><li>
+<b>TAIL</b>: decay scaling. The gain follows each hit's own envelope, g = (e / e_peak)^alpha, so an exponential tail
+ stays exponential, just faster. TAIL 50 % = half as long, same shape, no click. The opening ramp ends exactly at the
+ onset (look-ahead), even on a hit that lands on the previous one's ringing tail.
+</li><li>
+<b>THRESHOLD</b>, <b>HIT SENS</b>, <b>ATTACK</b>, <b>HOLD</b>, <b>RELEASE</b> (the final close), <b>RANGE</b>.
+</li><li>
+<b>MIDI out</b>: a note for every hit (HIT NOTE; velocity from the hit), exactly where you hear the hit. Layer a
+ sample, or drive a synth from the drums.
+</li></ul>
+<p><b>RHYTHM</b></p>
+<ul><li>
+16 steps, each with its own level (LENGTH 2-16; 12 for triplet bars), RATE 1/4 to 1/32 and triplets, SWING, EDGE
+ (raised-cosine edges centred on the grid), RANGE.
+</li><li>
+It follows the host's tempo and position; stopped, it free-runs.
+</li></ul>
+<p>There are 25 factory presets (vocals, drums, rhythm), user presets and A/B. Projects and presets from 1.0 load.</p>
+<p><table> <tr><td align="center" width="50%"><img src="docs/screenshots/gate-bleed.png" alt="BLEED REMOVAL - the beat on the side-chain" width="100%"><br><sub>BLEED REMOVAL - the beat on the side-chain</sub></td><td align="center" width="50%"><img src="docs/screenshots/gate-shape-midi.png" alt="SHAPE - drum tails, MIDI out" width="100%"><br><sub>SHAPE - drum tails, MIDI out</sub></td></tr> <tr><td align="center" width="50%"><img src="docs/screenshots/gate-rhythm.png" alt="RHYTHM - gating on the grid" width="100%"><br><sub>RHYTHM - gating on the grid</sub></td><td align="center" width="50%"><img src="docs/screenshots/gate-level-key.png" alt="LEVEL detection with the key filter" width="100%"><br><sub>LEVEL detection with the key filter</sub></td></tr> </table></p>
+  <h2>Every screen, every mode</h2><div class="gallery"><figure><img src="/img/gate/gate-bleed.webp" srcset="/img/gate/gate-bleed-800.webp 800w, /img/gate/gate-bleed.webp 1120w" sizes="(max-width: 860px) 100vw, 600px" width="1120" height="700" alt="BLEED REMOVAL - the beat on the side-chain" loading="lazy" decoding="async"><figcaption>BLEED REMOVAL - the beat on the side-chain</figcaption></figure><figure><img src="/img/gate/gate-shape-midi.webp" srcset="/img/gate/gate-shape-midi-800.webp 800w, /img/gate/gate-shape-midi.webp 1120w" sizes="(max-width: 860px) 100vw, 600px" width="1120" height="700" alt="SHAPE - drum tails, MIDI out" loading="lazy" decoding="async"><figcaption>SHAPE - drum tails, MIDI out</figcaption></figure><figure><img src="/img/gate/gate-rhythm.webp" srcset="/img/gate/gate-rhythm-800.webp 800w, /img/gate/gate-rhythm.webp 1120w" sizes="(max-width: 860px) 100vw, 600px" width="1120" height="700" alt="RHYTHM - gating on the grid" loading="lazy" decoding="async"><figcaption>RHYTHM - gating on the grid</figcaption></figure><figure><img src="/img/gate/gate-level-key.webp" srcset="/img/gate/gate-level-key-800.webp 800w, /img/gate/gate-level-key.webp 1120w" sizes="(max-width: 860px) 100vw, 600px" width="1120" height="700" alt="LEVEL detection with the key filter" loading="lazy" decoding="async"><figcaption>LEVEL detection with the key filter</figcaption></figure></div>
+  <p class="note">The complete reference, measurements and version history are in the
+  <a href="https://github.com/zmardanian/axell-gate">repository on GitHub</a>.</p>
+  <div class="dl" data-repo="axell-gate">
+  <a class="btn btn-primary" href="/get/gate/windows" rel="nofollow"><b>Download for Windows</b><small>Windows 10 / 11 &middot; 64-bit &middot; VST3</small></a>
+  <a class="btn btn-ghost" href="/get/gate/linux" rel="nofollow"><b>Download for Linux</b><small>Ubuntu 22.04+ &middot; Debian 12+ &middot; Fedora</small></a>
+  <p class="dl-meta"><span class="ver">Version 4.0.3</span> &middot; <a href="https://github.com/zmardanian/axell-gate/releases/latest">all files &amp; checksums</a> &middot; <a href="https://github.com/zmardanian/axell-gate">source on GitHub</a></p>
+  <p class="dl-news">New in 4.0.3 <span>(20 Nov 2026)</span>: Your DAW remembers the chosen preset; works with screen readers &middot; <a href="https://github.com/zmardanian/axell-gate/releases/tag/v4.0.3">release notes</a></p>
+  <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a> &middot; works with screen readers</p>
+</div>
+</section>
+</main>
+<footer class="foot">
+  <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
+  <div class="foot-links"><a href="/penta-eq/">Axell Penta EQ</a> <a href="/duo-compressor/">Axell Duo Compressor</a> <a href="/gate/">Axell Gate</a> <a href="/dereverb/">Axell De-Reverb</a> <a href="/velvet/">Axell Velvet</a> <a href="/master/">Axell Master</a> <a href="/space/">Axell Space</a> <a href="/forbidden-seal/">Axell Forbidden Seal</a> <a href="/76/">Axell 76</a><a href="/dojo/">Axell Signature Dojo</a></div>
+  <div class="foot-small">
+    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="https://github.com/zmardanian">GitHub</a> &middot; <a href="https://ko-fi.com/axellyobag" rel="noopener">Support on Ko-fi</a> &middot; <a href="/impressum/">Impressum</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/code-signing/">Code signing policy</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>VST is a registered trademark of Steinberg Media Technologies GmbH. 1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
+  </div>
+</footer>
+<script src="/site.js?v=adb61d68b3" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ce09d7285b9247608354813fd8e4a526"}'></script>
+</body>
+</html>

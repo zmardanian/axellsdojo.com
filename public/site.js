@@ -40,43 +40,44 @@
     const mA = meters.querySelector(".m-a i"), mB = meters.querySelector(".m-b i"), tmp = new Float32Array(1024);
     function lvl(node) { node.getFloatTimeDomainData(tmp); let s = 0; for (let i = 0; i < tmp.length; i++) s += tmp[i] * tmp[i];
       const db = 10 * Math.log10(s / tmp.length + 1e-12); return Math.max(0, Math.min(1, (db + 48) / 48)); }
+    const K = el.dataset.c ? ["a", "b", "c"] : ["a", "b"];   // c: only what the plugin removed
     function dur() { return bufs ? Math.min(bufs.a.duration, bufs.b.duration) : 1; }
     function now() { return srcs ? off + (ctx.currentTime - t0) : off; }
     function meter() { if (!an || !srcs) { mA.style.transform = mB.style.transform = "scaleX(0)"; return; }
       mA.style.transform = "scaleX(" + lvl(an.a).toFixed(3) + ")"; mB.style.transform = "scaleX(" + lvl(an.b).toFixed(3) + ")"; }
     function draw() { meter(); pos.style.clipPath = "inset(0 " + (100 - 100 * Math.min(1, now() / dur())) + "% 0 0)"; if (srcs) raf = requestAnimationFrame(draw); }
     function stop(keep) {
-      if (srcs) { off = keep ? now() : 0; srcs.a.onended = null; srcs.a.stop(); srcs.b.stop(); srcs = null; }
+      if (srcs) { off = keep ? now() : 0; srcs.a.onended = null; K.forEach(function (k) { srcs[k].stop(); }); srcs = null; }
       cancelAnimationFrame(raf); play.innerHTML = "&#9654;"; play.setAttribute("aria-label", "Play"); el.classList.remove("playing"); draw();
     }
     function start(at) {
       if (current && current !== api) current.stop(true);
       current = api; const c = audioCtx(); c.resume();
-      gains = { a: c.createGain(), b: c.createGain() }; srcs = {};
-      ["a", "b"].forEach(function (k) {
+      gains = {}; K.forEach(function (k) { gains[k] = c.createGain(); }); srcs = {};
+      K.forEach(function (k) {
         gains[k].gain.value = (k === side) ? 1 : 0; gains[k].connect(c.destination);
         srcs[k] = c.createBufferSource(); srcs[k].buffer = bufs[k]; srcs[k].connect(gains[k]);
         if (!an) an = {}; if (!an[k]) { an[k] = c.createAnalyser(); an[k].fftSize = 1024; } srcs[k].connect(an[k]);
       });
-      off = at; t0 = c.currentTime + 0.05; srcs.a.start(t0, at); srcs.b.start(t0, at);
+      off = at; t0 = c.currentTime + 0.05; K.forEach(function (k) { srcs[k].start(t0, at); });
       srcs.a.onended = function () { if (srcs) stop(false); };
       play.innerHTML = "&#10074;&#10074;"; play.setAttribute("aria-label", "Pause"); el.classList.add("playing"); draw();
     }
     const api = { stop: stop };
-    function warm() { if (!bufs && !loading && !(navigator.connection && navigator.connection.saveData)) { get(el.dataset.a).catch(function () {}); get(el.dataset.b).catch(function () {}); } }
+    function warm() { if (!bufs && !loading && !(navigator.connection && navigator.connection.saveData)) { K.forEach(function (k) { get(el.dataset[k]).catch(function () {}); }); } }
     el.addEventListener("pointerenter", warm, { once: true }); el.addEventListener("touchstart", warm, { once: true, passive: true });
     el.addEventListener("focusin", warm, { once: true });
     play.addEventListener("click", function () {
       if (srcs) { stop(true); return; }
       if (bufs) { start(off >= dur() - 0.05 ? 0 : off); return; }
       if (loading) return; loading = true; el.classList.add("loading"); unlockIOS(); audioCtx().resume();
-      Promise.all([load(el.dataset.a), load(el.dataset.b)]).then(function (r) { bufs = { a: r[0], b: r[1] }; el.classList.remove("loading"); start(0); })
+      Promise.all(K.map(function (k) { return load(el.dataset[k]); })).then(function (r) { bufs = {}; K.forEach(function (k, i) { bufs[k] = r[i]; }); el.classList.remove("loading"); start(0); })
         .catch(function () { el.classList.remove("loading"); loading = false; play.textContent = "!"; play.setAttribute("aria-label", "Could not load the audio - try again"); });
     });
     sw.forEach(function (b) {
       b.addEventListener("click", function () {
         side = b.dataset.side; el.dataset.side = side; sw.forEach(function (x) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
-        if (srcs && gains) { const t = ctx.currentTime; ["a", "b"].forEach(function (k) {
+        if (srcs && gains) { const t = ctx.currentTime; K.forEach(function (k) {
           gains[k].gain.cancelScheduledValues(t); gains[k].gain.setValueAtTime(gains[k].gain.value, t);
           gains[k].gain.linearRampToValueAtTime(k === side ? 1 : 0, t + 0.015); }); }
       });

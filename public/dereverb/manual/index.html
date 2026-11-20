@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" class="no-js"><script>document.documentElement.className="js"</script>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Axell De-Reverb manual - getting started and every control</title>
+<meta name="description" content="How to use Axell De-Reverb: installing, the presets and every control explained, with screenshots.">
+<meta name="theme-color" content="#0b0d12">
+<meta property="og:title" content="Axell De-Reverb manual - getting started and every control">
+<meta property="og:description" content="How to use Axell De-Reverb: installing, the presets and every control explained, with screenshots.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.axellsdojo.com/dereverb/manual/">
+<meta property="og:image" content="https://www.axellsdojo.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.axellsdojo.com/dereverb/manual/">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preload" href="/fonts/great-vibes-400.woff2?v=c59dc73d29" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jost-400.woff2?v=7726a5cd6f" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/cormorant-garamond-500.woff2?v=d80df8ff5a" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/yuji-syuku-400-kanji.woff2?v=0b79abf636" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=eab3032be4">
+<style>:root{--acc:#c9a25e}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <a class="brand" href="/"><span class="seal seal-wide seal-sm" aria-hidden="true">道場</span><span>Axell's Dojo</span></a>
+  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-support" href="https://ko-fi.com/axellyobag" rel="noopener" aria-label="Support on Ko-fi"><svg class="cup" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path class="steam" d="M10 4c-1.5 2 1.5 3 0 5M15 3c-1.5 2 1.5 3 0 5M20 4c-1.5 2 1.5 3 0 5"/><path d="M5 13h19v7a7 7 0 0 1-7 7h-5a7 7 0 0 1-7-7z"/><path d="M24 15h1.5a3.5 3.5 0 0 1 0 7H23.5"/></g><path d="M14.5 23.2l-3-2.9a1.9 1.9 0 0 1 2.7-2.7l.3.3.3-.3a1.9 1.9 0 0 1 2.7 2.7z" fill="currentColor"/></svg><span>Support</span></a><a class="nav-cta" href="/#get">Download</a></nav>
+</header>
+
+<main id="main" style="--acc:#62bfe9">
+<section class="section legal manual">
+  <p class="label">MANUAL &middot; SMALL-ROOM DE-REVERB</p><h1 class="h2">Axell De-Reverb: getting started and every control</h1>
+  <p class="lede">Take the room out of your vocal. Keep the voice. This page explains every control, with the plugin's own screens. <a href="/dereverb/">Back to Axell De-Reverb</a>.</p>
+  <h2>Getting started</h2><ol class="steps">
+  <li><b>Install.</b> Windows: run the Axell Signature Suite installer (or copy <code>Axell De-Reverb.vst3</code> to
+  <code>C:\Program Files\Common Files\VST3</code>). Linux: unpack the archive and run <code>./install.sh</code>.</li>
+  <li><b>Rescan.</b> Let your DAW rescan its VST3 plugins; Axell De-Reverb appears under the vendor <i>Axell Yobag</i>.</li>
+  <li><b>Insert it</b> on the track or bus it is made for, and start from a factory preset close to your material.</li>
+  <li><b>Listen, then adjust</b> the few controls described below; A/B compares two settings without losing either.</li>
+</ol>
+  <figure class="man-shot"><img src="/img/dereverb/dereverb-hidpi2x.webp" srcset="/img/dereverb/dereverb-hidpi2x-800.webp 800w, /img/dereverb/dereverb-hidpi2x.webp 1800w" sizes="(max-width: 1100px) 100vw, 1100px" width="1800" height="1029" alt="Axell De-Reverb" fetchpriority="high"><figcaption>The full window, as it opens.</figcaption></figure>
+  <figure class="closeup reveal"><img src="/img/closeups/dereverb.webp" width="1100" height="359" alt="REDUCTION, the live readout of what was removed, and TRUE TONE." loading="lazy" decoding="async"><figcaption><span class="dot" aria-hidden="true"></span>REDUCTION, the live readout of what was removed, and TRUE TONE.</figcaption></figure>
+  <h2>What it does</h2>
+<p>The de-reverb of the Axell suite. It removes the room from a close vocal:</p>
+<ul><li>
+<b>the tail</b> of a bare bedroom or a bathroom;
+</li><li>
+<b>the early reflections and the 350-600 Hz box</b> of a wardrobe booth, a closet or a car, which most de-reverbs
+ leave alone because they were built for long tails in big rooms.
+</li></ul>
+<ul><li>
+<b>A trained network</b> runs on your CPU (no internet, nothing to install). It predicts, for every moment and
+ frequency, how much of the sound is your voice and how much is the room. Below 4.5 kHz it also undoes the room with
+ a short complex filter over several frames, so it can remove reflections that arrive within a few milliseconds of
+ the voice.
+<ul><li>
+<b>Training:</b> rap and spoken word first (2.0: dense takes with 0-120 ms between phrases). 80 speaking voices
+ (women and men, 11 accents) and 16 singers, in 4,000 simulated small rooms (booths, closets, cars, bedrooms,
+ bathrooms) and 7 measured rooms.
+</li><li>
+<b>10 % of the training had no room at all:</b> a dry take must come out as it went in.
+</li></ul>
+</li><li>
+<b>REDUCTION</b> 0-100 %. The default 85 % was the best balance on the benchmark (DECISIONS D9). At 0 % the output is
+ the input, delayed.
+</li><li>
+<b>LISTEN: REMOVED</b> plays only what is taken away (processed + removed = the input).
+</li><li>
+<b>OUTPUT</b> -24 to +24 dB. In/out meters, a REMOVED meter and a room history.
+</li><li>
+<b>Presets:</b> Natural (85 %), Clean (100 %), Gentle (60 %). User presets and A/B.
+</li><li>
+<b>STUDIO / LIVE</b> (3.0): STUDIO looks 32 ms ahead (latency 2560 samples at 48 kHz, 53 ms, reported and
+ compensated) - for mixing. LIVE has no latency at all (48 kHz; the resamplers' 2-3 ms at other rates): a causal
+ network applied as a minimum-phase filter, for hearing yourself without the room while you record. LIVE removes
+ about two thirds of what STUDIO removes (3.7 vs 5.7 dB of room on 48 held-out examples, ViSQOL 4.00 vs 4.13) and
+ harms the voice no more.
+</li><li>
+<b>Any sample rate:</b> 44.1 to 96 kHz. The network runs at 48 kHz, with exact-latency resampling, and the band above
+ it passes untouched.
+</li></ul>
+<p><table> <tr><td align="center" width="50%"><img src="docs/screenshots/dereverb-listen.png" alt="LISTEN: REMOVED - hear exactly what it takes out" width="100%"><br><sub>LISTEN: REMOVED - hear exactly what it takes out</sub></td><td align="center" width="50%"><img src="docs/screenshots/dereverb-75pct.png" alt="The compact size" width="100%"><br><sub>The compact size</sub></td></tr> </table></p>
+  <h2>Every screen, every mode</h2><div class="gallery"><figure><img src="/img/dereverb/dereverb-listen.webp" width="980" height="560" alt="LISTEN: REMOVED - hear exactly what it takes out" loading="lazy" decoding="async"><figcaption>LISTEN: REMOVED - hear exactly what it takes out</figcaption></figure><figure><img src="/img/dereverb/dereverb-75pct.webp" width="735" height="420" alt="The compact size" loading="lazy" decoding="async"><figcaption>The compact size</figcaption></figure></div>
+  <p class="note">The complete reference, measurements and version history are in the
+  <a href="https://github.com/zmardanian/axell-dereverb">repository on GitHub</a>.</p>
+  <div class="dl" data-repo="axell-dereverb">
+  <a class="btn btn-primary" href="/get/dereverb/windows" rel="nofollow"><b>Download for Windows</b><small>Windows 10 / 11 &middot; 64-bit &middot; VST3</small></a>
+  <a class="btn btn-ghost" href="/get/dereverb/linux" rel="nofollow"><b>Download for Linux</b><small>Ubuntu 22.04+ &middot; Debian 12+ &middot; Fedora</small></a>
+  <p class="dl-meta"><span class="ver">Version 4.0.2</span> &middot; <a href="https://github.com/zmardanian/axell-dereverb/releases/latest">all files &amp; checksums</a> &middot; <a href="https://github.com/zmardanian/axell-dereverb">source on GitHub</a></p>
+  <p class="dl-news">New in 4.0.2 <span>(20 Nov 2026)</span>: Your DAW remembers the chosen preset; works with screen readers &middot; <a href="https://github.com/zmardanian/axell-dereverb/releases/tag/v4.0.2">release notes</a></p>
+  <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a> &middot; works with screen readers</p>
+</div>
+</section>
+</main>
+<footer class="foot">
+  <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
+  <div class="foot-links"><a href="/penta-eq/">Axell Penta EQ</a> <a href="/duo-compressor/">Axell Duo Compressor</a> <a href="/gate/">Axell Gate</a> <a href="/dereverb/">Axell De-Reverb</a> <a href="/velvet/">Axell Velvet</a> <a href="/master/">Axell Master</a> <a href="/space/">Axell Space</a> <a href="/forbidden-seal/">Axell Forbidden Seal</a> <a href="/76/">Axell 76</a><a href="/dojo/">Axell Signature Dojo</a></div>
+  <div class="foot-small">
+    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="https://github.com/zmardanian">GitHub</a> &middot; <a href="https://ko-fi.com/axellyobag" rel="noopener">Support on Ko-fi</a> &middot; <a href="/impressum/">Impressum</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/code-signing/">Code signing policy</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>VST is a registered trademark of Steinberg Media Technologies GmbH. 1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
+  </div>
+</footer>
+<script src="/site.js?v=adb61d68b3" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ce09d7285b9247608354813fd8e4a526"}'></script>
+</body>
+</html>

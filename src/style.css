@@ -360,3 +360,20 @@ h1.h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(34px, 5vw,
 .hero-shot { position: relative; }
 .hero-loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .8s ease; pointer-events: none; }
 .hero-loop.on { opacity: 1; }
+/* lab: the third switch side, only what the plugin removed */
+.ab-switch button[data-side="c"].on { background: var(--soft); color: var(--bg); }
+/* manual pages */
+.manual h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(26px, 3.4vw, 36px); margin: 56px 0 14px; }
+.manual ul, .manual ol { max-width: 72ch; line-height: 1.65; color: var(--soft); }
+.manual li { margin: 6px 0; } .manual li b { color: var(--ink); }
+.manual code { background: var(--bg2); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-size: .9em; }
+.manual .steps { counter-reset: s; list-style: none; padding: 0; }
+.manual .steps li { counter-increment: s; position: relative; padding: 14px 16px 14px 58px; margin: 10px 0; background: var(--bg2);
+  border: 1px solid var(--line); border-radius: 12px; }
+.manual .steps li::before { content: counter(s); position: absolute; left: 16px; top: 12px; width: 28px; height: 28px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--acc); color: var(--bg); font-weight: 600; }
+.man-shot { margin: 36px 0 0; } .man-shot img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); }
+.man-shot figcaption { color: var(--dim); font-size: 13px; margin-top: 8px; }
+.manual .tbl { overflow-x: auto; } .manual table { border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+.manual th, .manual td { border-bottom: 1px solid var(--line); padding: 8px 12px; text-align: left; vertical-align: top; }
+.ab-switch:has(button[data-side="c"]) button { white-space: nowrap; padding-inline: 4px; letter-spacing: .1em; font-size: 11px; }

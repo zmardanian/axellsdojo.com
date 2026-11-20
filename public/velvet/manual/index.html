@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" class="no-js"><script>document.documentElement.className="js"</script>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Axell Velvet manual - getting started and every control</title>
+<meta name="description" content="How to use Axell Velvet: installing, the presets and every control explained, with screenshots.">
+<meta name="theme-color" content="#0b0d12">
+<meta property="og:title" content="Axell Velvet manual - getting started and every control">
+<meta property="og:description" content="How to use Axell Velvet: installing, the presets and every control explained, with screenshots.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.axellsdojo.com/velvet/manual/">
+<meta property="og:image" content="https://www.axellsdojo.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.axellsdojo.com/velvet/manual/">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preload" href="/fonts/great-vibes-400.woff2?v=c59dc73d29" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jost-400.woff2?v=7726a5cd6f" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/cormorant-garamond-500.woff2?v=d80df8ff5a" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/yuji-syuku-400-kanji.woff2?v=0b79abf636" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=eab3032be4">
+<style>:root{--acc:#c9a25e}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <a class="brand" href="/"><span class="seal seal-wide seal-sm" aria-hidden="true">道場</span><span>Axell's Dojo</span></a>
+  <nav><a href="/#hear">Listen</a><a href="/#arsenal">Plugins</a><a href="/#proof">Proof</a><a href="/dojo/">The Dojo</a><a href="/contact/">About</a><a class="nav-support" href="https://ko-fi.com/axellyobag" rel="noopener" aria-label="Support on Ko-fi"><svg class="cup" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path class="steam" d="M10 4c-1.5 2 1.5 3 0 5M15 3c-1.5 2 1.5 3 0 5M20 4c-1.5 2 1.5 3 0 5"/><path d="M5 13h19v7a7 7 0 0 1-7 7h-5a7 7 0 0 1-7-7z"/><path d="M24 15h1.5a3.5 3.5 0 0 1 0 7H23.5"/></g><path d="M14.5 23.2l-3-2.9a1.9 1.9 0 0 1 2.7-2.7l.3.3.3-.3a1.9 1.9 0 0 1 2.7 2.7z" fill="currentColor"/></svg><span>Support</span></a><a class="nav-cta" href="/#get">Download</a></nav>
+</header>
+
+<main id="main" style="--acc:#e893b1">
+<section class="section legal manual">
+  <p class="label">MANUAL &middot; NEURAL DE-ESSER + WARMTH</p><h1 class="h2">Axell Velvet: getting started and every control</h1>
+  <p class="lede">Silk on your esses. Warmth everywhere else. This page explains every control, with the plugin's own screens. <a href="/velvet/">Back to Axell Velvet</a>.</p>
+  <h2>Getting started</h2><ol class="steps">
+  <li><b>Install.</b> Windows: run the Axell Signature Suite installer (or copy <code>Axell Velvet.vst3</code> to
+  <code>C:\Program Files\Common Files\VST3</code>). Linux: unpack the archive and run <code>./install.sh</code>.</li>
+  <li><b>Rescan.</b> Let your DAW rescan its VST3 plugins; Axell Velvet appears under the vendor <i>Axell Yobag</i>.</li>
+  <li><b>Insert it</b> on the track or bus it is made for, and start from a factory preset close to your material.</li>
+  <li><b>Listen, then adjust</b> the few controls described below; A/B compares two settings without losing either.</li>
+</ol>
+  <figure class="man-shot"><img src="/img/velvet/velvet-100pct-hidpi2x.webp" srcset="/img/velvet/velvet-100pct-hidpi2x-800.webp 800w, /img/velvet/velvet-100pct-hidpi2x.webp 1800w" sizes="(max-width: 1100px) 100vw, 1100px" width="1800" height="1125" alt="Axell Velvet" fetchpriority="high"><figcaption>The full window, as it opens.</figcaption></figure>
+  <figure class="closeup reveal"><img src="/img/closeups/velvet.webp" width="1100" height="646" alt="The neural de-esser shows every ess it detects - and only those are cut." loading="lazy" decoding="async"><figcaption><span class="dot" aria-hidden="true"></span>The neural de-esser shows every ess it detects - and only those are cut.</figcaption></figure>
+  <h2>What it does</h2>
+<p>The vocal plugin of the Axell suite: a de-esser that recognises sibilants instead of listening for loud treble, and three analog saturation models (tape, console, tube) to give a voice its signature warmth. The two are linked: S-GUARD keeps the warmth off the esses, so the saturation never makes them harsh again.</p>
+<p><b>DE-ESS</b> is a one-knob de-esser. <b>AMOUNT</b> sets how far the esses come down. There is no threshold: the same setting works on a quiet verse and a loud chorus, at any recording level.</p>
+<ul><li>
+<b>Detection:</b> a small neural network trained on 111 voices of labelled speech (many accents) recognises s, z, sh,
+ zh, ch and j by their sound (noisiness, spectral shape, how long the noise lasts). It is not a treble meter.
+</li><li>
+<b>Cut:</b> only the frequencies where each ess is harsh are lowered. An "s" whistling at 8.7 kHz is cut at 8.7 kHz,
+ a "sh" at 3.3 kHz at 3.3 kHz. Vowels, "t" bursts and hi-hat bleed are left alone.
+</li><li>
+<b>STUDIO / LIVE:</b>
+<ul><li>
+STUDIO (default, for mixing): ten linear-phase bands with 4 ms look-ahead; 14 ms latency, compensated by the host.
+</li><li>
+LIVE (for recording while you hear yourself through the plugin): zero latency. A causal detector with its own
+ network, and the same cut made minimum phase. With HEAT off the plugin adds no latency at all; with HEAT on, the
+ oversampler's 1.7 ms (0.4 ms at 96 kHz).
+</li><li>
+In both, with nothing to cut the output is the input bit for bit.
+</li></ul>
+</li><li>
+<b>More controls:</b>
+<ul><li>
+RANGE: the most any band may be cut.
+</li><li>
+FOCUS: Auto / S / SH.
+</li><li>
+LISTEN: hear only what is removed.
+</li><li>
+The display shows every ess, the target and the reduction live.
+</li></ul>
+</li></ul>
+<p><b>HEAT</b> offers three models, run at 16x oversampling:</p>
+<ul><li>
+<b>TAPE:</b> magnetic tape (Jiles-Atherton hysteresis with record and playback emphasis). Treble and esses saturate
+ first, as on tape; the low end gets a playback head bump. Smooth, glued, odd harmonics.
+</li><li>
+<b>CONSOLE:</b> an input transformer (low, loud notes saturate first) into a class-A transistor stage. Punch,
+ weight, presence; 2nd and 3rd harmonics.
+</li><li>
+<b>TUBE:</b> a triode stage (Koren's tube equations on a real load line) with grid conduction and bias shift. Sweet,
+ mostly 2nd harmonic, blooms on loud notes.
+</li></ul>
+<p>Each model has these controls:</p>
+<ul><li>
+<b>DRIVE (0-10):</b> calibrated so every model adds the same amount of harmonics at the same setting (-55 dB at 0,
+ -35 dB at 5, -15 dB at 10). The level is matched automatically, so turning it up adds character, not volume.
+</li><li>
+<b>S-GUARD:</b> how much the esses are kept out of the heat.
+</li><li>
+<b>TONE:</b> dark ↔ bright.
+</li><li>
+<b>MIX:</b> parallel saturation.
+</li><li>
+The display shows the model's curve at your vocal's current level and the harmonics it adds.
+</li></ul>
+<p><b>GLOBAL</b>:</p>
+<ul><li>
+<b>LEVEL + LEARN:</b> play the vocal and press LEARN. LEVEL is set so the models meet your recording at their nominal
+ level, so DRIVE means the same on every recording. LEVEL never changes the output volume.
+</li><li>
+<b>LOW CUT</b> (Off / 30 / 60 / 90 Hz, 24 dB/oct): removes rumble before the models, which would otherwise distort
+ the voice with it. The default 30 Hz takes only what you can't hear.
+</li><li>
+<b>OUTPUT</b>, oversampling 2x-16x, A/B, user presets.
+</li></ul>
+<p>There are 28 factory presets in six groups:</p>
+<ul><li>
+Essentials
+</li><li>
+Rap & Hip-Hop
+</li><li>
+Singing
+</li><li>
+Special
+</li><li>
+Tracking (Live): the LIVE de-esser for recording, alone or with light tape.
+</li><li>
+MY VOICE: six presets made on Axell's own voice and recording chain (a large-diaphragm condenser into an
+ interface preamp with a FET compressor), one of them for tracking. They also set LEVEL and a 90 Hz low cut for
+ that chain.
+</li></ul>
+<p><table> <tr><td align="center" width="50%"><img src="docs/screenshots/velvet-console.png" alt="HEAT: console" width="100%"><br><sub>HEAT: console</sub></td><td align="center" width="50%"><img src="docs/screenshots/velvet-tube.png" alt="HEAT: tube" width="100%"><br><sub>HEAT: tube</sub></td></tr> </table></p>
+  <h2>Every screen, every mode</h2><div class="gallery"><figure><img src="/img/velvet/velvet-console.webp" srcset="/img/velvet/velvet-console-800.webp 800w, /img/velvet/velvet-console.webp 1120w" sizes="(max-width: 860px) 100vw, 600px" width="1120" height="700" alt="HEAT: console" loading="lazy" decoding="async"><figcaption>HEAT: console</figcaption></figure><figure><img src="/img/velvet/velvet-tube.webp" srcset="/img/velvet/velvet-tube-800.webp 800w, /img/velvet/velvet-tube.webp 1120w" sizes="(max-width: 860px) 100vw, 600px" width="1120" height="700" alt="HEAT: tube" loading="lazy" decoding="async"><figcaption>HEAT: tube</figcaption></figure></div>
+  <p class="note">The complete reference, measurements and version history are in the
+  <a href="https://github.com/zmardanian/axell-velvet">repository on GitHub</a>.</p>
+  <div class="dl" data-repo="axell-velvet">
+  <a class="btn btn-primary" href="/get/velvet/windows" rel="nofollow"><b>Download for Windows</b><small>Windows 10 / 11 &middot; 64-bit &middot; VST3</small></a>
+  <a class="btn btn-ghost" href="/get/velvet/linux" rel="nofollow"><b>Download for Linux</b><small>Ubuntu 22.04+ &middot; Debian 12+ &middot; Fedora</small></a>
+  <p class="dl-meta"><span class="ver">Version 3.0.5</span> &middot; <a href="https://github.com/zmardanian/axell-velvet/releases/latest">all files &amp; checksums</a> &middot; <a href="https://github.com/zmardanian/axell-velvet">source on GitHub</a></p>
+  <p class="dl-news">New in 3.0.5 <span>(20 Nov 2026)</span>: Your DAW remembers the chosen preset; works with screen readers &middot; <a href="https://github.com/zmardanian/axell-velvet/releases/tag/v3.0.5">release notes</a></p>
+  <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a> &middot; works with screen readers</p>
+</div>
+</section>
+</main>
+<footer class="foot">
+  <div class="foot-brand"><span class="script">Axell's Dojo</span><p>Free, open-source audio plugins for Windows and Linux, built from measurement.</p></div>
+  <div class="foot-links"><a href="/penta-eq/">Axell Penta EQ</a> <a href="/duo-compressor/">Axell Duo Compressor</a> <a href="/gate/">Axell Gate</a> <a href="/dereverb/">Axell De-Reverb</a> <a href="/velvet/">Axell Velvet</a> <a href="/master/">Axell Master</a> <a href="/space/">Axell Space</a> <a href="/forbidden-seal/">Axell Forbidden Seal</a> <a href="/76/">Axell 76</a><a href="/dojo/">Axell Signature Dojo</a></div>
+  <div class="foot-small">
+    <p>Made by <a href="/contact/">Axell Yobag</a> &middot; <a href="/credits/">Credits</a> &middot; <a href="mailto:contact@axellsdojo.com">contact@axellsdojo.com</a> &middot; <a href="https://github.com/zmardanian">GitHub</a> &middot; <a href="https://ko-fi.com/axellyobag" rel="noopener">Support on Ko-fi</a> &middot; <a href="/impressum/">Impressum</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/code-signing/">Code signing policy</a> &middot; Licensed under the GNU AGPLv3.</p>
+    <p>VST is a registered trademark of Steinberg Media Technologies GmbH. 1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
+  </div>
+</footer>
+<script src="/site.js?v=adb61d68b3" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ce09d7285b9247608354813fd8e4a526"}'></script>
+</body>
+</html>
