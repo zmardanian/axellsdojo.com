@@ -89,3 +89,21 @@
     });
   });
 })();
+
+// the visitor's own system first: on Linux the Linux button becomes the main one; on a Mac a note says why there is none
+(function () {
+  const ua = navigator.userAgent || "", p = (navigator.userAgentData && navigator.userAgentData.platform) || "";
+  const linux = /linux/i.test(p) || (/Linux|X11/.test(ua) && !/Android/.test(ua));
+  const mac = /mac/i.test(p) || (/Macintosh/.test(ua) && !("ontouchend" in document));
+  document.querySelectorAll(".dl").forEach(function (dl) {
+    const w = dl.querySelector(".btn-primary"), l = dl.querySelector(".btn-ghost");
+    if (!w || !l) return;
+    if (linux) {
+      w.classList.replace("btn-primary", "btn-ghost"); l.classList.replace("btn-ghost", "btn-primary"); dl.insertBefore(l, w);
+    } else if (mac) {
+      const n = document.createElement("p"); n.className = "dl-mac";
+      n.textContent = "On a Mac? There is no macOS version yet - the plugins run on Windows and Linux.";
+      dl.insertBefore(n, dl.querySelector(".dl-meta"));
+    }
+  });
+})();

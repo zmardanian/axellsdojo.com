@@ -272,3 +272,4 @@ main p a:not(.btn), footer p a, .note a { text-decoration: underline; text-decor
 .dl-help summary:hover { color: var(--soft); }
 .dl-help p { margin: 10px 0 0; line-height: 1.6; }
 .dl-help code { background: var(--bg2); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; font-size: 13px; white-space: nowrap; }
+.dl-mac { flex-basis: 100%; margin: 2px 0 0; text-align: center; color: var(--soft); font-size: 14px; }
