@@ -169,14 +169,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-signature-dojo/releases/download/v3.3.3/AxellSignatureSuite-3.3.3-windows-x64-setup.exe",
-   "file": "AxellSignatureSuite-3.3.3-windows-x64-setup.exe",
-   "version": "3.3.3"
+   "url": "https://github.com/zmardanian/axell-signature-dojo/releases/download/v3.3.4/AxellSignatureSuite-3.3.4-windows-x64-setup.exe",
+   "file": "AxellSignatureSuite-3.3.4-windows-x64-setup.exe",
+   "version": "3.3.4"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-signature-dojo/releases/download/v3.3.3/AxellSignatureDojo-3.3.3-linux-x86_64.tar.gz",
-   "file": "AxellSignatureDojo-3.3.3-linux-x86_64.tar.gz",
-   "version": "3.3.3"
+   "url": "https://github.com/zmardanian/axell-signature-dojo/releases/download/v3.3.4/AxellSignatureDojo-3.3.4-linux-x86_64.tar.gz",
+   "file": "AxellSignatureDojo-3.3.4-linux-x86_64.tar.gz",
+   "version": "3.3.4"
   }
  }
 }

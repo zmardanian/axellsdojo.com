@@ -54,9 +54,9 @@
   "point": "Your DAW remembers the chosen preset; works with screen readers"
  },
  "dojo": {
-  "version": "3.3.3",
-  "date": "2026-11-19",
-  "url": "https://github.com/zmardanian/axell-signature-dojo/releases/tag/v3.3.3",
-  "point": "Linux: runs on Ubuntu 22.04 and newer"
+  "version": "3.3.4",
+  "date": "2026-11-20",
+  "url": "https://github.com/zmardanian/axell-signature-dojo/releases/tag/v3.3.4",
+  "point": "Installs only releases signed by the suite's key"
  }
 }
