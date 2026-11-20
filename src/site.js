@@ -73,15 +73,26 @@
       if (bufs) { start(off >= dur() - 0.05 ? 0 : off); return; }
       if (loading) return; loading = true; el.classList.add("loading"); audioCtx().resume();
       Promise.all([load(el.dataset.a), load(el.dataset.b)]).then(function (r) { bufs = { a: r[0], b: r[1] }; el.classList.remove("loading"); start(0); })
-        .catch(function () { el.classList.remove("loading"); loading = false; play.textContent = "!"; });
+        .catch(function () { el.classList.remove("loading"); loading = false; play.textContent = "!"; play.setAttribute("aria-label", "Could not load the audio - try again"); });
     });
     sw.forEach(function (b) {
       b.addEventListener("click", function () {
-        side = b.dataset.side; el.dataset.side = side; sw.forEach(function (x) { x.classList.toggle("on", x === b); });
+        side = b.dataset.side; el.dataset.side = side; sw.forEach(function (x) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
         if (srcs && gains) { const t = ctx.currentTime; ["a", "b"].forEach(function (k) {
           gains[k].gain.cancelScheduledValues(t); gains[k].gain.setValueAtTime(gains[k].gain.value, t);
           gains[k].gain.linearRampToValueAtTime(k === side ? 1 : 0, t + 0.015); }); }
       });
+    });
+    sw.forEach(function (x) { x.setAttribute("aria-pressed", x.classList.contains("on") ? "true" : "false"); });
+    bar.setAttribute("role", "slider"); bar.setAttribute("tabindex", "0"); bar.setAttribute("aria-label", "Position");
+    bar.setAttribute("aria-valuemin", "0"); bar.setAttribute("aria-valuemax", "14"); bar.setAttribute("aria-valuenow", "0");
+    bar.addEventListener("keydown", function (ev) {   // arrows: 1 s steps, Home/End: start/end
+      const k = ev.key, d = dur(); let at = null;
+      if (k === "ArrowRight" || k === "ArrowUp") at = Math.min(d, now() + 1);
+      else if (k === "ArrowLeft" || k === "ArrowDown") at = Math.max(0, now() - 1);
+      else if (k === "Home") at = 0; else if (k === "End") at = Math.max(0, d - 0.1);
+      if (at === null) return; ev.preventDefault(); bar.setAttribute("aria-valuenow", at.toFixed(0));
+      if (srcs) { stop(true); start(at); } else { off = at; draw(); }
     });
     bar.addEventListener("click", function (ev) {
       const r = bar.getBoundingClientRect(), at = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width)) * dur();

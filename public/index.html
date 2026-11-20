@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js"><script>document.documentElement.className="js"</script>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +20,7 @@
 <link rel="preload" href="/fonts/jost-400.woff2?v=7726a5cd6f" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/cormorant-garamond-500.woff2?v=d80df8ff5a" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/yuji-syuku-400-kanji.woff2?v=0b79abf636" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/style.css?v=a6783ac5e5">
+<link rel="stylesheet" href="/style.css?v=1dc5385c22">
 <style>:root{--acc:#c9a25e}</style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Axell's Dojo", "url": "https://www.axellsdojo.com/", "author": {"@type": "Person", "name": "Axell Yobag", "url": "https://www.axellsdojo.com/contact/"}}</script>
 </head>
@@ -43,16 +43,11 @@
   <a class="btn btn-ghost" href="/get/dojo/linux" rel="nofollow"><b>Download for Linux</b><small>The Dojo installs the plugins</small></a>
   <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="https://github.com/zmardanian/axell-signature-dojo/releases/latest">all files &amp; checksums</a> &middot; <a href="https://github.com/zmardanian/axell-signature-dojo">source on GitHub</a></p>
   <p class="dl-news">New in 3.3.4 <span>(20 Nov 2026)</span>: Installs only releases signed by the suite&#x27;s key &middot; <a href="https://github.com/zmardanian/axell-signature-dojo/releases/tag/v3.3.4">release notes</a></p>
-  <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a></p><p class="dl-trust">Windows code signing: being set up with the <a href="https://signpath.org/" rel="noopener">SignPath Foundation</a>, free signing for open-source software &middot; <a href="/code-signing/">code signing policy</a></p>
-  <details class="dl-help"><summary>Windows says &ldquo;Windows protected your PC&rdquo;?</summary>
-  <p>The installer is free and not yet code-signed, so SmartScreen doesn't know it. Click <b>More info</b>, then <b>Run anyway</b>.
-  To be sure it's the original file, compare its fingerprint with <code>SHA256SUMS.txt</code> on the release page &mdash; in PowerShell:
-  <code>Get-FileHash .\AxellSignatureSuite-*-setup.exe</code>. On Linux: <code>sha256sum -c SHA256SUMS.txt</code>.
-  Every file is built from the public source on GitHub, and the checksums are signed &mdash; see the <a href="/code-signing/">code signing policy</a>.</p></details>
+  <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a></p>
 </div>
-  <p class="hero-support"><span>Free forever</span><span class="dot">&middot;</span><a href="https://ko-fi.com/axellyobag" rel="noopener"><svg class="cup" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path class="steam" d="M10 4c-1.5 2 1.5 3 0 5M15 3c-1.5 2 1.5 3 0 5M20 4c-1.5 2 1.5 3 0 5"/><path d="M5 13h19v7a7 7 0 0 1-7 7h-5a7 7 0 0 1-7-7z"/><path d="M24 15h1.5a3.5 3.5 0 0 1 0 7H23.5"/></g><path d="M14.5 23.2l-3-2.9a1.9 1.9 0 0 1 2.7-2.7l.3.3.3-.3a1.9 1.9 0 0 1 2.7 2.7z" fill="currentColor"/></svg>Support on Ko-fi</a></p>
+  <div class="hero-shot hero-home"><img src="/img/signature-dojo/plugins.webp" srcset="/img/signature-dojo/plugins-800.webp 800w, /img/signature-dojo/plugins.webp 1600w" sizes="(max-width: 1100px) 100vw, 1100px" width="1600" height="1430" alt="The Axell Signature Dojo: all nine plugins installed, checked and updated in one place" fetchpriority="high"></div>
+  <div class="seal-row"><a href="/penta-eq/" style="--acc:#e2c04f"><span class="seal" aria-hidden="true">五</span><span class="sr-only">Axell Penta EQ</span></a><a href="/duo-compressor/" style="--acc:#ec8b42"><span class="seal" aria-hidden="true">双</span><span class="sr-only">Axell Duo Compressor</span></a><a href="/gate/" style="--acc:#3cc8bb"><span class="seal" aria-hidden="true">門</span><span class="sr-only">Axell Gate</span></a><a href="/dereverb/" style="--acc:#62bfe9"><span class="seal" aria-hidden="true">静</span><span class="sr-only">Axell De-Reverb</span></a><a href="/velvet/" style="--acc:#e893b1"><span class="seal" aria-hidden="true">絹</span><span class="sr-only">Axell Velvet</span></a><a href="/master/" style="--acc:#55c992"><span class="seal" aria-hidden="true">匠</span><span class="sr-only">Axell Master</span></a><a href="/space/" style="--acc:#b096f2"><span class="seal" aria-hidden="true">響</span><span class="sr-only">Axell Space</span></a><a href="/forbidden-seal/" style="--acc:#e8604c"><span class="seal" aria-hidden="true">禁</span><span class="sr-only">Axell Forbidden Seal</span></a><a href="/76/" style="--acc:#c9a25e"><span class="seal seal-76" aria-hidden="true">76</span><span class="sr-only">Axell 76</span></a></div>
   <p class="hosts"><img class="vst-logo" src="/img/vst-compatible.svg" width="64" height="41" alt="VST Compatible"><span>Works in any DAW that loads VST3, on Windows and Linux &mdash; FL Studio, Ableton Live, Cubase, Studio One, Bitwig, REAPER, Ardour<br><span class="tm">VST is a registered trademark of Steinberg Media Technologies GmbH.</span></span></p>
-  <div class="seal-row"><a href="/penta-eq/" title="Axell Penta EQ" style="--acc:#e2c04f"><span class="seal" aria-hidden="true">五</span></a><a href="/duo-compressor/" title="Axell Duo Compressor" style="--acc:#ec8b42"><span class="seal" aria-hidden="true">双</span></a><a href="/gate/" title="Axell Gate" style="--acc:#3cc8bb"><span class="seal" aria-hidden="true">門</span></a><a href="/dereverb/" title="Axell De-Reverb" style="--acc:#62bfe9"><span class="seal" aria-hidden="true">静</span></a><a href="/velvet/" title="Axell Velvet" style="--acc:#e893b1"><span class="seal" aria-hidden="true">絹</span></a><a href="/master/" title="Axell Master" style="--acc:#55c992"><span class="seal" aria-hidden="true">匠</span></a><a href="/space/" title="Axell Space" style="--acc:#b096f2"><span class="seal" aria-hidden="true">響</span></a><a href="/forbidden-seal/" title="Axell Forbidden Seal" style="--acc:#e8604c"><span class="seal" aria-hidden="true">禁</span></a><a href="/76/" title="Axell 76" style="--acc:#c9a25e"><span class="seal seal-76" aria-hidden="true">76</span></a></div>
 </section>
 
 <section id="hear" class="section listen"><p class="label">HEAR THE DIFFERENCE</p><h2>Press play. Flip the switch.</h2>
@@ -89,32 +84,32 @@
   <p class="label">01 &nbsp; THE ARSENAL</p><h2>Nine plugins. One core.</h2>
   <p class="lede">Built as one family: they share a core library, so a breakthrough in one becomes a feature of the next &mdash; Velvet's sibilance network guards the esses in four of its siblings; Gate's voice detector holds the gain through your pauses in two more.</p>
   <div class="cards"><a class="card reveal" href="/penta-eq/" style="--acc:#e2c04f">
-  <div class="card-shot"><img src="/img/penta-eq/penta-100pct-hidpi2x.webp" srcset="/img/penta-eq/penta-100pct-hidpi2x-800.webp 800w, /img/penta-eq/penta-100pct-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="774" alt="Axell Penta EQ" loading="lazy" decoding="async"></div>
-  <div class="card-body"><span class="seal" aria-hidden="true">五</span><h3 class="script">Axell Penta EQ</h3><p class="card-tag">The analog-matched EQ that listens to your esses.</p>
+  <div class="card-shot"><img src="/img/penta-eq/penta-100pct-hidpi2x.webp" srcset="/img/penta-eq/penta-100pct-hidpi2x-800.webp 800w, /img/penta-eq/penta-100pct-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="774" alt="" loading="lazy" decoding="async"></div>
+  <div class="card-body"><span class="seal" aria-hidden="true">五</span><h3>Penta EQ</h3><p class="card-tag">The analog-matched EQ that listens to your esses.</p>
   <p class="card-line">analog-matched EQ</p></div></a><a class="card reveal" href="/duo-compressor/" style="--acc:#ec8b42">
-  <div class="card-shot"><img src="/img/duo-compressor/duo-100pct-hidpi2x.webp" srcset="/img/duo-compressor/duo-100pct-hidpi2x-800.webp 800w, /img/duo-compressor/duo-100pct-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="860" alt="Axell Duo Compressor" loading="lazy" decoding="async"></div>
-  <div class="card-body"><span class="seal" aria-hidden="true">双</span><h3 class="script">Axell Duo Compressor</h3><p class="card-tag">Two classic compressors and a true-peak limiter, in one.</p>
+  <div class="card-shot"><img src="/img/duo-compressor/duo-100pct-hidpi2x.webp" srcset="/img/duo-compressor/duo-100pct-hidpi2x-800.webp 800w, /img/duo-compressor/duo-100pct-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="860" alt="" loading="lazy" decoding="async"></div>
+  <div class="card-body"><span class="seal" aria-hidden="true">双</span><h3>Duo Compressor</h3><p class="card-tag">Two classic compressors and a true-peak limiter, in one.</p>
   <p class="card-line">FET + opto + limiter</p></div></a><a class="card reveal" href="/gate/" style="--acc:#3cc8bb">
-  <div class="card-shot"><img src="/img/gate/gate-vocal-hidpi2x.webp" srcset="/img/gate/gate-vocal-hidpi2x-800.webp 800w, /img/gate/gate-vocal-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="750" alt="Axell Gate" loading="lazy" decoding="async"></div>
-  <div class="card-body"><span class="seal" aria-hidden="true">門</span><h3 class="script">Axell Gate</h3><p class="card-tag">A gate that hears your voice, not just its level.</p>
+  <div class="card-shot"><img src="/img/gate/gate-vocal-hidpi2x.webp" srcset="/img/gate/gate-vocal-hidpi2x-800.webp 800w, /img/gate/gate-vocal-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
+  <div class="card-body"><span class="seal" aria-hidden="true">門</span><h3>Gate</h3><p class="card-tag">A gate that hears your voice, not just its level.</p>
   <p class="card-line">voice-aware gate</p></div></a><a class="card reveal" href="/dereverb/" style="--acc:#62bfe9">
-  <div class="card-shot"><img src="/img/dereverb/dereverb-hidpi2x.webp" srcset="/img/dereverb/dereverb-hidpi2x-800.webp 800w, /img/dereverb/dereverb-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="686" alt="Axell De-Reverb" loading="lazy" decoding="async"></div>
-  <div class="card-body"><span class="seal" aria-hidden="true">静</span><h3 class="script">Axell De-Reverb</h3><p class="card-tag">Take the room out of your vocal. Keep the voice.</p>
+  <div class="card-shot"><img src="/img/dereverb/dereverb-hidpi2x.webp" srcset="/img/dereverb/dereverb-hidpi2x-800.webp 800w, /img/dereverb/dereverb-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="686" alt="" loading="lazy" decoding="async"></div>
+  <div class="card-body"><span class="seal" aria-hidden="true">静</span><h3>De-Reverb</h3><p class="card-tag">Take the room out of your vocal. Keep the voice.</p>
   <p class="card-line">small-room de-reverb</p></div></a><a class="card reveal" href="/velvet/" style="--acc:#e893b1">
-  <div class="card-shot"><img src="/img/velvet/velvet-100pct-hidpi2x.webp" srcset="/img/velvet/velvet-100pct-hidpi2x-800.webp 800w, /img/velvet/velvet-100pct-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="750" alt="Axell Velvet" loading="lazy" decoding="async"></div>
-  <div class="card-body"><span class="seal" aria-hidden="true">絹</span><h3 class="script">Axell Velvet</h3><p class="card-tag">Silk on your esses. Warmth everywhere else.</p>
+  <div class="card-shot"><img src="/img/velvet/velvet-100pct-hidpi2x.webp" srcset="/img/velvet/velvet-100pct-hidpi2x-800.webp 800w, /img/velvet/velvet-100pct-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
+  <div class="card-body"><span class="seal" aria-hidden="true">絹</span><h3>Velvet</h3><p class="card-tag">Silk on your esses. Warmth everywhere else.</p>
   <p class="card-line">neural de-esser + warmth</p></div></a><a class="card reveal" href="/master/" style="--acc:#55c992">
-  <div class="card-shot"><img src="/img/master/master-100pct-hidpi2x.webp" srcset="/img/master/master-100pct-hidpi2x-800.webp 800w, /img/master/master-100pct-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="760" alt="Axell Master" loading="lazy" decoding="async"></div>
-  <div class="card-body"><span class="seal" aria-hidden="true">匠</span><h3 class="script">Axell Master</h3><p class="card-tag">Loud, clean masters that survive the streaming codecs.</p>
+  <div class="card-shot"><img src="/img/master/master-100pct-hidpi2x.webp" srcset="/img/master/master-100pct-hidpi2x-800.webp 800w, /img/master/master-100pct-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="760" alt="" loading="lazy" decoding="async"></div>
+  <div class="card-body"><span class="seal" aria-hidden="true">匠</span><h3>Master</h3><p class="card-tag">Loud, clean masters that survive the streaming codecs.</p>
   <p class="card-line">mastering limiter</p></div></a><a class="card reveal" href="/space/" style="--acc:#b096f2">
-  <div class="card-shot"><img src="/img/space/space-hidpi2x.webp" srcset="/img/space/space-hidpi2x-800.webp 800w, /img/space/space-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="733" alt="Axell Space" loading="lazy" decoding="async"></div>
-  <div class="card-body"><span class="seal" aria-hidden="true">響</span><h3 class="script">Axell Space</h3><p class="card-tag">Reverb and delay that step aside for the voice.</p>
+  <div class="card-shot"><img src="/img/space/space-hidpi2x.webp" srcset="/img/space/space-hidpi2x-800.webp 800w, /img/space/space-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="733" alt="" loading="lazy" decoding="async"></div>
+  <div class="card-body"><span class="seal" aria-hidden="true">響</span><h3>Space</h3><p class="card-tag">Reverb and delay that step aside for the voice.</p>
   <p class="card-line">vocal reverb + delay</p></div></a><a class="card reveal" href="/forbidden-seal/" style="--acc:#e8604c">
-  <div class="card-shot"><img src="/img/forbidden-seal/seal-hidpi2x.webp" srcset="/img/forbidden-seal/seal-hidpi2x-800.webp 800w, /img/forbidden-seal/seal-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="636" alt="Axell Forbidden Seal" loading="lazy" decoding="async"></div>
-  <div class="card-body"><span class="seal" aria-hidden="true">禁</span><h3 class="script">Axell Forbidden Seal</h3><p class="card-tag">Saturation from physics. Your voice never passes a circuit.</p>
+  <div class="card-shot"><img src="/img/forbidden-seal/seal-hidpi2x.webp" srcset="/img/forbidden-seal/seal-hidpi2x-800.webp 800w, /img/forbidden-seal/seal-hidpi2x.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="636" alt="" loading="lazy" decoding="async"></div>
+  <div class="card-body"><span class="seal" aria-hidden="true">禁</span><h3>Forbidden Seal</h3><p class="card-tag">Saturation from physics. Your voice never passes a circuit.</p>
   <p class="card-line">saturation</p></div></a><a class="card reveal" href="/76/" style="--acc:#c9a25e">
-  <div class="card-shot"><img src="/img/76/axell76.webp" srcset="/img/76/axell76-800.webp 800w, /img/76/axell76.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="550" alt="Axell 76" loading="lazy" decoding="async"></div>
-  <div class="card-body"><span class="seal seal-76" aria-hidden="true">76</span><h3 class="script">Axell 76</h3><p class="card-tag">The FET limiting amplifier, modelled from the real thing.</p>
+  <div class="card-shot" style="--pos:50% 45%"><img src="/img/76/axell76.webp" srcset="/img/76/axell76-800.webp 800w, /img/76/axell76.webp 1200w" sizes="(max-width: 860px) 100vw, 400px" width="1200" height="550" alt="" loading="lazy" decoding="async"></div>
+  <div class="card-body"><span class="seal seal-76" aria-hidden="true">76</span><h3>Axell 76</h3><p class="card-tag">The FET limiting amplifier, modelled from the real thing.</p>
   <p class="card-line">1176 FET compressor</p></div></a></div>
 </section>
 
@@ -182,7 +177,7 @@
     <p>VST is a registered trademark of Steinberg Media Technologies GmbH. 1176, 1176LN, LA-2A, UADx and Universal Audio are trademarks of their owners. The Axell plugins are independent works, not affiliated with or endorsed by them; the names describe what was measured and compared.</p>
   </div>
 </footer>
-<script src="/site.js?v=5e64d8a59a" defer></script>
+<script src="/site.js?v=7bd3f6556a" defer></script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ce09d7285b9247608354813fd8e4a526"}'></script>
 </body>
 </html>

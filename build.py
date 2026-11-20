@@ -90,7 +90,7 @@ def app_ld(name, desc, path, og, os_="Windows 10, Windows 11, Linux", repo=None)
 
 def head(title, desc, accent="#c9a25e", path="/", og="og.jpg", ld=None):
     return f"""<!doctype html>
-<html lang="en">
+<html lang="en" class="no-js"><script>document.documentElement.className="js"</script>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -196,14 +196,14 @@ def downloads_manifest():
 SIGNPATH = ('<p class="dl-trust">Windows code signing: being set up with the <a href="https://signpath.org/" rel="noopener">SignPath '
             'Foundation</a>, free signing for open-source software &middot; <a href="/code-signing/">code signing policy</a></p>')
 
-def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 11 &middot; 64-bit &middot; VST3", sub_l="Ubuntu 22.04+ &middot; Debian 12+ &middot; Fedora"):
+def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 11 &middot; 64-bit &middot; VST3", sub_l="Ubuntu 22.04+ &middot; Debian 12+ &middot; Fedora", extras=True):
     rel = f"{GH}/{repo}/releases/latest"
     pat_w = "setup.exe" if repo == "axell-signature-dojo" else "windows-x64.tar.gz"
     return f"""<div class="dl" data-repo="{repo}">
   <a class="btn btn-primary" href="/get/{DLSLUG(repo)}/windows" rel="nofollow"><b>{windows_label}</b><small>{sub_w}</small></a>
   <a class="btn btn-ghost" href="/get/{DLSLUG(repo)}/linux" rel="nofollow"><b>Download for Linux</b><small>{sub_l}</small></a>
   <p class="dl-meta"><span class="ver" data-version>Latest release</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>{whats_new(repo)}
-  <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a>{accessible(repo)}</p>{SIGNPATH if repo == "axell-signature-dojo" else ""}{SAFE if repo == "axell-signature-dojo" else ""}
+  <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a>{accessible(repo)}</p>{SIGNPATH if repo == "axell-signature-dojo" and extras else ""}{SAFE if repo == "axell-signature-dojo" and extras else ""}
 </div>"""
 
 # every control named for screen readers (JUCE's accessibility: Windows Narrator, macOS VoiceOver) from these releases on
@@ -290,12 +290,12 @@ def home():
     for r in PLUGINS:
         u, w, h = img(r, C[r]["shot"], 1200)
         cards.append(f"""<a class="card reveal" href="/{SLUG[r]}/" style="--acc:{ACC[r]}">
-  <div class="card-shot">{tag(u, w, h, NAME[r], "card")}</div>
-  <div class="card-body">{seal(r)}<h3 class="script">{e(NAME[r])}</h3><p class="card-tag">{e(TAG[r])}</p>
+  <div class="card-shot"{' style="--pos:50% 45%"' if r == "axell-76" else ""}>{tag(u, w, h, "", "card")}</div>
+  <div class="card-body">{seal(r)}<h3>{e(NAME[r] if r == "axell-76" else NAME[r].replace("Axell ", ""))}</h3><p class="card-tag">{e(TAG[r])}</p>
   <p class="card-line">{e(SUITE_LINE[r])}</p></div></a>""")
     stats = "".join(f"""<a class="stat reveal" href="/{SLUG[r]}/" style="--acc:{ACC[r]}"><span class="stat-n">{n}</span>
   <span class="stat-t">{t}</span><span class="stat-p">{e(NAME[r])}</span></a>""" for r, n, t in STATS)
-    seals = "".join(f'<a href="/{SLUG[r]}/" title="{e(NAME[r])}" style="--acc:{ACC[r]}">{seal(r)}</a>' for r in PLUGINS)
+    seals = "".join(f'<a href="/{SLUG[r]}/" style="--acc:{ACC[r]}">{seal(r)}<span class="sr-only">{e(NAME[r])}</span></a>' for r in PLUGINS)
     d, dw, dh = img("axell-signature-dojo", C["axell-signature-dojo"]["shot"], 1600)
     body = f"""
 <main>
@@ -305,10 +305,10 @@ def home():
   <h1 class="script hero-title">Axell's Dojo</h1>
   <p class="hero-tag">Nine plugins forged for the voice. Every claim, measured.</p>
   <p class="spec">WINDOWS &nbsp;&middot;&nbsp; LINUX &nbsp;&middot;&nbsp; VST&reg;3 &nbsp;&middot;&nbsp; FREE &amp; OPEN SOURCE</p>
-  {dl_buttons("axell-signature-dojo", "Get the whole suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo installs the plugins")}
-  <p class="hero-support"><span>Free forever</span><span class="dot">&middot;</span><a href="{KOFI}" rel="noopener">{CUP}Support on Ko-fi</a></p>
-  {HOSTS}
+  {dl_buttons("axell-signature-dojo", "Get the whole suite for Windows", "One installer &middot; the Dojo + all nine plugins", "The Dojo installs the plugins", extras=False)}
+  <div class="hero-shot hero-home">{tag(d, dw, dh, "The Axell Signature Dojo: all nine plugins installed, checked and updated in one place", "hero")}</div>
   <div class="seal-row">{seals}</div>
+  {HOSTS}
 </section>
 
 {featured()}
@@ -417,6 +417,7 @@ def plugin_page(r):
   <p class="hero-tag">{e(TAG[r])}</p>
   <p class="spec">{e(SPEC[r])}</p>
   {dl_buttons(r)}
+  <p class="suite-up">Want all nine? One installer, one updater &rarr; <a href="/dojo/">get the whole suite</a></p>
   <div class="hero-shot rise">{tag(u, w, h, c["alt"], "hero")}</div>
   <p class="pitch"><b>{c['pitch'][0]}</b> {c['pitch'][1]}</p>
 </section>
@@ -626,7 +627,7 @@ rappers under Creative Commons Attribution licences:</p><ul>{rows}</ul>
 (the De-Reverb examples first get a modelled small room); the processed excerpts are shared under the same licence as their source.</p>""")
 
 def credits_page():
-    body = """<main><section class="section"><p class="label">CREDITS</p><h2>The music in the examples.</h2>
+    body = """<main><section class="section"><p class="label">CREDITS</p><h1 class="h2">The music in the examples.</h1>
 <p class="lede">The before/after examples on this site are made from openly licensed recordings: stems from the <a href="https://github.com/OnAir-Music/OnAir-Music-Dataset">OnAir Music Dataset</a>
 - royalty-free songs by the <b>OnAir Music</b> project (Hrag, the Crescent MTL Project and SevagH), featuring <b>KXNE</b>,
 released under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a> licence.</p>
