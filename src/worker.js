@@ -64,6 +64,13 @@ async function note(env, row) {
     }
     await env.DB.prepare("INSERT INTO downloads (time, plugin, system, version, file, country, city, from_page, device, browser, bot, network) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
       .bind(...row).run();
+    if (row[10] === 0) {
+      // again after the insert: two requests in the same instant both pass the check above before either row exists
+      await env.DB.prepare("UPDATE downloads SET bot = 3 WHERE bot = 0 AND plugin = ? AND city IS ? AND time BETWEEN datetime(?, '-3 seconds') AND datetime(?, '+3 seconds')"
+        + " AND EXISTS (SELECT 1 FROM downloads o WHERE o.plugin = downloads.plugin AND o.city IS downloads.city AND o.system != downloads.system"
+        + " AND o.time BETWEEN datetime(downloads.time, '-3 seconds') AND datetime(downloads.time, '+3 seconds'))")
+        .bind(plugin, city, time, time).run();
+    }
     await env.DB.prepare("DELETE FROM downloads WHERE time < datetime('now', '-24 months')").run();   // kept 24 months (privacy policy)
   } catch (e) { console.log("download not noted:", e.message); }
 }
