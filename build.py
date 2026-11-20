@@ -230,7 +230,7 @@ SAFE = """
   Every file is built from the public source on GitHub, and the checksums are signed &mdash; see the <a href="/code-signing/">code signing policy</a>.</p></details>"""
 
 HIDE_AUDIO = set()
-FEATURED = [("axell-gate", "vocals"), ("axell-dereverb", "vocals"), ("axell-master", "mix")]
+FEATURED = [("axell-forbidden-seal", "boom-bap"), ("axell-gate", "trap"), ("axell-penta-eq", "lo-fi")]     # one per genre
 def featured():
     cards = []
     for r, cat in FEATURED:
@@ -238,7 +238,7 @@ def featured():
         if it: cards.append(ab_card(r, it, show_plugin=True))
     if not cards: return ""
     return f"""<section id="hear" class="section listen"><p class="label">HEAR THE DIFFERENCE</p><h2>Press play. Flip the switch.</h2>
-<p class="lede">The same excerpt, before and after &mdash; both play in sync, so the only thing that changes is the plugin. Every plugin page has its own drums, melodic and vocal examples.</p>
+<p class="lede">The same excerpt, before and after &mdash; both play in sync, so the only thing that changes is the plugin. Every plugin page has its own boom bap, trap and lo-fi examples.</p>
 <div class="abs">{"".join(cards)}</div></section>"""
 
 from PIL import ImageDraw, ImageFont, ImageFilter
@@ -343,6 +343,7 @@ def home():
 
 
 AUDIO = {}
+GENRE = {"boom-bap": "boom bap"}
 WF_BINS = 96
 _WF_CACHE = f"{SITE}/.wf-cache.json"
 _wf = json.load(open(_WF_CACHE)) if os.path.exists(_WF_CACHE) else {}
@@ -373,7 +374,7 @@ def ab_card(r, it, show_plugin=False):
     sim = f' &middot; <span class="sim">{e(it["simulated"])}</span>' if it["simulated"] else ""
     tag = f'<a class="ab-plugin" href="/{SLUG[r]}/" style="--acc:{ACC[r]}">{seal(r, "seal seal-sm")} {e(NAME[r])}</a>' if show_plugin else ""
     return f"""<div class="ab reveal" style="--acc:{ACC[r]}" data-side="a" data-a="{it['a']}" data-b="{it['b']}">
-  {tag}<div class="ab-head"><span class="ab-cat">{e(it['cat'].upper())}</span><h3>{e(it['title'])}</h3></div>
+  {tag}<div class="ab-head"><span class="ab-cat">{e(GENRE.get(it['cat'], it['cat']).upper())}</span><h3>{e(it['title'])}</h3></div>
   <p class="ab-note">{e(it['note'])}</p>
   <div class="ab-ctl">
     <button class="ab-play" aria-label="Play">&#9654;</button>
@@ -592,19 +593,30 @@ sends nothing about you or your computer. See the <a href="/privacy/">privacy po
 </section></main>"""
     return head("Code signing policy - Axell's Dojo", "How the Axell plugins and the Signature Dojo are built, signed and verified.", path="/code-signing/") + body + foot()
 
+def tracks_used():
+    """the songs and stems the published examples come from, read from the manifest so the list never goes stale"""
+    import re
+    songs = {}
+    for items in AUDIO.values():
+        for it in items:
+            m = re.match(r"(.+?) - OnAir Music( feat\. [^(]+)? \((.+)\)$", it["source"])
+            if m: songs.setdefault((m.group(1), (m.group(2) or "").strip()), set()).add(m.group(3))
+    parts = [f"<i>{e(t)}</i>{' (' + e(f) + ')' if f else ''} - {e(', '.join(sorted(p)))}" for (t, f), p in sorted(songs.items())]
+    return "; ".join(parts)
+
 def credits_page():
     body = """<main><section class="section"><p class="label">CREDITS</p><h2>The music in the examples.</h2>
 <p class="lede">Every before/after example on this site is made from the <a href="https://github.com/OnAir-Music/OnAir-Music-Dataset">OnAir Music Dataset</a>
 - stems of royalty-free songs by the <b>OnAir Music</b> project (Hrag, the Crescent MTL Project and SevagH), featuring <b>KXNE</b> and <b>Holocene</b>,
 released under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a> licence.</p>
-<p>Tracks used: <i>Ronin</i> (feat. KXNE) - verse, drums, instrumental, full mix; <i>Set Me Free</i> - vocal; <i>Under My Skin</i> - piano;
-<i>Bouncin Around</i> - drums; <i>Autumn in NY</i> - keys.</p>
+<p>Tracks used: TRACKS_USED.</p>
 <p><b>Changes made:</b> 14-second excerpts, set to a working level (-18 LUFS; -20 LUFS for the mastering examples), processed through the
 Axell plugins with their factory presets, the processed version matched to the original's loudness (except the mastering examples), short
 fades. Where marked, a small room (De-Reverb) or headphone bleed of the song's instrumental (Gate) was simulated before processing.
 The processed excerpts are shared under the same licence, CC BY-SA 4.0. No endorsement by the artists or the OnAir Music project is implied.</p>
 <p>Typefaces: Great Vibes, Cormorant Garamond, Jost and Yuji Syuku (<a href="/fonts/OFL.txt">SIL Open Font License</a>), served from this site - no request goes to a font service.</p>
 </section></main>"""
+    body = body.replace("TRACKS_USED", tracks_used())
     return head("Credits - Axell's Dojo", "The music used in the before/after examples and its licence.", path="/credits/") + body + foot()
 
 def contact_page():
