@@ -184,16 +184,34 @@ async function contact(request, env) {
 // are deployed, the contact form is configured; a problem is mailed to CONTACT_TO. Mondays also bring the week's downloads.
 // Runs inside Cloudflare (Bot Fight Mode would challenge a check from a data centre) and counts no downloads.
 async function daily(env, ctx, cronTime) {
+  // Free plan: at most 50 subrequests per invocation (fetch, cache, ASSETS all count). One GitHub API call per plugin
+  // answers for both systems (an asset listed as "uploaded" with a size is a real file); only when the API fails is the
+  // baked file probed, with one HEAD that stops at GitHub's redirect. ~10 + 13 page reads, far under the limit.
   const problems = [];
+  const head = async (slug, system, file, url) => {
+    try {
+      const r = await fetch(url, { method: "HEAD", redirect: "manual", headers: { "User-Agent": "axellsdojo.com daily check" } });
+      if (!(r.status === 302 || r.ok)) problems.push(`/get/${slug}/${system}: ${file} answers ${r.status}`);
+    } catch (e) { problems.push(`/get/${slug}/${system}: ${file} unreachable (${e.message})`); }
+  };
   for (const [slug, entry] of Object.entries(BAKED)) {
-    for (const system of ["windows", "linux"]) {
-      if (!entry.suffix[system]) continue;
-      const hit = await newest(entry, system, ctx);
-      if (!hit || !/^https:\/\/github\.com\/zmardanian\//.test(hit.url)) { problems.push(`/get/${slug}/${system}: no release file found`); continue; }
-      try {
-        const r = await fetch(hit.url, { method: "HEAD", redirect: "follow", headers: { "User-Agent": "axellsdojo.com daily check" } });
-        if (!r.ok) problems.push(`/get/${slug}/${system}: ${hit.file} answers ${r.status}`);
-      } catch (e) { problems.push(`/get/${slug}/${system}: ${hit.file} unreachable (${e.message})`); }
+    const systems = ["windows", "linux"].filter((s) => entry.suffix[s]);
+    let releases = null;
+    try {
+      const r = await fetch("https://api.github.com/repos/zmardanian/" + entry.repo + "/releases?per_page=6",
+        { headers: { Accept: "application/vnd.github+json", "User-Agent": "axellsdojo.com daily check" } });
+      if (r.ok) releases = (await r.json()).filter((rel) => !rel.draft && !rel.prerelease);
+    } catch (e) {}
+    for (const system of systems) {
+      if (!releases) {
+        const b = entry[system];
+        if (!b || !/^https:\/\/github\.com\/zmardanian\//.test(b.url)) problems.push(`/get/${slug}/${system}: no release file found (GitHub API unavailable)`);
+        else await head(slug, system, b.file, b.url);
+        continue;
+      }
+      const a = releases.flatMap((rel) => rel.assets).find((x) => x.name.endsWith(entry.suffix[system]));
+      if (!a) problems.push(`/get/${slug}/${system}: no release file found`);
+      else if (a.state !== "uploaded" || !a.size) problems.push(`/get/${slug}/${system}: ${a.name} is not fully uploaded (${a.state}, ${a.size} bytes)`);
     }
   }
   const page = async (p) => { try { const r = await env.ASSETS.fetch(new URL(p, "https://www.axellsdojo.com")); return r.ok ? await r.text() : null; } catch (e) { return null; } };
