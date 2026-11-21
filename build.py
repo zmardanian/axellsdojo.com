@@ -668,6 +668,12 @@ needed to answer it and for any follow-up. Legal basis: Art. 6 (1) (b) or (f) GD
 as an email through Cloudflare's email service to my mailbox, where it is kept as long as needed to answer it. The website itself
 keeps no copy; it notes only the time of each sent message (no content, no address, no IP address) to stop mass sending, and deletes
 that note after 30 days. Legal basis: Art. 6 (1) (b) or (f) GDPR.</p>
+<p>To keep automated spam out, the contact page loads <b>Cloudflare Turnstile</b> (Cloudflare, Inc., 101 Townsend St, San
+Francisco, CA 94107, USA). It checks in the background that a person, not a program, is sending the form; to do so your browser
+exchanges technical signals with Cloudflare (such as the browser and device type and your IP address). Turnstile sets no
+advertising cookies and does not track you across sites; Cloudflare states that it uses this data only to provide the check.
+Only the page with the form loads it. Legal basis: Art. 6 (1) (f) GDPR - the legitimate interest in a contact form free of spam.
+Cloudflare is certified under the EU-U.S. Data Privacy Framework. If you prefer, write to contact@axellsdojo.com instead.</p>
 
 <h3>7. Your rights</h3>
 <p>You have the right to access (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18), data
@@ -805,6 +811,8 @@ def contact_page():
     <label>Your email <small>(for the answer)</small><input name="email" type="email" required maxlength="254" autocomplete="email"></label></div>
     <label>Message<textarea name="message" required minlength="10" maxlength="5000" rows="6"></textarea></label>
     <label class="cf-trap" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAGLQ0PKfRQEkg3FK" data-theme="dark" data-size="flexible"></div>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <p class="cf-note">Sent to me as an email; this site keeps no copy &mdash; see the <a href="/privacy/">privacy policy</a>.</p>
     <button class="btn btn-primary" type="submit"><b>Send message</b></button>
   </form>
@@ -852,7 +860,16 @@ def build():
     # favicon: the Dojo's seal; social card: the home hero's look
     T.wideseal(f"{OUT}/img/favicon.png", "道場", "dark", 64)
     og_card("", "Axell's Dojo", "Nine plugins forged for the voice. Every claim, measured.", f"{HOME}/axell-gate/{C['axell-gate']['shot']}", f"{OUT}/img/og.jpg")
-    open(f"{OUT}/robots.txt", "w").write("User-agent: *\nAllow: /\nDisallow: /get/\nSitemap: https://www.axellsdojo.com/sitemap.xml\n")
+    # search engines and AI search / answer tools may read and cite the site (that is how people find the plugins);
+    # AI model training may not - the Content-Signal line (contentsignals.org) says so, the training-only crawlers are
+    # named, and Cloudflare's AI training block enforces it at the edge for the ones that ignore robots.txt
+    TRAIN_ONLY = ["GPTBot", "Google-Extended", "Applebot-Extended", "ClaudeBot", "CCBot", "Bytespider", "meta-externalagent",
+                  "Amazonbot", "cohere-training-data-crawler", "Diffbot", "AI2Bot", "omgili", "Timpibot"]
+    open(f"{OUT}/robots.txt", "w").write(
+        "# Search and AI answers: welcome. AI model training: no.\n"
+        "User-agent: *\nContent-Signal: search=yes, ai-input=yes, ai-train=no\nAllow: /\nDisallow: /get/\n\n"
+        + "".join(f"User-agent: {b}\n" for b in TRAIN_ONLY) + "Disallow: /\n\n"
+        "Sitemap: https://www.axellsdojo.com/sitemap.xml\n")
     os.makedirs(f"{OUT}/.well-known", exist_ok=True)
     import datetime
     open(f"{OUT}/.well-known/security.txt", "w").write("Contact: mailto:contact@axellsdojo.com\nExpires: " + (datetime.date.today() + datetime.timedelta(days=360)).isoformat()

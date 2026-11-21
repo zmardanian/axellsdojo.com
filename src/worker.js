@@ -137,6 +137,19 @@ async function contact(request, env) {
   const one = (k, max) => String(f.get(k) || "").replace(/[\r\n]+/g, " ").trim().slice(0, max);   // header-safe, one line
   const name = one("name", 100), email = one("email", 254), message = String(f.get("message") || "").trim();
   if (one("website", 200)) return page("Thank you", "Your message is on its way.");   // the hidden trap field: a bot, quietly dropped
+  // Turnstile (Cloudflare's privacy-friendly bot check): the browser's token, verified with Cloudflare before anything is sent
+  if (env.TURNSTILE_SECRET) {
+    const token = String(f.get("cf-turnstile-response") || "");
+    let ok = false;
+    if (token) {
+      try {
+        const v = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+          method: "POST", body: new URLSearchParams({ secret: env.TURNSTILE_SECRET, response: token, remoteip: ip }) });
+        ok = (await v.json()).success === true;
+      } catch (e) { console.log("turnstile verify failed:", e.message); }
+    }
+    if (!ok) return page("Not sent", "The spam check did not go through. Please go back, wait for the check to finish and send again - or write to <a href=\"mailto:contact@axellsdojo.com\">contact@axellsdojo.com</a>.", 403);
+  }
   if (!/^[^\s@<>",;]+@[^\s@<>",;]+\.[^\s@<>",;]{2,}$/.test(email))
     return page("Not sent", "That email address does not look right - I need it to answer you. Please go back and check it.", 400);
   if (message.length < 10 || message.length > 5000)
