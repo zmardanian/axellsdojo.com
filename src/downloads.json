@@ -133,14 +133,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/download/v4.0.3/AxellForbiddenSeal-4.0.3-windows-x64.tar.gz",
-   "file": "AxellForbiddenSeal-4.0.3-windows-x64.tar.gz",
-   "version": "4.0.3"
+   "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/download/v4.0.4/AxellForbiddenSeal-4.0.4-windows-x64.tar.gz",
+   "file": "AxellForbiddenSeal-4.0.4-windows-x64.tar.gz",
+   "version": "4.0.4"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/download/v4.0.3/AxellForbiddenSeal-4.0.3-linux-x86_64.tar.gz",
-   "file": "AxellForbiddenSeal-4.0.3-linux-x86_64.tar.gz",
-   "version": "4.0.3"
+   "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/download/v4.0.4/AxellForbiddenSeal-4.0.4-linux-x86_64.tar.gz",
+   "file": "AxellForbiddenSeal-4.0.4-linux-x86_64.tar.gz",
+   "version": "4.0.4"
   }
  },
  "76": {

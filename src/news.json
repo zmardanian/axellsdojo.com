@@ -42,10 +42,10 @@
   "point": "Fixed: switching DELAY or REVERB on or off clicked"
  },
  "forbidden-seal": {
-  "version": "4.0.3",
-  "date": "2026-11-20",
-  "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/tag/v4.0.3",
-  "point": "Your DAW remembers the chosen preset; works with screen readers"
+  "version": "4.0.4",
+  "date": "2026-11-21",
+  "url": "https://github.com/zmardanian/axell-forbidden-seal/releases/tag/v4.0.4",
+  "point": "Preset names are readable at full size"
  },
  "76": {
   "version": "3.2.2",
