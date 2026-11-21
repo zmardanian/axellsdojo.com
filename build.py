@@ -26,6 +26,10 @@ e = html.escape
 import hashlib
 # a fingerprint per asset in its URL: a browser can never keep an outdated stylesheet or script after an update
 CSS = open(f"{SITE}/src/fonts.css").read() + open(f"{SITE}/src/style.css").read()   # the site serves its own fonts (tools/fetch_fonts.py)
+def media_url(path):
+    """a media file's URL with its content hash: a replaced clip or loop gets a new URL, so no browser plays the old one
+    from its cache (audio is cached for 7 days)"""
+    return f"{path}?v={hashlib.sha256(open(f'{SITE}/src{path}', 'rb').read()).hexdigest()[:10]}"
 VER = {"style.css": hashlib.sha256(CSS.encode()).hexdigest()[:10], "site.js": hashlib.sha256(open(f"{SITE}/src/site.js", "rb").read()).hexdigest()[:10]}
 import re
 FONT_URL = {n: u for u, n in re.findall(r"url\((/fonts/([a-z-]+?)-\d[^)]*)\)", CSS)}
@@ -385,7 +389,7 @@ def ab_card(r, it, show_plugin=False):
     lvl = "level-matched" if it["matched"] else "not level-matched - loudness is the point"
     sim = f' &middot; <span class="sim">{e(it["simulated"])}</span>' if it["simulated"] else ""
     tag = f'<a class="ab-plugin" href="/{SLUG[r]}/" style="--acc:{ACC[r]}">{seal(r, "seal seal-sm")} {e(NAME[r])}</a>' if show_plugin else ""
-    return f"""<div class="ab reveal" style="--acc:{ACC[r]}" data-side="a" data-a="{it['a']}" data-b="{it['b']}">
+    return f"""<div class="ab reveal" style="--acc:{ACC[r]}" data-side="a" data-a="{media_url(it['a'])}" data-b="{media_url(it['b'])}">
   {tag}<div class="ab-head"><span class="ab-cat">{e(GENRE.get(it['cat'], it['cat']).upper())}</span><h3>{e(it['title'])}</h3></div>
   <p class="ab-note">{e(it['note'])}</p>
   <div class="ab-ctl">
@@ -473,7 +477,7 @@ def hero_loop(r):
     a silent loop laid exactly over the screenshot; site.js starts it only when visible and motion is welcome"""
     v = f"/video/{SLUG[r]}.mp4"
     if not os.path.exists(f"{SITE}/src{v}"): return ""
-    return f'<video class="hero-loop" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="{v}"></video>'
+    return f'<video class="hero-loop" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="{media_url(v)}"></video>'
 
 def closeup(r):
     """one tight crop of the plugin's signature control with a short callout (src/img/closeups, cut from the screenshot)"""
