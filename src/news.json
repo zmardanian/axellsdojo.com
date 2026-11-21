@@ -36,10 +36,10 @@
   "point": "Your DAW remembers the chosen preset; works with screen readers"
  },
  "space": {
-  "version": "4.0.2",
-  "date": "2026-11-20",
-  "url": "https://github.com/zmardanian/axell-space/releases/tag/v4.0.2",
-  "point": "Your DAW remembers the chosen preset; works with screen readers"
+  "version": "4.0.3",
+  "date": "2026-11-21",
+  "url": "https://github.com/zmardanian/axell-space/releases/tag/v4.0.3",
+  "point": "Fixed: switching DELAY or REVERB on or off clicked"
  },
  "forbidden-seal": {
   "version": "4.0.3",

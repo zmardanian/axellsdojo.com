@@ -115,14 +115,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-space/releases/download/v4.0.2/AxellSpace-4.0.2-windows-x64.tar.gz",
-   "file": "AxellSpace-4.0.2-windows-x64.tar.gz",
-   "version": "4.0.2"
+   "url": "https://github.com/zmardanian/axell-space/releases/download/v4.0.3/AxellSpace-4.0.3-windows-x64.tar.gz",
+   "file": "AxellSpace-4.0.3-windows-x64.tar.gz",
+   "version": "4.0.3"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-space/releases/download/v4.0.2/AxellSpace-4.0.2-linux-x86_64.tar.gz",
-   "file": "AxellSpace-4.0.2-linux-x86_64.tar.gz",
-   "version": "4.0.2"
+   "url": "https://github.com/zmardanian/axell-space/releases/download/v4.0.3/AxellSpace-4.0.3-linux-x86_64.tar.gz",
+   "file": "AxellSpace-4.0.3-linux-x86_64.tar.gz",
+   "version": "4.0.3"
   }
  },
  "forbidden-seal": {
