@@ -385,12 +385,12 @@ def ab_card(r, it, show_plugin=False):
     lvl = "level-matched" if it["matched"] else "not level-matched - loudness is the point"
     sim = f' &middot; <span class="sim">{e(it["simulated"])}</span>' if it["simulated"] else ""
     tag = f'<a class="ab-plugin" href="/{SLUG[r]}/" style="--acc:{ACC[r]}">{seal(r, "seal seal-sm")} {e(NAME[r])}</a>' if show_plugin else ""
-    return f"""<div class="ab reveal" style="--acc:{ACC[r]}" data-side="a" data-a="{it['a']}" data-b="{it['b']}"{f' data-c="{it["c"]}"' if it.get("c") else ""}>
+    return f"""<div class="ab reveal" style="--acc:{ACC[r]}" data-side="a" data-a="{it['a']}" data-b="{it['b']}">
   {tag}<div class="ab-head"><span class="ab-cat">{e(GENRE.get(it['cat'], it['cat']).upper())}</span><h3>{e(it['title'])}</h3></div>
   <p class="ab-note">{e(it['note'])}</p>
   <div class="ab-ctl">
     <button class="ab-play" aria-label="Play">&#9654;</button>
-    <div class="ab-switch" role="group" aria-label="Compare"><button class="on" data-side="a">Original</button><button data-side="b">{e(SHORT[r])}</button>{'<button data-side="c" title="Only what the plugin took out, at its real level">Removed</button>' if it.get("c") else ""}</div>
+    <div class="ab-switch" role="group" aria-label="Compare"><button class="on" data-side="a">Original</button><button data-side="b">{e(SHORT[r])}</button></div>
   </div>
   <div class="ab-bar" title="Click to jump">{(w := wf_svg(wf_peaks(it['a']), wf_peaks(it['b'])))}<div class="ab-pos">{w}</div></div>
   <p class="ab-meta">Preset <b>{e(it['preset'])}</b> &middot; {lvl}{sim}<br>Source: {e(it['source'])} &middot; <a href="/credits/">{e(it.get('license', 'CC BY-SA 4.0'))}</a></p>

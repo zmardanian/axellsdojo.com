@@ -40,7 +40,7 @@
     const mA = meters.querySelector(".m-a i"), mB = meters.querySelector(".m-b i"), tmp = new Float32Array(1024);
     function lvl(node) { node.getFloatTimeDomainData(tmp); let s = 0; for (let i = 0; i < tmp.length; i++) s += tmp[i] * tmp[i];
       const db = 10 * Math.log10(s / tmp.length + 1e-12); return Math.max(0, Math.min(1, (db + 48) / 48)); }
-    const K = el.dataset.c ? ["a", "b", "c"] : ["a", "b"];   // c: only what the plugin removed
+    const K = ["a", "b"];
     function dur() { return bufs ? Math.min(bufs.a.duration, bufs.b.duration) : 1; }
     function now() { return srcs ? off + (ctx.currentTime - t0) : off; }
     function meter() { if (!an || !srcs) { mA.style.transform = mB.style.transform = "scaleX(0)"; return; }

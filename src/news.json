@@ -18,10 +18,10 @@
   "point": "Your DAW remembers the chosen preset; works with screen readers"
  },
  "dereverb": {
-  "version": "4.0.2",
+  "version": "4.0.3",
   "date": "2026-11-20",
-  "url": "https://github.com/zmardanian/axell-dereverb/releases/tag/v4.0.2",
-  "point": "Your DAW remembers the chosen preset; works with screen readers"
+  "url": "https://github.com/zmardanian/axell-dereverb/releases/tag/v4.0.3",
+  "point": "New: STEREO LINK (always on, nothing to set)"
  },
  "velvet": {
   "version": "3.0.5",
@@ -48,10 +48,10 @@
   "point": "Your DAW remembers the chosen preset; works with screen readers"
  },
  "76": {
-  "version": "3.2.1",
+  "version": "3.2.2",
   "date": "2026-11-20",
-  "url": "https://github.com/zmardanian/axell-76/releases/tag/v3.2.1",
-  "point": "Your DAW remembers the chosen preset; works with screen readers"
+  "url": "https://github.com/zmardanian/axell-76/releases/tag/v3.2.2",
+  "point": "The VU (+4 / +8) now has real VU ballistics"
  },
  "dojo": {
   "version": "3.3.4",

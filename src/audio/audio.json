@@ -86,8 +86,7 @@
    "license": "CC BY-SA 4.0",
    "a": "/audio/gate/boom-bap-a.mp3",
    "b": "/audio/gate/boom-bap-b.mp3",
-   "simulated": "",
-   "c": "/audio/gate/boom-bap-c.mp3"
+   "simulated": ""
   },
   {
    "cat": "trap",
@@ -99,8 +98,7 @@
    "license": "CC BY-SA 4.0",
    "a": "/audio/gate/trap-a.mp3",
    "b": "/audio/gate/trap-b.mp3",
-   "simulated": "beat bleed simulated",
-   "c": "/audio/gate/trap-c.mp3"
+   "simulated": "beat bleed simulated"
   },
   {
    "cat": "lo-fi",
@@ -112,8 +110,7 @@
    "license": "CC BY-SA 4.0",
    "a": "/audio/gate/lo-fi-a.mp3",
    "b": "/audio/gate/lo-fi-b.mp3",
-   "simulated": "",
-   "c": "/audio/gate/lo-fi-c.mp3"
+   "simulated": ""
   }
  ],
  "dereverb": [
@@ -134,8 +131,7 @@
    },
    "a": "/audio/dereverb/boom-bap-a.mp3",
    "b": "/audio/dereverb/boom-bap-b.mp3",
-   "simulated": "room simulated",
-   "c": "/audio/dereverb/boom-bap-c.mp3"
+   "simulated": "room simulated"
   },
   {
    "cat": "trap",
@@ -147,8 +143,7 @@
    "license": "CC BY-SA 4.0",
    "a": "/audio/dereverb/trap-a.mp3",
    "b": "/audio/dereverb/trap-b.mp3",
-   "simulated": "room simulated",
-   "c": "/audio/dereverb/trap-c.mp3"
+   "simulated": "room simulated"
   },
   {
    "cat": "rnb",
@@ -167,8 +162,7 @@
    },
    "a": "/audio/dereverb/rnb-a.mp3",
    "b": "/audio/dereverb/rnb-b.mp3",
-   "simulated": "room simulated",
-   "c": "/audio/dereverb/rnb-c.mp3"
+   "simulated": "room simulated"
   }
  ],
  "velvet": [
@@ -189,8 +183,7 @@
    },
    "a": "/audio/velvet/boom-bap-a.mp3",
    "b": "/audio/velvet/boom-bap-b.mp3",
-   "simulated": "",
-   "c": "/audio/velvet/boom-bap-c.mp3"
+   "simulated": ""
   },
   {
    "cat": "trap",
@@ -202,8 +195,7 @@
    "license": "CC BY-SA 4.0",
    "a": "/audio/velvet/trap-a.mp3",
    "b": "/audio/velvet/trap-b.mp3",
-   "simulated": "",
-   "c": "/audio/velvet/trap-c.mp3"
+   "simulated": ""
   },
   {
    "cat": "lo-fi",

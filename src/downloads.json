@@ -61,14 +61,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-dereverb/releases/download/v4.0.2/AxellDeReverb-4.0.2-windows-x64.tar.gz",
-   "file": "AxellDeReverb-4.0.2-windows-x64.tar.gz",
-   "version": "4.0.2"
+   "url": "https://github.com/zmardanian/axell-dereverb/releases/download/v4.0.3/AxellDeReverb-4.0.3-windows-x64.tar.gz",
+   "file": "AxellDeReverb-4.0.3-windows-x64.tar.gz",
+   "version": "4.0.3"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-dereverb/releases/download/v4.0.2/AxellDeReverb-4.0.2-linux-x86_64.tar.gz",
-   "file": "AxellDeReverb-4.0.2-linux-x86_64.tar.gz",
-   "version": "4.0.2"
+   "url": "https://github.com/zmardanian/axell-dereverb/releases/download/v4.0.3/AxellDeReverb-4.0.3-linux-x86_64.tar.gz",
+   "file": "AxellDeReverb-4.0.3-linux-x86_64.tar.gz",
+   "version": "4.0.3"
   }
  },
  "velvet": {
@@ -151,14 +151,14 @@
    "linux": "linux-x86_64.tar.gz"
   },
   "windows": {
-   "url": "https://github.com/zmardanian/axell-76/releases/download/v3.2.1/Axell76-3.2.1-windows-x64.tar.gz",
-   "file": "Axell76-3.2.1-windows-x64.tar.gz",
-   "version": "3.2.1"
+   "url": "https://github.com/zmardanian/axell-76/releases/download/v3.2.2/Axell76-3.2.2-windows-x64.tar.gz",
+   "file": "Axell76-3.2.2-windows-x64.tar.gz",
+   "version": "3.2.2"
   },
   "linux": {
-   "url": "https://github.com/zmardanian/axell-76/releases/download/v3.2.1/Axell76-3.2.1-linux-x86_64.tar.gz",
-   "file": "Axell76-3.2.1-linux-x86_64.tar.gz",
-   "version": "3.2.1"
+   "url": "https://github.com/zmardanian/axell-76/releases/download/v3.2.2/Axell76-3.2.2-linux-x86_64.tar.gz",
+   "file": "Axell76-3.2.2-linux-x86_64.tar.gz",
+   "version": "3.2.2"
   }
  },
  "dojo": {
