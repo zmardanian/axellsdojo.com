@@ -15,5 +15,7 @@
   "ratelimits": [{ "name": "LIMIT", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } }],
   "send_email": [{ "name": "MAIL" }],
   "d1_databases": [{ "binding": "DB", "database_name": "axellsdojo-downloads" }],
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+  // the daily check (src/worker.js daily()): 06:17 UTC; Mondays it also mails the week's downloads
+  "triggers": { "crons": ["17 6 * * *"] }
 }

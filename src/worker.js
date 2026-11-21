@@ -180,7 +180,53 @@ async function contact(request, env) {
   return page("Thank you", `Your message is on its way. I'll answer at <b>${esc(email)}</b>.`);
 }
 
+// the daily check (Cron Trigger, wrangler.jsonc): every download link resolves to a release file that exists, the key pages
+// are deployed, the contact form is configured; a problem is mailed to CONTACT_TO. Mondays also bring the week's downloads.
+// Runs inside Cloudflare (Bot Fight Mode would challenge a check from a data centre) and counts no downloads.
+async function daily(env, ctx, cronTime) {
+  const problems = [];
+  for (const [slug, entry] of Object.entries(BAKED)) {
+    for (const system of ["windows", "linux"]) {
+      if (!entry.suffix[system]) continue;
+      const hit = await newest(entry, system, ctx);
+      if (!hit || !/^https:\/\/github\.com\/zmardanian\//.test(hit.url)) { problems.push(`/get/${slug}/${system}: no release file found`); continue; }
+      try {
+        const r = await fetch(hit.url, { method: "HEAD", redirect: "follow", headers: { "User-Agent": "axellsdojo.com daily check" } });
+        if (!r.ok) problems.push(`/get/${slug}/${system}: ${hit.file} answers ${r.status}`);
+      } catch (e) { problems.push(`/get/${slug}/${system}: ${hit.file} unreachable (${e.message})`); }
+    }
+  }
+  const page = async (p) => { try { const r = await env.ASSETS.fetch(new URL(p, "https://www.axellsdojo.com")); return r.ok ? await r.text() : null; } catch (e) { return null; } };
+  for (const slug of Object.keys(BAKED)) if (slug !== "dojo" && !(await page(`/${slug}/`))) problems.push(`page /${slug}/ is missing`);
+  if (!(await page("/"))) problems.push("the home page is missing");
+  if (!/class="cf-turnstile"/.test((await page("/contact/")) || "")) problems.push("the spam check (Turnstile) is missing on /contact/");
+  if (!/^Content-Signal: search=yes, ai-input=yes, ai-train=no$/m.test((await page("/robots.txt")) || "")) problems.push("robots.txt lost its AI policy");
+  if (!env.MAIL || !env.CONTACT_TO || !env.TURNSTILE_SECRET) problems.push("the contact form is not fully configured (MAIL / CONTACT_TO / TURNSTILE_SECRET)");
+  let week = "";
+  if (env.DB && new Date(cronTime).getUTCDay() === 1) {
+    try {
+      const q = (sql) => env.DB.prepare(sql).all().then((r) => r.results);
+      const since = "datetime('now', '-7 days')";
+      const total = (await q(`SELECT count(*) AS n FROM downloads WHERE bot = 0 AND time >= ${since}`))[0].n;
+      const byPlugin = await q(`SELECT plugin, system, count(*) AS n FROM downloads WHERE bot = 0 AND time >= ${since} GROUP BY plugin, system ORDER BY n DESC`);
+      const byCountry = await q(`SELECT country, count(*) AS n FROM downloads WHERE bot = 0 AND time >= ${since} GROUP BY country ORDER BY n DESC LIMIT 12`);
+      week = `Downloads by people in the last 7 days: ${total}\n\n` + byPlugin.map((r) => `  ${r.n}  ${r.plugin} (${r.system})`).join("\n")
+        + `\n\nCountries: ${byCountry.map((r) => `${r.country || "?"} ${r.n}`).join(", ")}\n\nVisits: Cloudflare dashboard > Web analytics.\n`;
+    } catch (e) { problems.push("the weekly download summary failed: " + e.message); }
+  }
+  console.log("daily check:", problems.length ? problems.join("; ") : "all good");
+  if (!(problems.length || week) || !env.MAIL || !env.CONTACT_TO) return;
+  const subject = problems.length ? `axellsdojo.com: ${problems.length} problem${problems.length > 1 ? "s" : ""} found` : "axellsdojo.com: your week";
+  const text = (problems.length ? "The daily check found:\n\n" + problems.map((p) => "  - " + p).join("\n") + "\n\n" : "The daily check: everything works.\n\n") + week;
+  const from = "website@axellsdojo.com";
+  const raw = [`From: "axellsdojo.com" <${from}>`, `To: <${env.CONTACT_TO}>`, `Subject: =?UTF-8?B?${b64(subject)}?=`, `Date: ${new Date().toUTCString()}`,
+    `Message-ID: <${crypto.randomUUID()}@axellsdojo.com>`, "MIME-Version: 1.0", "Content-Type: text/plain; charset=utf-8", "Content-Transfer-Encoding: base64", "",
+    b64(text).replace(/.{76}/g, "$&\r\n")].join("\r\n");
+  try { await env.MAIL.send(new EmailMessage(from, env.CONTACT_TO, raw)); } catch (e) { console.log("daily check mail failed:", e.message); }
+}
+
 export default {
+  async scheduled(controller, env, ctx) { ctx.waitUntil(daily(env, ctx, controller.scheduledTime)); },
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     if (url.pathname === "/contact/send") return contact(request, env);
