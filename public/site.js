@@ -100,30 +100,16 @@
   });
 })();
 
-// the visitor's own system first: on Linux the Linux button becomes the main one; on a Mac a note says why there is none
+// the visitor's own system first: the <head> script sets os-linux / os-phone / os-mac and CSS shows the right order
+// and notes from the first frame; here only the tab order follows (Linux button first) and the share button works
 (function () {
-  const ua = navigator.userAgent || "", p = (navigator.userAgentData && navigator.userAgentData.platform) || "";
-  const linux = /linux/i.test(p) || (/Linux|X11/.test(ua) && !/Android/.test(ua));
-  const mac = /mac/i.test(p) || (/Macintosh/.test(ua) && !("ontouchend" in document));
+  const linux = document.documentElement.classList.contains("os-linux");
   document.querySelectorAll(".dl").forEach(function (dl) {
-    const w = dl.querySelector(".btn-primary"), l = dl.querySelector(".btn-ghost");
-    if (!w || !l) return;
-    if (linux) {
-      w.classList.replace("btn-primary", "btn-ghost"); l.classList.replace("btn-ghost", "btn-primary"); dl.insertBefore(l, w);
-    } else if (/Android|iPhone|iPad|iPod/.test(ua) || (mac && "ontouchend" in document)) {
-      const n = document.createElement("p"); n.className = "dl-mac";
-      n.textContent = "Desktop plugins for Windows and Linux - open this page on your computer. ";
-      if (navigator.share) {
-        const b = document.createElement("button"); b.type = "button"; b.className = "dl-share"; b.textContent = "Send the link to yourself";
-        b.addEventListener("click", function () { navigator.share({ title: document.title, url: location.href }).catch(function () {}); });
-        n.appendChild(b);
-      }
-      dl.insertBefore(n, dl.querySelector(".dl-meta"));
-    } else if (mac) {
-      const n = document.createElement("p"); n.className = "dl-mac";
-      n.textContent = "On a Mac? There is no macOS version yet - the plugins run on Windows and Linux.";
-      dl.insertBefore(n, dl.querySelector(".dl-meta"));
-    }
+    const w = dl.querySelector('.btn[href$="/windows"]'), l = dl.querySelector('.btn[href$="/linux"]');
+    if (linux && w && l) dl.insertBefore(l, w);
+  });
+  document.querySelectorAll(".dl-share").forEach(function (b) {
+    b.addEventListener("click", function () { navigator.share({ title: document.title, url: location.href }).catch(function () {}); });
   });
 })();
 

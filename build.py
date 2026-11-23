@@ -94,7 +94,7 @@ def app_ld(name, desc, path, og, os_="Windows 10, Windows 11, Linux", repo=None)
 
 def head(title, desc, accent="#c9a25e", path="/", og="og.jpg", ld=None):
     return f"""<!doctype html>
-<html lang="en" class="no-js"><script>document.documentElement.className="js"</script>
+<html lang="en" class="no-js"><script>(function(){{var u=navigator.userAgent||"",p=(navigator.userAgentData&&navigator.userAgentData.platform)||"",t="ontouchend" in document,c="js",m=/mac/i.test(p)||(/Macintosh/.test(u)&&!t);if(/linux/i.test(p)||(/Linux|X11/.test(u)&&!/Android/.test(u)))c+=" os-linux";else if(/Android|iPhone|iPad|iPod/.test(u)||(m&&t))c+=" os-phone";else if(m)c+=" os-mac";if(navigator.share)c+=" can-share";document.documentElement.className=c}})()</script>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -206,6 +206,8 @@ def dl_buttons(repo, windows_label="Download for Windows", sub_w="Windows 10 / 1
     return f"""<div class="dl" data-repo="{repo}">
   <a class="btn btn-primary" href="/get/{DLSLUG(repo)}/windows" rel="nofollow"><b>{windows_label}</b><small>{sub_w}</small></a>
   <a class="btn btn-ghost" href="/get/{DLSLUG(repo)}/linux" rel="nofollow"><b>Download for Linux</b><small>{sub_l}</small></a>
+  <p class="dl-mac dl-phone">Desktop plugins for Windows and Linux - open this page on your computer. <button type="button" class="dl-share">Send the link to yourself</button></p>
+  <p class="dl-mac dl-macnote">On a Mac? There is no macOS version yet - the plugins run on Windows and Linux.</p>
   <p class="dl-meta"><span class="ver">{ver_of(repo)}</span> &middot; <a href="{rel}">all files &amp; checksums</a> &middot; <a href="{GH}/{repo}">source on GitHub</a></p>{whats_new(repo)}
   <p class="dl-trust">No account &middot; no email &middot; no licence key &middot; open source &middot; <a href="/code-signing/">signed releases</a>{accessible(repo)}</p>{SIGNPATH if repo == "axell-signature-dojo" and extras else ""}{SAFE if repo == "axell-signature-dojo" and extras else ""}
 </div>"""
@@ -881,14 +883,19 @@ def build():
         return d if d and h == hashlib.sha256(open(f"{OUT}{u}index.html", "rb").read()).hexdigest() else today
     open(f"{OUT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>https://www.axellsdojo.com{u}</loc><lastmod>{lastmod(u)}</lastmod></url>\n" for u in urls) + "</urlset>\n")
-    have = open(f"{SITE}/src/fonts/KANJI.txt").read()
+    have = open(f"{SITE}/src/fonts/KANJI.txt").read(); missing = {}
+    # only text set in the brush face counts (style.css: .seal, .hero-bg, .support-bg); kanji in running text, such as
+    # the Forbidden Seal manual's prose, use the visitor's system CJK font
+    brush = re.compile(r'class="(?:[^"]*\s)?(?:seal|hero-bg|support-bg)(?:\s[^"]*)?"[^>]*>([^<]*)')
     for d_, _, fs in os.walk(OUT):
         for f in fs:
             if f.endswith(".html"):   # the skip link's target: every page's <main>
                 h = open(f"{d_}/{f}").read()
                 if 'id="main"' not in h: open(f"{d_}/{f}", "w").write(h.replace("<main", '<main id="main"', 1))
-                miss = set(re.findall(r"[\u3000-\u9fff]", open(f"{d_}/{f}").read())) - set(have)
-                if miss: raise SystemExit(f"{f}: kanji {miss} not in the brush font - run tools/fetch_fonts.py")
+                miss = set(re.findall(r"[\u3000-\u9fff]", "".join(brush.findall(h)))) - set(have)
+                if miss: missing[os.path.relpath(f"{d_}/{f}", OUT)] = miss
+    if missing:   # reported after every page is finished, so a missing glyph never leaves pages half-built
+        raise SystemExit("".join(f"{f}: kanji {m} not in the brush font - run tools/fetch_fonts.py\n" for f, m in missing.items()))
     print("built", OUT, sum(len(fs) for _, _, fs in os.walk(OUT)), "files")
 
 if __name__ == "__main__": build()

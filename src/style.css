@@ -300,6 +300,15 @@ main p a:not(.btn), footer p a, .note a { text-decoration: underline; text-decor
 .dl-help p { margin: 10px 0 0; line-height: 1.6; }
 .dl-help code { background: var(--bg2); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; font-size: 13px; white-space: nowrap; }
 .dl-mac { flex-basis: 100%; margin: 2px 0 0; text-align: center; color: var(--soft); font-size: 14px; }
+/* the visitor's own system first, decided in <head> before the first paint (no layout shift): on Linux the Linux button
+   leads and takes the primary style; phones and Macs get a note */
+.dl-phone, .dl-macnote, .dl-share { display: none; }
+.os-phone .dl-phone, .os-mac .dl-macnote { display: block; }
+.can-share .dl-share { display: inline; }
+.os-linux .dl .btn[href$="/linux"] { order: -1; background: var(--acc); color: var(--bg); box-shadow: 0 10px 40px color-mix(in srgb, var(--acc) 35%, transparent); }
+.os-linux .dl .btn[href$="/linux"]:hover { filter: brightness(1.08); color: var(--bg); }
+.os-linux .dl .btn[href$="/windows"] { background: transparent; color: var(--acc); box-shadow: none; }
+.os-linux .dl .btn[href$="/windows"]:hover { filter: none; }
 .dl-news { flex-basis: 100%; margin: 0; text-align: center; color: var(--soft); font-size: 14px; }
 .dl-news span { color: var(--dim); }
 .dl-trust { flex-basis: 100%; margin: 0; text-align: center; color: var(--dim); font-size: 13px; letter-spacing: .02em; }
